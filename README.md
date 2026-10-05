@@ -1,6 +1,6 @@
 # Sidewalk
 
-A San Francisco walking-tour prototype: type a starting point and destination, optionally choose extra walking time / maximum distance, then generate a mapped itinerary. Numbered stops have sourced stories, device speech playback, pedestrian directions, and manual next-stop progression.
+A San Francisco walking-tour prototype: type a starting point and destination, optionally choose extra walking time / maximum distance, then generate a mapped itinerary. Numbered stops have sourced stories, pedestrian directions, and manual next-stop progression.
 
 ## Run
 
@@ -14,7 +14,7 @@ Node 22.13+ and npm. `npm install`, copy `.env.example` to `.env`, then `npm run
 - Category diversity and randomized scoring vary tours. This is a heuristic, not a global optimum.
 - When `OPENAI_API_KEY` is set server-side, the Responses API writes short narratives using only supplied facts. `OPENAI_MODEL` defaults to `gpt-4.1-mini`. The model does not invent geographic coordinates or walking directions. Secrets never go to the browser.
 - Without a key, or on an AI API error, the app honestly labels sourced-story mode and shows original source descriptions / factual templates. This mode is functional but is not live LLM generation.
-- Browser speech synthesis provides narration where supported. There is no GPS tracking; next-stop progression is manual.
+- Audio is disabled. Better narration is deferred in BACKLOG.md. There is no GPS tracking; next-stop progression is manual.
 - The `plan_san_francisco_walk` WebMCP tool shares the UI planning action and rejects invalid input.
 
 ## Data refresh
