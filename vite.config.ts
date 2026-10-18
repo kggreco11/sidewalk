@@ -1,3 +1,4 @@
+import {mkdirSync, copyFileSync} from 'node:fs';
 import vinext from "vinext";
 import { defineConfig } from "vite";
 import hostingConfig from "./.openai/hosting.json";
@@ -37,6 +38,11 @@ const localBindingConfig = {
 };
 
 export default defineConfig(async ({ command }) => {
+  // Serve the module worker without framework dev-overlay transformations.
+  mkdirSync('public/map-worker', {recursive:true});
+  for (const name of ['maplibre-gl-worker.mjs', 'maplibre-gl-shared.mjs']) {
+    copyFileSync(`node_modules/maplibre-gl/dist/${name}`, `public/map-worker/${name}`);
+  }
   // Use Miniflare's local Request.cf placeholder unless fetching is requested.
   process.env.CLOUDFLARE_CF_FETCH_ENABLED ??= "false";
   process.env.WRANGLER_SEND_METRICS ??= "false";

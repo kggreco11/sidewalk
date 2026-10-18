@@ -8,6 +8,7 @@ Node 22.13+ and npm. `npm install`, copy `.env.example` to `.env`, then `npm run
 
 ## Current behavior
 
+- MapLibre GL renders a custom field-guide vector style in `lib/map-style.ts`, using OpenFreeMap tiles. The map worker is copied from the installed package into generated public assets by the Vite config.
 - Server-side catalog of SF Planning landmarks and SF Film Commission filming locations; the normalized data is in `lib/data/places.json` with per-stop source links.
 - Photon geocodes user-entered places. A small exact-name cache handles common landmarks. Search is limited to mainland San Francisco.
 - FOSSGIS OSRM pedestrian matrices select up to five stops. Walking-time and distance budgets are enforced on the final street route. Sparse routes can have fewer than three stops. Two minutes per stop is a separate estimated allowance, not part of the extra walking budget.
@@ -29,7 +30,7 @@ Sources:
 
 ## Services and deployment
 
-This is a private low-volume prototype. Photon and the FOSSGIS pedestrian router are public demonstration services without availability guarantees. Requests are serialized per running instance and paced at least 1.15 seconds apart; geocoding results are cached per instance. Before broader use, replace these endpoints with hosted/self-hosted services and implement shared rate limiting and durable caching. Environment variables `GEOCODER_URL` and `ROUTER_URL` support changing providers without changing application logic (compatible API required). OSM attribution and an improve-the-map link are displayed.
+This is a private low-volume prototype. Photon and the FOSSGIS pedestrian router are public demonstration services without availability guarantees. Requests are serialized per running instance and paced at least 1.15 seconds apart; geocoding results are cached per instance. Before broader use, replace these endpoints with hosted/self-hosted services and implement shared rate limiting and durable caching. Environment variables `GEOCODER_URL` and `ROUTER_URL` support changing providers without changing application logic (compatible API required). OpenFreeMap, OpenMapTiles, and OpenStreetMap attribution is displayed.
 
 For live AI, configure `OPENAI_API_KEY` as a Sites production secret and redeploy. The local `.env` is ignored by Git. No key is included in this project. The browser status endpoint reveals only whether AI is configured and catalog counts.
 

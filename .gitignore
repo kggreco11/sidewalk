@@ -46,3 +46,5 @@ next-env.d.ts
 /work/
 !/.env.example
 *.tsbuildinfo
+
+/public/map-worker/

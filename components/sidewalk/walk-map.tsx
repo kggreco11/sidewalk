@@ -1,13 +1,66 @@
 'use client';
 import {useEffect,useRef,useState} from 'react';
 import type {Walk} from '@/lib/types';
-import type * as Leaflet from 'leaflet';
-import 'leaflet/dist/leaflet.css';
+import type {Map as LibreMap,Marker,GeoJSONSource} from 'maplibre-gl';
+import {fieldGuideStyle} from '@/lib/map-style';
+import 'maplibre-gl/dist/maplibre-gl.css';
+const emptyRoute={type:'FeatureCollection' as const,features:[]};
 export default function WalkMap({walk,selected,onSelect,bottomInset=0,visited=[],viewRevision=0}:{walk:Walk|null;selected:number;onSelect:(n:number)=>void;bottomInset?:number;visited?:number[];viewRevision?:number}){
-const container=useRef<HTMLDivElement>(null),map=useRef<Leaflet.Map|null>(null),group=useRef<Leaflet.LayerGroup|null>(null),Lref=useRef<typeof Leaflet|null>(null);const [ready,setReady]=useState(false);const [error,setError]=useState(false);const callback=useRef(onSelect);callback.current=onSelect;
-useEffect(()=>{let cancelled=false;let observer:ResizeObserver;import('leaflet').then(L=>{if(cancelled||!container.current)return;Lref.current=L;const m=L.map(container.current,{zoomControl:false,scrollWheelZoom:true}).setView([37.7954,-122.409],14);map.current=m;L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png',{maxZoom:19,attribution:'© <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'}).addTo(m);L.control.zoom({position:'topright'}).addTo(m);group.current=L.layerGroup().addTo(m);observer=new ResizeObserver(()=>m.invalidateSize());observer.observe(container.current);setReady(true);}).catch(()=>setError(true));return()=>{cancelled=true;observer?.disconnect();map.current?.remove();map.current=null;};},[]);
-useEffect(()=>{const L=Lref.current,m=map.current,g=group.current;if(!ready||!L||!m||!g)return;g.clearLayers();const marker=(lat:number,lng:number,label:string,title:string,cls:string,click?:()=>void)=>{const icon=L.divIcon({className:'map-pin-wrapper',html:`<span class="map-pin ${cls}">${label}</span>`,iconSize:[44,44],iconAnchor:[22,22]});const mark=L.marker([lat,lng],{icon,keyboard:true,title,alt:title}).addTo(g);mark.getElement()?.setAttribute('aria-label',`${label}: ${title}`);const tip=document.createElement('span');tip.textContent=title;mark.bindTooltip(tip,{direction:'top',offset:[0,-18]});if(click)mark.on('click',click);};
-if(walk){L.geoJSON(walk.geometry as any,{style:{color:'#fcfaf6',weight:9,opacity:.95}}).addTo(g);L.geoJSON(walk.geometry as any,{style:{color:'#315f8b',weight:5,opacity:1}}).addTo(g);marker(walk.start.lat,walk.start.lng,'A',walk.start.name,'endpoint');walk.stops.forEach((p,i)=>marker(p.lat,p.lng,String(i+1),p.name,'',()=>callback.current(i)));marker(walk.end.lat,walk.end.lng,'B',walk.end.name,'endpoint');}else{m.setView([37.7954,-122.409],14,{animate:false});marker(37.7976,-122.4065,'✦','City Lights Bookstore','discovery');marker(37.7969,-122.4044,'✦','Sentinel Building','discovery');marker(37.8024,-122.4058,'✦','Coit Tower','discovery');marker(37.79549,-122.39372,'A','Ferry Building','endpoint');}},[ready,walk]);
-useEffect(()=>{const L=Lref.current,m=map.current;if(!ready||!walk||!m||!L)return;const frame=requestAnimationFrame(()=>{m.invalidateSize();if(selected>=0&&(walk.stops[selected]||selected===walk.stops.length)){const p=walk.stops[selected]||walk.end;const point=m.project([p.lat,p.lng],m.getZoom()).add([0,bottomInset/2]);m.panTo(m.unproject(point,m.getZoom()),{animate:true});}else{const coords=walk.geometry.coordinates.map(p=>[p[1],p[0]] as [number,number]);m.fitBounds(L.latLngBounds(coords),{paddingTopLeft:[45,90],paddingBottomRight:[45,Math.min(bottomInset+35,m.getSize().y-200)],maxZoom:16,animate:false});}container.current?.querySelectorAll('.map-pin:not(.endpoint):not(.discovery)').forEach((el,i)=>{el.classList.toggle('active',i===selected);el.classList.toggle('visited',visited.includes(i));});});return()=>cancelAnimationFrame(frame)},[selected,walk,ready,bottomInset,visited,viewRevision]);
-useEffect(()=>{const m=map.current;if(!m)return;const control=m.getContainer().querySelector('.leaflet-control-attribution') as HTMLElement|null;if(control)control.style.marginBottom=`${bottomInset?bottomInset+4:0}px`;},[bottomInset,ready]);
-return <><div ref={container} className="leaflet-map" aria-label="Interactive walking itinerary map"/>{error&&<div className="map-error">The map could not load. Your stop list and directions are still available.</div>}</>}
+  const container=useRef<HTMLDivElement>(null),map=useRef<LibreMap|null>(null),library=useRef<typeof import('maplibre-gl')|null>(null);
+  const markers=useRef<{marker:Marker;index:number;button:HTMLButtonElement;hide:()=>void}[]>([]);
+  const callback=useRef(onSelect);callback.current=onSelect;
+  const [ready,setReady]=useState(false),[error,setError]=useState(false);
+  useEffect(()=>{
+    let cancelled=false,observer:ResizeObserver|undefined;
+    const timeout=setTimeout(()=>{if(!cancelled&&!map.current?.isStyleLoaded())setError(true)},20000);
+    import('maplibre-gl').then(L=>{
+      if(cancelled||!container.current)return;
+      L.setWorkerUrl('/map-worker/maplibre-gl-worker.mjs');
+      library.current=L;
+      const m=new L.Map({container:container.current,style:fieldGuideStyle,center:[-122.409,37.7954],zoom:13.6,minZoom:10,maxZoom:19,attributionControl:false,pitchWithRotate:false});
+      map.current=m;m.touchPitch.disable();
+      m.addControl(new L.NavigationControl({showCompass:true,visualizePitch:false}),'top-right');
+      m.addControl(new L.AttributionControl({compact:true}),'bottom-right');
+      m.on('load',()=>{
+        if(cancelled)return;
+        clearTimeout(timeout);setError(false);
+        m.addSource('walk-route',{type:'geojson',data:emptyRoute});
+        m.addLayer({id:'walk-route-halo',type:'line',source:'walk-route',layout:{'line-cap':'round','line-join':'round'},paint:{'line-color':'#fcfaf6','line-width':9}},'major-street-names');
+        m.addLayer({id:'walk-route-line',type:'line',source:'walk-route',layout:{'line-cap':'round','line-join':'round'},paint:{'line-color':'#315f8b','line-width':4.5}},'major-street-names');
+        setReady(true);
+      });
+      m.on('error',()=>{if(!m.isStyleLoaded())setError(true)});
+      observer=new ResizeObserver(()=>m.resize());observer.observe(container.current);
+    }).catch(()=>{if(!cancelled)setError(true)});
+    return()=>{cancelled=true;clearTimeout(timeout);observer?.disconnect();markers.current.forEach(({marker,hide})=>{hide();marker.remove()});markers.current=[];map.current?.remove();map.current=null};
+  },[]);
+  useEffect(()=>{
+    const m=map.current,L=library.current;if(!ready||!m||!L)return;
+    markers.current.forEach(({marker,hide})=>{hide();marker.remove()});markers.current=[];
+    (m.getSource('walk-route') as GeoJSONSource).setData(walk?{type:'Feature',properties:{},geometry:walk.geometry}:emptyRoute);
+    function add(lng:number,lat:number,label:string,title:string,kind:string,index:number){
+      const button=document.createElement('button');button.type='button';button.className='map-pin-wrapper';button.title=title;button.setAttribute('aria-label',`${label}: ${title}`);
+      const pin=document.createElement('span');pin.className=`map-pin ${kind}`;pin.textContent=label;button.appendChild(pin);
+      const marker=new L!.Marker({element:button,anchor:'center'}).setLngLat([lng,lat]).addTo(m!);
+      const popup=new L!.Popup({closeButton:false,closeOnClick:false,offset:26,className:'stop-tooltip'}).setText(title);
+      const show=()=>popup.setLngLat([lng,lat]).addTo(m!),hide=()=>popup.remove();
+      button.addEventListener('mouseenter',show);button.addEventListener('mouseleave',hide);button.addEventListener('focus',show);button.addEventListener('blur',hide);
+      button.addEventListener('click',()=>{hide();if(index>=0)callback.current(index)});
+      markers.current.push({marker,index,button,hide});
+    }
+    if(walk){add(walk.start.lng,walk.start.lat,'A',walk.start.name,'endpoint',-1);walk.stops.forEach((p,i)=>add(p.lng,p.lat,String(i+1),p.name,'',i));add(walk.end.lng,walk.end.lat,'B',walk.end.name,'endpoint',walk.stops.length)}
+    else{m.jumpTo({center:[-122.409,37.7954],zoom:13.6,bearing:0,padding:{top:0,bottom:0,left:0,right:0}});add(-122.4065,37.7976,'✦','City Lights Bookstore','discovery',-1);add(-122.4044,37.7969,'✦','Sentinel Building','discovery',-1);add(-122.4058,37.8024,'✦','Coit Tower','discovery',-1);add(-122.39372,37.79549,'A','Ferry Building','endpoint',-1)}
+    return()=>{markers.current.forEach(({marker,hide})=>{hide();marker.remove()});markers.current=[]};
+  },[ready,walk]);
+  useEffect(()=>{
+    const m=map.current,L=library.current;if(!ready||!walk||!m||!L)return;
+    m.resize();
+    const padding={top:90,bottom:Math.min(bottomInset+32,Math.max(32,m.getContainer().clientHeight-200)),left:44,right:44};
+    const duration=window.matchMedia('(prefers-reduced-motion: reduce)').matches?0:350;
+    const point=walk.stops[selected]||(selected===walk.stops.length?walk.end:null);
+    if(point)m.easeTo({center:[point.lng,point.lat],padding,duration});
+    else{const bounds=new L.LngLatBounds();walk.geometry.coordinates.forEach(p=>bounds.extend([p[0],p[1]]));m.fitBounds(bounds,{padding,maxZoom:16,bearing:0,duration})}
+  },[ready,walk,selected,bottomInset,viewRevision]);
+  useEffect(()=>{markers.current.forEach(({button,index})=>{const pin=button.firstElementChild!;pin.classList.toggle('active',index>=0&&index===selected);pin.classList.toggle('visited',index>=0&&visited.includes(index));button.setAttribute('aria-pressed',String(index>=0&&index===selected))})},[ready,walk,selected,visited]);
+  return <><div ref={container} className="vector-map" style={{'--map-bottom-inset':`${bottomInset+4}px`} as React.CSSProperties} aria-label="Interactive walking itinerary map"/>{error&&<div className="map-error" role="status">The map couldn’t load. Your stops and walking directions are still available.</div>}</>;
+}
