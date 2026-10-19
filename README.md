@@ -16,7 +16,7 @@ Node 22.13+ and npm. `npm install`, copy `.env.example` to `.env`, then `npm run
 - When `OPENAI_API_KEY` is set server-side, the Responses API writes short narratives using only supplied facts. `OPENAI_MODEL` defaults to `gpt-4.1-mini`. The model does not invent geographic coordinates or walking directions. Secrets never go to the browser.
 - Without a key, or on an AI API error, the app honestly labels sourced-story mode and shows original source descriptions / factual templates. This mode is functional but is not live LLM generation.
 - “I’m here” collects a stamp and opens an optional photo/note editor. Visits, notes, one compressed photo per place, and completed-walk milestones persist in browser localStorage; no account sync or server photo upload. Photos are resized to 960px and encoded as JPEG. Browser storage limits are reported without claiming a failed save succeeded. Clearing browser data removes the collection.
-- Audio is disabled. Better narration is deferred in BACKLOG.md. There is no GPS tracking; next-stop progression is manual.
+- Audio is disabled. Better narration is deferred in BACKLOG.md. Live walking uses foreground GPS with a follow/recenter map, route-distance and upcoming-instruction card, and a nearby state within 50 m when GPS accuracy is 50 m or better. Fixes older than 20 seconds are stale. Off-route detection does not reroute. Location watching pauses when the page is hidden and stops when the walk ends. Arrival and next-stop progression remain manual. GPS coordinates are not persisted or sent to the app server; map tile requests reflect the displayed area.
 - The `plan_san_francisco_walk` WebMCP tool shares the UI planning action and rejects invalid input.
 
 ## Data refresh
