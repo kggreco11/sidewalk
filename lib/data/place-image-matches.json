@@ -1,0 +1,314 @@
+[
+  {
+    "id": "art-1901.2",
+    "name": "Mechanics Monument",
+    "wikidata": "http://www.wikidata.org/entity/Q17021242",
+    "file": "File:Mechanics Monument by Douglas Tilden - San Francisco, CA - DSC03542.JPG",
+    "match": "name + coordinate",
+    "distanceMeters": 10
+  },
+  {
+    "id": "art-1936.1",
+    "name": "Sun Yat-Sen",
+    "wikidata": "http://www.wikidata.org/entity/Q40732369",
+    "file": "File:Chinatown, San Francisco, California (2013) - 38.JPG",
+    "match": "name + coordinate",
+    "distanceMeters": 53
+  },
+  {
+    "id": "park-145",
+    "name": "Ina Coolbrith Park",
+    "wikidata": "http://www.wikidata.org/entity/Q49504637",
+    "file": "File:Ina Coolbrith Park, San Francisco, California, US.jpg",
+    "match": "name + coordinate",
+    "distanceMeters": 23
+  },
+  {
+    "id": "park-153",
+    "name": "Francisco Park",
+    "wikidata": "http://www.wikidata.org/entity/Q112061568",
+    "file": "File:Francisco Park.jpg",
+    "match": "name + coordinate",
+    "distanceMeters": 22
+  },
+  {
+    "id": "film-301",
+    "name": "Lafayette Park",
+    "wikidata": "http://www.wikidata.org/entity/Q6471488",
+    "file": "File:Lafayette Park, San Francisco, from the park's western edge.jpg",
+    "match": "name + coordinate",
+    "distanceMeters": 28
+  },
+  {
+    "id": "film-523",
+    "name": "Alta Plaza Park",
+    "wikidata": "http://www.wikidata.org/entity/Q4735994",
+    "file": "File:Alta plaza looks mayan.jpg",
+    "match": "name + coordinate",
+    "distanceMeters": 28
+  },
+  {
+    "id": "film-624",
+    "name": "South Park",
+    "wikidata": "http://www.wikidata.org/entity/Q3492264",
+    "file": "File:South Park Facing SW - Playground.jpg",
+    "match": "name + coordinate",
+    "distanceMeters": 10
+  },
+  {
+    "id": "lm-316",
+    "name": "Sacred Heart Parish Complex",
+    "wikidata": "http://www.wikidata.org/entity/Q137476407",
+    "file": "File:Sacred Heart Church (San Francisco, CA).jpg",
+    "match": "name + coordinate",
+    "distanceMeters": 87
+  },
+  {
+    "id": "lm-125",
+    "name": "Havens Mansion and Carriage House",
+    "wikidata": "http://www.wikidata.org/entity/Q124327756",
+    "file": "File:1381 South Van Ness.jpg",
+    "match": "name + coordinate",
+    "distanceMeters": 21
+  },
+  {
+    "id": "lm-276",
+    "name": "Gaughran House",
+    "wikidata": "http://www.wikidata.org/entity/Q139146234",
+    "file": "File:Gaughran House.jpg",
+    "match": "name + coordinate",
+    "distanceMeters": 21
+  },
+  {
+    "id": "lm-286",
+    "name": "Sunshine School",
+    "wikidata": "http://www.wikidata.org/entity/Q124792368",
+    "file": "File:Sunshine School, exterior, San Francisco (February 2024) 02.jpg",
+    "match": "name + coordinate",
+    "distanceMeters": 15
+  },
+  {
+    "id": "lm-315",
+    "name": "Grand Theater",
+    "wikidata": "http://www.wikidata.org/entity/Q44634103",
+    "file": "File:Grand Theater, San Francisco, California, US.jpg",
+    "match": "name + coordinate",
+    "distanceMeters": 38
+  },
+  {
+    "id": "lm-35",
+    "name": "Stadtmuller House",
+    "wikidata": "http://www.wikidata.org/entity/Q115485353",
+    "file": "File:Stadtmuller House (San Francisco).JPG",
+    "match": "name + coordinate",
+    "distanceMeters": 30
+  },
+  {
+    "id": "lm-40",
+    "name": "First Unitarian Church",
+    "wikidata": "http://www.wikidata.org/entity/Q114798187",
+    "file": "File:First Unitarian Universalist Church of San Francisco.jpg",
+    "match": "name + coordinate",
+    "distanceMeters": 63
+  },
+  {
+    "id": "lm-288",
+    "name": "Kinmon Gakuen",
+    "wikidata": "http://www.wikidata.org/entity/Q6413992",
+    "file": "File:Kinmon Gakuen, exterior, San Francisco (March 2024).jpg",
+    "match": "name + coordinate",
+    "distanceMeters": 22
+  },
+  {
+    "id": "lm-69",
+    "name": "Haas-Lilienthal House",
+    "wikidata": "http://www.wikidata.org/entity/Q5636548",
+    "file": "File:Haas-Lilienthal House.jpg",
+    "match": "name + coordinate",
+    "distanceMeters": 49
+  },
+  {
+    "id": "lm-80",
+    "name": "Alfred E.(Nobby) Clarke Mansion",
+    "wikidata": "http://www.wikidata.org/entity/Q4722577",
+    "file": "File:The Caselli Mansion, San Francisco (3720041013).jpg",
+    "match": "name + coordinate",
+    "distanceMeters": 39
+  },
+  {
+    "id": "lm-86",
+    "name": "Potrero Hill Neighborhood House",
+    "wikidata": "http://www.wikidata.org/entity/Q105426889",
+    "file": "File:Potrero Hill Neighborhood House, exterior, San Francisco (January 2025) 02.jpg",
+    "match": "name + coordinate",
+    "distanceMeters": 14
+  },
+  {
+    "id": "lm-100",
+    "name": "Castro Theater",
+    "wikidata": "http://www.wikidata.org/entity/Q2941518",
+    "file": "File:Castro Theatre in San Francisco.JPG",
+    "match": "name + coordinate",
+    "distanceMeters": 36
+  },
+  {
+    "id": "lm-134",
+    "name": "The Mechanics Institute",
+    "wikidata": "http://www.wikidata.org/entity/Q7414066",
+    "file": "File:San Francisco Mechanics’ Institute-0672.jpg",
+    "match": "name + coordinate",
+    "distanceMeters": 10
+  },
+  {
+    "id": "lm-154",
+    "name": "James Flood Building",
+    "wikidata": "http://www.wikidata.org/entity/Q5460027",
+    "file": "File:San Francisco - Flood Building from Hallidie Plaza.jpg",
+    "match": "name + coordinate",
+    "distanceMeters": 45
+  },
+  {
+    "id": "lm-228",
+    "name": "City Lights Bookstore",
+    "wikidata": "http://www.wikidata.org/entity/Q2394278",
+    "file": "File:City Lights outside.jpg",
+    "match": "name + coordinate",
+    "distanceMeters": 3
+  },
+  {
+    "id": "lm-253",
+    "name": "Richard Doolan/Norman Larson Residence and Storefronts",
+    "wikidata": "http://www.wikidata.org/entity/Q133464378",
+    "file": "File:Richard P. Doolan Residence and Storefronts, 557 Ashbury St. & 1500 Haight St., San Francisco, CA 3-4-2012 4-03-43 PM.JPG",
+    "match": "name + coordinate",
+    "distanceMeters": 7
+  },
+  {
+    "id": "lm-263",
+    "name": "Sam Jordan's Bar",
+    "wikidata": "http://www.wikidata.org/entity/Q115080916",
+    "file": "File:Sam Jordan's Bar.jpg",
+    "match": "name + coordinate",
+    "distanceMeters": 1
+  },
+  {
+    "id": "lm-264",
+    "name": "Twin Peaks Tavern",
+    "wikidata": "http://www.wikidata.org/entity/Q114832605",
+    "file": "File:Twin Peaks Tavern, San Francisco.jpg",
+    "match": "name + coordinate",
+    "distanceMeters": 15
+  },
+  {
+    "id": "lm-265",
+    "name": "Doelger Building",
+    "wikidata": "http://www.wikidata.org/entity/Q16965154",
+    "file": "File:Doelger Building.JPG",
+    "match": "name + coordinate",
+    "distanceMeters": 5
+  },
+  {
+    "id": "lm-267",
+    "name": "Swedish American Hall",
+    "wikidata": "http://www.wikidata.org/entity/Q124284720",
+    "file": "File:Swedish American Hall (WordCamp 2007).jpg",
+    "match": "name + coordinate",
+    "distanceMeters": 23
+  },
+  {
+    "id": "lm-274",
+    "name": "El Rey Theater",
+    "wikidata": "http://www.wikidata.org/entity/Q44633951",
+    "file": "File:El Rey Theatre San Francisco.jpg",
+    "match": "name + coordinate",
+    "distanceMeters": 19
+  },
+  {
+    "id": "lm-275",
+    "name": "Third Baptist Church Complex",
+    "wikidata": "http://www.wikidata.org/entity/Q116610117",
+    "file": "File:Third Baptist Church of San Francisco.jpg",
+    "match": "name + coordinate",
+    "distanceMeters": 85
+  },
+  {
+    "id": "lm-282",
+    "name": "Hotel Utah",
+    "wikidata": "http://www.wikidata.org/entity/Q115147944",
+    "file": "File:Hotel Utah, 2008.jpg",
+    "match": "name + coordinate",
+    "distanceMeters": 81
+  },
+  {
+    "id": "lm-310",
+    "name": "Parkside Branch Library",
+    "wikidata": "http://www.wikidata.org/entity/Q66362962",
+    "file": "File:Parkside Branch Library (28714395811).jpg",
+    "match": "name + coordinate",
+    "distanceMeters": 92
+  },
+  {
+    "id": "lm-353",
+    "name": "Second Church of Christ Scientist",
+    "wikidata": "http://www.wikidata.org/entity/Q17017980",
+    "file": "File:Christ, Scientist (7238798536).jpg",
+    "match": "name + coordinate",
+    "distanceMeters": 8
+  },
+  {
+    "id": "lm-215",
+    "name": "Brown's Opera House (Victoria's Theater)",
+    "wikidata": "http://www.wikidata.org/entity/Q7927081",
+    "file": "File:SFVictoriaTheater.jpg",
+    "match": "reviewed alias",
+    "distanceMeters": 20
+  },
+  {
+    "id": "lm-33",
+    "name": "Sentinel Building/Columbus Tower",
+    "wikidata": "http://www.wikidata.org/entity/Q5150141",
+    "file": "File:Columbus Tower, San Francisco.JPG",
+    "match": "reviewed alias",
+    "distanceMeters": 15
+  },
+  {
+    "id": "lm-36",
+    "name": "Feusier Octagon House/Kenny Residence",
+    "wikidata": "http://www.wikidata.org/entity/Q5446047",
+    "file": "File:Feusier Octagon House (San Francisco).JPG",
+    "match": "reviewed alias",
+    "distanceMeters": 98
+  },
+  {
+    "id": "lm-113",
+    "name": "S.F. Curb Mining Exchange",
+    "wikidata": "http://www.wikidata.org/entity/Q137643186",
+    "file": "File:California State Chamber of Commerce 02.JPG",
+    "match": "reviewed alias",
+    "distanceMeters": 41
+  },
+  {
+    "id": "lm-246",
+    "name": "James Lick Baths/People's Laundry Building",
+    "wikidata": "http://www.wikidata.org/entity/Q6138041",
+    "file": "File:James Lick Baths as photographed in 2008.jpg",
+    "match": "reviewed alias",
+    "distanceMeters": 29
+  },
+  {
+    "id": "lm-291",
+    "name": "Japanese YWCA/Issei Women's Building",
+    "wikidata": "http://www.wikidata.org/entity/Q118646812",
+    "file": "File:Japanese YWCA San Francisco.png",
+    "match": "reviewed alias",
+    "distanceMeters": 36
+  },
+  {
+    "id": "lm-334",
+    "name": "St. Matthew's Church",
+    "wikidata": "http://www.wikidata.org/entity/Q2316537",
+    "file": "File:St. Matthew's Corner 1.JPG",
+    "match": "reviewed alias",
+    "distanceMeters": 5
+  }
+]

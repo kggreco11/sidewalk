@@ -1,0 +1,13 @@
+import fs from 'node:fs/promises';
+const root=new URL('../',import.meta.url);
+const read=async file=>JSON.parse(await fs.readFile(new URL(file,root),'utf8'));
+const [original,additions,images]=await Promise.all([read('lib/data/places.json'),read('lib/data/explore-places.json'),read('lib/data/place-images.json')]);
+const normalize=name=>name.toLowerCase().replace(/[^a-z0-9]/g,'');
+const ids=new Map(original.map(p=>[normalize(p.name),p.id]));
+const newer=additions.map(p=>({...p,id:ids.get(normalize(p.name))||p.id}));
+const names=new Set(newer.map(p=>normalize(p.name)));
+const places=[...newer,...original.filter(p=>!names.has(normalize(p.name))&&p.story.length>70&&p.quality>=3)].map(p=>({...p,...images[p.id]}));
+if(new Set(places.map(p=>p.id)).size!==places.length)throw Error('Duplicate place ids');
+await fs.writeFile(new URL('ios/Sidewalk/Resources/places.json',root),JSON.stringify(places,null,2)+'\n');
+await fs.writeFile(new URL('lib/data/place-image-gaps.json',root),JSON.stringify(places.filter(p=>!p.image).map(({id,name})=>({id,name,reason:'No reviewed licensed exterior cover yet'})),null,2)+'\n');
+console.log(`${places.length} iOS places; ${places.filter(p=>p.image).length} covers.`);

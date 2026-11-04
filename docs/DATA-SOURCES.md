@@ -1,6 +1,6 @@
 # Explore data sources
 
-Explore adds **24 curated places** to the existing SF Planning landmarks and SF Film Commission catalog: **16 public artworks and 8 parks**. These are real source records, not demo coordinates. We select a small set instead of loading every record onto the home map.
+Explore adds **24 curated places** to the existing SF Planning landmarks and SF Film Commission catalog: **16 public artworks and 8 parks**. These are real source records, not demo coordinates. The initial import is curated; Explore now exposes all matching curated records without a five-place cap.
 
 ## New structured feeds
 
@@ -9,7 +9,7 @@ Explore adds **24 curated places** to the existing SF Planning landmarks and SF 
 | San Francisco Arts Commission, Civic Art Collection | [r7bn-7v9c](https://data.sf.gov/d/r7bn-7v9c) | Accession number, title, artist, date, materials, site description, neighborhood, latitude/longitude | 16 curated publicly-sited outdoor works |
 | San Francisco Recreation & Parks, Properties | [gtr9-ntp6](https://data.sf.gov/d/gtr9-ntp6) | Stable property ID, name, acreage, address, neighborhood, latitude/longitude | 8 small parks/gardens |
 
-Both DataSF dataset metadata records identify the **Open Data Commons Public Domain Dedication and License 1.0**. See [PDDL](https://opendatacommons.org/licenses/pddl/1-0/). This covers the datasets; it does not grant rights to photographs or reproductions of artworks. No images have been copied into this expansion.
+Both DataSF dataset metadata records identify the **Open Data Commons Public Domain Dedication and License 1.0**. See [PDDL](https://opendatacommons.org/licenses/pddl/1-0/). This covers the datasets; it does not grant rights to photographs or reproductions of artworks. The separate licensed-photo manifest is documented in [PLACE-PHOTOS.md](PLACE-PHOTOS.md). These photos come from individually licensed Commons files, not the city dataset license.
 
 ## Stories and provenance
 
@@ -51,3 +51,7 @@ The manifest records the fetch date separately from the source's `data_as_of` da
 Artwork locations may be approximate intersections; grouped artworks may share a point. Park coordinates are property points, not verified accessible entrances. Routing may snap to nearby streets. Hours, construction closures, stair accessibility, temporary removals and on-site condition are not live-verified. No claim of current opening status is made. Large parks with deep interior centroid targets and known changed/removal candidates such as the Embarcadero Fountain were excluded from this initial selection.
 
 Explore must deduplicate these additions against existing landmark/film locations when presenting a view; stable prefixed IDs prevent collisions but do not alone imply distinct physical sites. Saved places should retain those IDs across importer runs.
+
+## Further expansion review
+
+See [PUBLIC-DATA-REVIEW.md](PUBLIC-DATA-REVIEW.md) for twelve additional sources, verified dataset counts, licensing constraints and recommended import order. Those sources are audited candidates, not all imported feeds.

@@ -1,0 +1,472 @@
+[
+  {
+    "id": "art-T2009.1",
+    "name": "Language of the Birds",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "art-2012.1.a-c",
+    "name": "Plaything of the Wind",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "art-1966.23",
+    "name": "Bronze Icosaspirale",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "art-1990.7.2",
+    "name": "Bay Bench",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "art-2010.7",
+    "name": "Passage",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "art-1986.25",
+    "name": "ILWU Memorial",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "art-2017.6",
+    "name": "Boeddeker’s Blooming Bounty",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "art-1995.13",
+    "name": "Sea Change",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "art-2018.4.c",
+    "name": "Auspicious Clouds / Heavy Fog",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "art-1999.22.1-2",
+    "name": "Origami Fountains",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "art-1954.18",
+    "name": "Fountain of the Tortoises",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "art-1985.25",
+    "name": "Skygate",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "art-1996.1.1-5",
+    "name": "Playland Revisited",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "art-2007.2.b",
+    "name": "Incomplete Metamorphosis (Dragonfly)",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "park-184",
+    "name": "Fay Park",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "park-131",
+    "name": "Allyne Park",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "park-127",
+    "name": "Cottage Row Mini Park",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-321",
+    "name": "Mint Mall and Hall",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-317",
+    "name": "San Francisco Fire Station No. 44",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-319",
+    "name": "Rainbow Flag at Harvey Milk Plaza",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-320",
+    "name": "Ladies' Protection and Relief Society",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-314",
+    "name": "Westwood Park Entrance Gateway and Pillars",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-323",
+    "name": "Sha’ar Zahav (Historic Location)",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-322",
+    "name": "Bob Ross House",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-324",
+    "name": "American Indian Historical Society/Chautauqua House",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-329",
+    "name": "Full Moon Coffeehouse",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-325",
+    "name": "Bank of Italy Branch Building",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-326",
+    "name": "Castro Rock Steam Baths",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-327",
+    "name": "Engine Company No. 13",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-328",
+    "name": "Firehouse : Hose Company #30",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-331",
+    "name": "Maud's",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-332",
+    "name": "Mission Folk Victorian Home",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-333",
+    "name": "San Francisco AIDS Foundation",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-335",
+    "name": "St. Nicholas Cathedral",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-330",
+    "name": "Geilfuss on Guerrero",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-318",
+    "name": "The Gregangelo Museum",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-313",
+    "name": "Carnaval Mural",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-312",
+    "name": "Chata Gutierrez Mural",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-136",
+    "name": "Marsden Kershaw House",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-269",
+    "name": "University Mound Old Ladies Home",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-336",
+    "name": "House of Latin Rock",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-14",
+    "name": "Medico-Dental Building",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-29",
+    "name": "Old Fire House",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-66",
+    "name": "Stanyan House",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-72",
+    "name": "V. C. Morris Building",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-79",
+    "name": "Miller-Joost House",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-112",
+    "name": "Rothschild House",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-186",
+    "name": "David Lewis House",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-196",
+    "name": "Alfred G. Hanson Residence",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-208",
+    "name": "The McCormick House",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-232",
+    "name": "Filbert Street Cottages",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-266",
+    "name": "Marcus Books and Jimbo's Bop City",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-268",
+    "name": "R.(Rube) L. Goldberg Building",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-270",
+    "name": "Cowell House",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-271",
+    "name": "Bourdette Building",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-281",
+    "name": "Piledrivers, Bridge, And Structural Inonworkers Local No. 77 Union Hall",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-272",
+    "name": "Alemany Emergency Hospital And Health Center",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-273",
+    "name": "Ingleside Presbyterian Church and \"The Great Cloud of Witnesses\"",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-277",
+    "name": "New Era Hall",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-278",
+    "name": "Phillips Building",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-279",
+    "name": "Arthur H. Coleman Medical Center",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-280",
+    "name": "New Pullman Hotel",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-284",
+    "name": "Benedict-Gieling House",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-283",
+    "name": "Dunham, Carrigan & Hayden Building",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-285",
+    "name": "Theodore Roosavelt Middle School",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-292",
+    "name": "Lyon Martin House",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-287",
+    "name": "Paper Doll Bar",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-289",
+    "name": "\"History of Medicine in California\" Frescoes at UC Hall",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-306",
+    "name": "City Cemetery",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-309",
+    "name": "Church for the Fellowship of All People",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-307",
+    "name": "Turk and Taylor Streets Intersection, known as the “Site of the Compton’s Cafeteria Riot”",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-308",
+    "name": "St. James Presbyterian Church",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-311",
+    "name": "Colombo Market Arch",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-337",
+    "name": "Alexander Adams Home",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-338",
+    "name": "Born Home",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-341",
+    "name": "De Urioste Home - James C. Hormel Mansion",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-354",
+    "name": "Tietz-Beneke House",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-342",
+    "name": "Duboce Triangle Greek Revival Home",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-343",
+    "name": "Early Haight Ashbury Farmhouse",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-340",
+    "name": "Charles L. Hinkel Home",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-339",
+    "name": "Charles Katz Home",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-349",
+    "name": "John J. Clark House",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-344",
+    "name": "Elliott M. Wilson Home",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-350",
+    "name": "Reverend Francis W. Reid",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-355",
+    "name": "William Shaughnessy Home",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-345",
+    "name": "Engine Company No. 44 / Adams-Van Hoesen House",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-352",
+    "name": "Richard Spreckels Mansion / Buena Vista Studios",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-347",
+    "name": "Henry Street Rowhouses",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-356",
+    "name": "Fernando Nelson Home",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-357",
+    "name": "Lange Home",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-346",
+    "name": "Guerrero Street Double Stick Eastlake House",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-348",
+    "name": "Holy Innocents Church",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-351",
+    "name": "Phoenix Brewery",
+    "reason": "No reviewed licensed exterior cover yet"
+  },
+  {
+    "id": "lm-358",
+    "name": "Engine Company No. 33",
+    "reason": "No reviewed licensed exterior cover yet"
+  }
+]

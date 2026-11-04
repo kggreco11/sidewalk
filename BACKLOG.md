@@ -25,7 +25,8 @@ Before reintroducing audio:
 ## Next discovery work
 
 - Expand neighborhood coverage with editorially reviewed stories and verified pedestrian entrances.
-- Add licensed place photography with attribution; no artwork images are imported from the new datasets.
+- Complete place-photo coverage: 39 licensed covers integrated; 94 curated places still need reviewed images. See `lib/data/place-image-gaps.json`.
+- Import reviewed POPOS (81 source rows) and separate 1% Public Art (65 source rows), with access review and deduplication. See `docs/PUBLIC-DATA-REVIEW.md`.
 - Research additional structured history and local culture sources, including Wikidata enrichment.
 - Account-backed saved places and collection sync.
 - Current access/closure data and production routing/geocoding providers before broader launch.

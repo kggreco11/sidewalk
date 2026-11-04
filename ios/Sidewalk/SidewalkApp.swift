@@ -13,6 +13,11 @@ struct Place: Codable, Identifiable, Hashable {
     let sourceName: String
     let address: String?
     let teaser: String?
+    let image: String?
+    let imageLocal: String?
+    let imageCredit: String?
+    let imageSource: String?
+    let imageLicenseUrl: String?
     var coordinate: CLLocationCoordinate2D { .init(latitude: lat, longitude: lng) }
     var kind: String {
         let text = category.lowercased()
@@ -103,7 +108,7 @@ struct ExploreView: View {
                         HStack(alignment:.top,spacing:12) {
                             Button { selected = place } label: {
                                 HStack(alignment:.top,spacing:12) {
-                                    Image(systemName:place.icon).font(.system(size:30,weight:.light)).frame(width:54,height:88).background(ink.opacity(0.06),in:RoundedRectangle(cornerRadius:6))
+                                    PlaceCover(place:place).frame(width:88,height:100).clipped().clipShape(RoundedRectangle(cornerRadius:6))
                                     VStack(alignment:.leading,spacing:7) {
                                         Text(place.kind.uppercased()).font(.system(size:9,design:.monospaced))
                                         Text(place.name).font(.system(size:21,design:.serif)).lineLimit(2)
@@ -130,7 +135,8 @@ struct PlaceDetail: View {
     let walk: () -> Void
     var body: some View {
         ScrollView { VStack(alignment:.leading,spacing:20) {
-            Image(systemName:place.icon).font(.system(size:60,weight:.ultraLight)).frame(maxWidth:.infinity).padding(30).background(ink.opacity(0.06))
+            PlaceCover(place:place).frame(height:200).clipped()
+            if let credit=place.imageCredit, let source=place.imageSource, let url=URL(string:source) {Link(credit,destination:url).font(.caption);if let license=place.imageLicenseUrl,let licenseURL=URL(string:license){Link("Image license",destination:licenseURL).font(.caption)};Text("Cropped to fit").font(.caption2).foregroundStyle(.secondary)}
             Text(place.kind.uppercased()).font(.caption.monospaced())
             Text(place.name).font(.system(size:34,design:.serif))
             Text(place.story).font(.system(size:19,design:.serif)).lineSpacing(5)
@@ -191,4 +197,19 @@ struct PlacesMap: UIViewRepresentable {
             if let annotation=view.annotation {mapView.deselectAnnotation(annotation,animated:false)}
         }
     }
+}
+
+struct PlaceCover:View {
+    let place:Place
+    var body:some View {
+        if let local=place.imageLocal,let image=UIImage(named:local) {
+            Image(uiImage:image).resizable().scaledToFill().accessibilityLabel(place.name)
+        } else if let image=place.image,let url=URL(string:image), url.scheme == "https" {
+            AsyncImage(url:url) {phase in
+                if let image=phase.image {image.resizable().scaledToFill().accessibilityLabel(place.name)}
+                else {fallback}
+            }
+        } else {fallback}
+    }
+    var fallback:some View {ZStack{ink.opacity(0.06);Image(systemName:place.icon).font(.system(size:36,weight:.light)).foregroundStyle(ink)}.accessibilityLabel(place.name)}
 }
