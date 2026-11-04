@@ -1,0 +1,28 @@
+{
+  "updated": "2026-11-04",
+  "places": 24,
+  "sources": [
+    {
+      "id": "r7bn-7v9c",
+      "name": "SF Arts Commission · Civic Art Collection",
+      "url": "https://data.sf.gov/d/r7bn-7v9c",
+      "api": "https://data.sf.gov/resource/r7bn-7v9c.json",
+      "places": 16,
+      "license": "Open Data Commons Public Domain Dedication and License 1.0",
+      "licenseUrl": "https://opendatacommons.org/licenses/pddl/1-0/",
+      "sourceDataAsOf": "2024-04-17",
+      "notes": "Curated publicly-sited outdoor works. Dataset coordinates can be nearest intersections. Artwork image rights are separate; no images imported."
+    },
+    {
+      "id": "gtr9-ntp6",
+      "name": "SF Recreation & Parks · Properties",
+      "url": "https://data.sf.gov/d/gtr9-ntp6",
+      "api": "https://data.sf.gov/resource/gtr9-ntp6.json",
+      "places": 8,
+      "license": "Open Data Commons Public Domain Dedication and License 1.0",
+      "licenseUrl": "https://opendatacommons.org/licenses/pddl/1-0/",
+      "sourceDataAsOf": "2026-10-27",
+      "notes": "Curated small parks. Property points are approximate locations, not verified entrances. Stories reference linked official pages."
+    }
+  ]
+}

@@ -1,12 +1,16 @@
 # Sidewalk
 
-A San Francisco walking-tour prototype: type a starting point and destination, optionally choose extra walking time / maximum distance, then generate a mapped itinerary. Numbered stops have sourced stories, pedestrian directions, and manual next-stop progression.
+A San Francisco walking-tour prototype with an Explore home: browse a few nearby discoveries, save places for later, or choose Walk here. You can also type a starting point and destination, optionally choose extra walking time / maximum distance, then generate a mapped itinerary. Numbered stops have sourced stories, pedestrian directions, and manual next-stop progression.
 
 ## Run
 
 Node 22.13+ and npm. `npm install`, copy `.env.example` to `.env`, then `npm run dev`. `npm run build` creates the Cloudflare Worker output. `npx tsc --noEmit` checks types.
 
 ## Current behavior
+
+- Explore shows at most five suggestions and map pins at once, with neighborhood and interest filters, explicit Explore this area after panning, and browser-local bookmarks separate from visited stamps.
+- Walk here preserves the selected catalog destination, asks for a typed starting point or explicitly requested location, and supports collecting the destination itself.
+- 24 curated source records (16 public artworks and 8 parks) enrich the catalog; overlapping park identities preserve prior stamps. See `docs/DATA-SOURCES.md` for provenance, snapshot dates, and import instructions.
 
 - MapLibre GL renders a custom field-guide vector style in `lib/map-style.ts`, using OpenFreeMap tiles. The map worker is copied from the installed package into generated public assets by the Vite config.
 - Server-side catalog of SF Planning landmarks and SF Film Commission filming locations; the normalized data is in `lib/data/places.json` with per-stop source links.
@@ -16,7 +20,7 @@ Node 22.13+ and npm. `npm install`, copy `.env.example` to `.env`, then `npm run
 - When `OPENAI_API_KEY` is set server-side, the Responses API writes short narratives using only supplied facts. `OPENAI_MODEL` defaults to `gpt-4.1-mini`. The model does not invent geographic coordinates or walking directions. Secrets never go to the browser.
 - Without a key, or on an AI API error, the app honestly labels sourced-story mode and shows original source descriptions / factual templates. This mode is functional but is not live LLM generation.
 - “I’m here” collects a stamp and opens an optional photo/note editor. Visits, notes, one compressed photo per place, and completed-walk milestones persist in browser localStorage; no account sync or server photo upload. Photos are resized to 960px and encoded as JPEG. Browser storage limits are reported without claiming a failed save succeeded. Clearing browser data removes the collection.
-- Audio is disabled. Better narration is deferred in BACKLOG.md. Live walking uses foreground GPS with a follow/recenter map, route-distance and upcoming-instruction card, and a nearby state within 50 m when GPS accuracy is 50 m or better. Fixes older than 20 seconds are stale. Off-route detection does not reroute. Location watching pauses when the page is hidden and stops when the walk ends. Arrival and next-stop progression remain manual. GPS coordinates are not persisted or sent to the app server; map tile requests reflect the displayed area.
+- Audio is disabled. Better narration is deferred in BACKLOG.md. Live walking uses foreground GPS with a follow/recenter map, route-distance and upcoming-instruction card, and a nearby state within 50 m when GPS accuracy is 50 m or better. Fixes older than 20 seconds are stale. Off-route detection does not reroute. Location watching pauses when the page is hidden and stops when the walk ends. Arrival and next-stop progression remain manual. Live GPS fixes are not persisted or sent to the app server. Choosing Use my location when planning sends that starting coordinate to the app server and routing provider; map tile requests reflect the displayed area.
 - The `plan_san_francisco_walk` WebMCP tool shares the UI planning action and rejects invalid input.
 
 ## Data refresh

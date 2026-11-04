@@ -15,3 +15,17 @@ Before reintroducing audio:
 
 - Keep UI copy functional. No slogans, motivational filler, decorative captions, or API-setup prompts in the walking flow.
 - Live LLM integration is deferred at the user's request. No API key setup is needed for the current prototype.
+
+## Explore prototype — implemented
+
+- Explore home, five suggestions at a time, map/card details, neighborhood and interest filters.
+- Save places locally; Walk here creates a route to the exact place and supports its destination stamp.
+- Curated Civic Art Collection and Recreation & Parks records with source links and a repeatable importer.
+
+## Next discovery work
+
+- Expand neighborhood coverage with editorially reviewed stories and verified pedestrian entrances.
+- Add licensed place photography with attribution; no artwork images are imported from the new datasets.
+- Research additional structured history and local culture sources, including Wikidata enrichment.
+- Account-backed saved places and collection sync.
+- Current access/closure data and production routing/geocoding providers before broader launch.
