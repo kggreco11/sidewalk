@@ -1,0 +1,22 @@
+name: Sidewalk
+options:
+  bundleIdPrefix: com.sidewalk
+  deploymentTarget:
+    iOS: '17.0'
+targets:
+  Sidewalk:
+    type: application
+    platform: iOS
+    sources: [Sidewalk]
+    settings:
+      base:
+        PRODUCT_BUNDLE_IDENTIFIER: com.sidewalk.explore
+        GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_KEY_CFBundleDisplayName: Sidewalk
+        INFOPLIST_KEY_UILaunchScreen_Generation: YES
+        INFOPLIST_KEY_NSLocationWhenInUseUsageDescription: Show your position during a walk.
+        TARGETED_DEVICE_FAMILY: '1'
+        SWIFT_VERSION: '5.0'
+        CODE_SIGN_STYLE: Automatic
+    scheme:
+      gatherCoverageData: false

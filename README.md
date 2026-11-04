@@ -2,13 +2,17 @@
 
 A San Francisco walking-tour prototype with an Explore home: browse a few nearby discoveries, save places for later, or choose Walk here. You can also type a starting point and destination, optionally choose extra walking time / maximum distance, then generate a mapped itinerary. Numbered stops have sourced stories, pedestrian directions, and manual next-stop progression.
 
+## iPhone app
+
+The native SwiftUI prototype lives in `ios/`. Open `ios/Sidewalk.xcodeproj` in Xcode. See `ios/README.md` for implemented features and the remaining parity work. iOS is the product target; the hosted web app remains a prototype.
+
 ## Run
 
 Node 22.13+ and npm. `npm install`, copy `.env.example` to `.env`, then `npm run dev`. `npm run build` creates the Cloudflare Worker output. `npx tsc --noEmit` checks types.
 
 ## Current behavior
 
-- Explore shows at most five suggestions and map pins at once, with neighborhood and interest filters, explicit Explore this area after panning, and browser-local bookmarks separate from visited stamps.
+- Explore shows all matching suggestions with clustered map pins, with neighborhood and interest filters, explicit Explore this area after panning, and browser-local bookmarks separate from visited stamps.
 - Walk here preserves the selected catalog destination, asks for a typed starting point or explicitly requested location, and supports collecting the destination itself.
 - 24 curated source records (16 public artworks and 8 parks) enrich the catalog; overlapping park identities preserve prior stamps. See `docs/DATA-SOURCES.md` for provenance, snapshot dates, and import instructions.
 

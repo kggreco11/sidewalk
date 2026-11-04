@@ -18,7 +18,7 @@ Before reintroducing audio:
 
 ## Explore prototype — implemented
 
-- Explore home, five suggestions at a time, map/card details, neighborhood and interest filters.
+- Explore home, all matching suggestions with clustered map pins, map/card details, neighborhood and interest filters.
 - Save places locally; Walk here creates a route to the exact place and supports its destination stamp.
 - Curated Civic Art Collection and Recreation & Parks records with source links and a repeatable importer.
 
@@ -29,3 +29,7 @@ Before reintroducing audio:
 - Research additional structured history and local culture sources, including Wikidata enrichment.
 - Account-backed saved places and collection sync.
 - Current access/closure data and production routing/geocoding providers before broader launch.
+
+## Native iOS — in progress
+
+SwiftUI Explore, bookmarks, direct walking routes, and photo/note check-ins are implemented in `ios/`. Remaining: simulator/device visual QA, scenic multi-stop routing, foreground GPS/proximity, camera capture, custom map styling, and distribution signing. See `ios/README.md`.
