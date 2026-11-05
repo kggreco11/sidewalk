@@ -1,11 +1,8 @@
+<img src="ios/Sidewalk/Resources/Assets.xcassets/AppIcon.appiconset/Sidewalk.png" width="120" alt="Sidewalk app logo">
+
 # Sidewalk
 
 A native iPhone field guide to San Francisco. Find a place, take a walking tour, and keep notes, photos and visit stamps along the way.
-
-<p>
-  <img src="docs/images/walk-preview.png" width="280" alt="Five-stop walking tour with numbered places on the map">
-  <img src="docs/images/walk-summary.png" width="280" alt="Completed walk with visited places and a saved field note">
-</p>
 
 ## Run
 
