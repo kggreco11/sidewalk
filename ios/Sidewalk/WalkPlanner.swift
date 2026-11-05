@@ -44,14 +44,14 @@ struct WalkPlanner: View {
                         HStack {
                             Image(systemName:"circle")
                             TextField("Starting point",text:input(.origin)).focused($searchField,equals:.origin)
-                                .submitLabel(.search).autocorrectionDisabled()
+                                .submitLabel(.route).autocorrectionDisabled().onSubmit {Task {await plan()}}
                             if !originText.isEmpty {Button {input(.origin).wrappedValue="";searchField = .origin} label: {Image(systemName:"xmark.circle.fill").frame(width:44,height:44)}.accessibilityLabel("Clear starting point")}
                         }.frame(minHeight:44)
                         Divider()
                         HStack {
                             Image(systemName:"mappin.circle.fill")
                             TextField("Where to?",text:input(.destination)).focused($searchField,equals:.destination)
-                                .submitLabel(.search).autocorrectionDisabled()
+                                .submitLabel(.route).autocorrectionDisabled().onSubmit {Task {await plan()}}
                             if !destinationText.isEmpty {Button {input(.destination).wrappedValue="";searchField = .destination} label: {Image(systemName:"xmark.circle.fill").frame(width:44,height:44)}.accessibilityLabel("Clear destination")}
                         }.frame(minHeight:44)
                     }.padding(16).background(paper)
@@ -69,7 +69,6 @@ struct WalkPlanner: View {
                 .offset(y:controlsVisible || reduceMotion ? 0 : -36).opacity(controlsVisible ? 1 : 0)
             Spacer()
             Group {
-                if searchField == nil {
                 VStack(alignment:.leading,spacing:12) {
                     if let route {
                         Text("\(Int(ceil(route.expectedTravelTime/60))) min · \(route.distance/1000,specifier:"%.1f") km").font(.title2.bold())
@@ -85,17 +84,15 @@ struct WalkPlanner: View {
                         else {Task {await plan()}}
                     } label: {
                         HStack { if busy {ProgressView().tint(paper)}; Label(active ? (target == nil ? "Finish walk" : "I’m here") : route == nil ? "Find route" : "Go",systemImage:active ? "mappin" : "figure.walk") }.foregroundStyle(paper).frame(maxWidth:.infinity,minHeight:52)
-                    }.buttonStyle(.borderedProminent).disabled(busy || destinationItem == nil || origin == nil)
+                    }.buttonStyle(.borderedProminent).disabled(busy || originText.trimmingCharacters(in:.whitespacesAndNewlines).isEmpty || destinationText.trimmingCharacters(in:.whitespacesAndNewlines).isEmpty)
                 }.padding(20).background(paper,in:UnevenRoundedRectangle(topLeadingRadius:24,topTrailingRadius:24))
-                }
             }
             .offset(y:controlsVisible || reduceMotion ? 0 : 48).opacity(controlsVisible ? 1 : 0)
             .onAppear {withAnimation(SidewalkMotion.spring(reduceMotion)) {controlsVisible=true}}
             .animation(SidewalkMotion.spring(reduceMotion),value:active)
             .animation(SidewalkMotion.spring(reduceMotion),value:route != nil)
-            .onDisappear {requestID=UUID()}
             .sheet(isPresented:$checkIn) {if let target {CheckIn(place:target).environmentObject(guide)}}
-        }.foregroundStyle(ink)
+        }.foregroundStyle(ink).onDisappear {requestID=UUID()}
     }
     private func input(_ field:RouteSearchField)->Binding<String> {
         Binding(get: {field == .origin ? originText : destinationText},set: {value in
@@ -105,16 +102,44 @@ struct WalkPlanner: View {
         })
     }
     private func invalidateRoute() {requestID=UUID();busy=false;route=nil;active=false;error=nil}
-    func plan() async {
-        guard let origin,let destinationItem else{return}
+    @MainActor private func resolve(_ text:String, label:String) async throws -> MKMapItem {
+        let request=MKLocalSearch.Request()
+        request.naturalLanguageQuery=text
+        request.resultTypes=text.first?.isNumber == true ? .address : [.address,.pointOfInterest]
+        request.region=MKCoordinateRegion(center:.init(latitude:37.775,longitude:-122.438),span:.init(latitudeDelta:0.15,longitudeDelta:0.15))
+        let response=try await MKLocalSearch(request:request).start()
+        guard response.mapItems.count == 1,let item=response.mapItems.first else {
+            throw AddressError(message:response.mapItems.isEmpty ? "Couldn’t find that \(label). Include the street number and city, or choose a suggestion." : "Several places match your \(label). Choose the correct suggestion below the field.")
+        }
+        return item
+    }
+    @MainActor func plan() async {
+        let from=originText.trimmingCharacters(in:.whitespacesAndNewlines)
+        let to=destinationText.trimmingCharacters(in:.whitespacesAndNewlines)
+        guard !from.isEmpty else {searchField = .origin;return}
+        guard !to.isEmpty else {searchField = .destination;return}
         let token=UUID();requestID=token;busy=true;error=nil;defer {if requestID == token {busy=false}}
         do {
-            let directions=MKDirections.Request();directions.source=origin;directions.destination=destinationItem;directions.transportType = .walking
+            let source:MKMapItem
+            if let origin {source=origin} else {source=try await resolve(from,label:"starting address")}
+            guard requestID == token else {return}
+            origin=source
+            let end:MKMapItem
+            if let destinationItem {end=destinationItem} else {end=try await resolve(to,label:"destination")}
+            guard requestID == token else {return}
+            destinationItem=end
+            searchField=nil
+            let directions=MKDirections.Request();directions.source=source;directions.destination=end;directions.transportType = .walking
             let result=try await MKDirections(request:directions).calculate()
             guard requestID == token else {return}
-            guard let first=result.routes.first else{error="No walking route found.";return};route=first
-        } catch {if requestID == token {self.error="Could not get a walking route. Check your connection and try again."}}
+            guard let first=result.routes.first else{error="No walking route found between these places.";return};route=first
+        } catch {
+            guard requestID == token else {return}
+            self.error=(error as? AddressError)?.message ?? "Could not get a walking route. Check your connection and try again."
+        }
     }
+    private struct AddressError: Error {let message:String}
+
 }
 struct CheckIn:View {
     @EnvironmentObject var guide:FieldGuide
