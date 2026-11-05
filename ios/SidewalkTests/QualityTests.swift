@@ -130,3 +130,33 @@ final class DrawerTests:XCTestCase {
         XCTAssertEqual(ExploreDetent.nearest(to:800,in:844),.full)
     }
 }
+
+final class WalkingPathTests:XCTestCase {
+    let start=CLLocationCoordinate2D(latitude:37.8,longitude:-122.41)
+    let end=CLLocationCoordinate2D(latitude:37.802,longitude:-122.41)
+    func testMidpointHasHalfRemainingDistance() {
+        let path=WalkingPath(coordinates:[start,end])
+        let p=path.project(.init(latitude:37.801,longitude:-122.41))
+        XCTAssertEqual(p.along,path.length/2,accuracy:1);XCTAssertLessThan(p.away,1)
+    }
+    func testOffRouteDistanceIsNotRemainingDistance() {
+        let path=WalkingPath(coordinates:[start,end])
+        let p=path.project(.init(latitude:37.801,longitude:-122.408))
+        XCTAssertGreaterThan(p.away,100);XCTAssertEqual(p.along,path.length/2,accuracy:2)
+    }
+    func testProjectionClampsBeforeStartAndAfterEnd() {
+        let path=WalkingPath(coordinates:[start,end])
+        XCTAssertEqual(path.project(.init(latitude:37.799,longitude:-122.41)).along,0,accuracy:1)
+        XCTAssertEqual(path.project(.init(latitude:37.803,longitude:-122.41)).along,path.length,accuracy:1)
+    }
+    func testStaleAndImpreciseFixesCannotDriveProgress() {
+        let now=Date()
+        func fix(_ age:Double,_ accuracy:Double)->CLLocation {
+            CLLocation(coordinate:start,altitude:0,horizontalAccuracy:accuracy,verticalAccuracy:0,timestamp:now.addingTimeInterval(-age))
+        }
+        XCTAssertTrue(WalkingPath.usable(fix(1,10),now:now))
+        XCTAssertFalse(WalkingPath.usable(fix(16,10),now:now))
+        XCTAssertFalse(WalkingPath.usable(fix(1,100),now:now))
+        XCTAssertFalse(WalkingPath.usable(fix(1,-1),now:now))
+    }
+}

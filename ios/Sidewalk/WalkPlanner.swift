@@ -8,12 +8,13 @@ struct WalkPlanner:View {
     @StateObject private var location=StartingLocation()
     @Environment(\.scenePhase) private var scenePhase
     @Binding var route:MKRoute?
+    @ObservedObject var navigation:WalkNavigation
     let close:()->Void
     @FocusState private var focused:RouteSearchField?
     @State private var checkIn=false
     @State private var visible=false
-    init(destination:Place?,route:Binding<MKRoute?>,close:@escaping ()->Void) {
-        _model=StateObject(wrappedValue:RoutePlannerModel(place:destination));_route=route;self.close=close
+    init(destination:Place?,route:Binding<MKRoute?>,navigation:WalkNavigation,close:@escaping ()->Void) {
+        _model=StateObject(wrappedValue:RoutePlannerModel(place:destination));_route=route;self.close=close;self.navigation=navigation
     }
     @EnvironmentObject private var guide:FieldGuide
     var body:some View {
@@ -26,6 +27,7 @@ struct WalkPlanner:View {
                         Spacer()
                         if model.active {Button("Edit") {model.active=false}.frame(minHeight:44)}
                     }.padding(.horizontal,8)
+                    if model.active {WalkingInstruction(navigation:navigation)}
                     if !model.active {
                         HStack(spacing:8) {
                             VStack(spacing:0) {
@@ -57,21 +59,31 @@ struct WalkPlanner:View {
                 Spacer(minLength:8)
                 VStack(alignment:.leading,spacing:12) {
                     if focused == nil,let route=model.route {
-                        HStack(alignment:.firstTextBaseline) {
-                            Text("\(Int(ceil(route.expectedTravelTime/60))) min").font(.system(.title,design:.rounded).weight(.semibold)).monospacedDigit()
-                            Text(String(format:"%.1f km",route.distance/1000)).font(.body).foregroundStyle(FieldStyle.secondary)
-                            Spacer()
-                            Image(systemName:"figure.walk").font(.title2).foregroundStyle(FieldStyle.clay)
-                        }
-                        Text(model.destination?.name ?? model.destinationText).font(.headline).lineLimit(2)
                         if model.active {
-                            Text("Walking directions").font(.subheadline).foregroundStyle(FieldStyle.secondary)
-                            ScrollView {
-                                VStack(alignment:.leading,spacing:16) {ForEach(Array(route.steps.filter{!$0.instructions.isEmpty}.enumerated()),id:\.offset) {index,step in
-                                    HStack(alignment:.top,spacing:12) {Text("\(index+1)").font(.caption.monospacedDigit()).frame(width:24,height:24).background(FieldStyle.inset,in:Circle());Text(step.instructions).font(.body)}
-                                }}}.frame(maxHeight:160)
-                            Button {model.openInMaps()} label: {Label("Navigate in Apple Maps",systemImage:"arrow.up.right.square").frame(minHeight:44)}.buttonStyle(.plain)
-                        } else {Text("Direct walking route").font(.subheadline).foregroundStyle(FieldStyle.secondary)}
+                            HStack {
+                                Text(navigation.arrived ? "You’ve reached" : "Next place").font(.subheadline).foregroundStyle(FieldStyle.secondary)
+                                Spacer()
+                                FieldIconButton(symbol:"location.fill",label:"Follow my location") {navigation.recenter += 1}.disabled(navigation.fix == nil)
+                            }
+                            Text(model.destination?.name ?? model.destinationText).font(.system(.title2,design:.serif).weight(.semibold)).lineLimit(2)
+                            if let remaining=navigation.remaining {
+                                HStack {Text(WalkNavigation.distance(remaining));if let minutes=navigation.minutes,!navigation.arrived {Text("· about \(minutes) min")}}.font(.headline).monospacedDigit()
+                            }
+                            if navigation.offRoute,let fix=navigation.fix {
+                                Button("Update route from here") {
+                                    let item=MKMapItem(placemark:MKPlacemark(coordinate:fix.coordinate));item.name="Current location"
+                                    model.choose(.origin,item:item);model.startPlanning()
+                                }.frame(minHeight:44)
+                            }
+                        } else {
+                            HStack(alignment:.firstTextBaseline) {
+                                Text("\(Int(ceil(route.expectedTravelTime/60))) min").font(.system(.title,design:.rounded).weight(.semibold)).monospacedDigit()
+                                Text(String(format:"%.1f km",route.distance/1000)).font(.body).foregroundStyle(FieldStyle.secondary)
+                                Spacer();Image(systemName:"figure.walk").font(.title2).foregroundStyle(FieldStyle.clay)
+                            }
+                            Text(model.destination?.name ?? model.destinationText).font(.headline).lineLimit(2)
+                            Text("Direct walking route").font(.subheadline).foregroundStyle(FieldStyle.secondary)
+                        }
                     } else if focused == nil && !model.busy {
                         Text("Where shall we walk?").font(.system(.title2,design:.serif).weight(.semibold))
                     }
@@ -85,8 +97,12 @@ struct WalkPlanner:View {
             }.foregroundStyle(ink)
         }.onAppear {withAnimation(SidewalkMotion.spring(reduced)) {visible=true}}
             .onReceive(model.$route) {route=$0}
-            .onDisappear {model.cancel();location.cancel()}
-            .onChange(of:scenePhase) {_,phase in if phase == .background {location.cancel()}}
+            .onDisappear {model.cancel();location.cancel();navigation.stop()}
+            .onChange(of:model.active) {_,active in if active,let route=model.route {navigation.start(route)} else {navigation.stop()}}
+            .onChange(of:scenePhase) {_,phase in
+                if phase == .background {location.cancel();navigation.stop()}
+                else if phase == .active,model.active,let route=model.route {navigation.start(route)}
+            }
             .sheet(isPresented:$checkIn) {if let place=model.place {CheckIn(place:place).environmentObject(guide)}}
     }
     private func endpoint(_ field:RouteSearchField,symbol:String,placeholder:String)->some View {
@@ -124,7 +140,10 @@ struct CheckIn:View {
     var body:some View {
         NavigationStack {
             Form {
-                if !guide.unlocked.contains(place.id) { Section { ArrivalUnlock(place:place) } }
+                if !guide.unlocked.contains(place.id) {
+                    Section {Text(place.name).font(.system(.title2,design:.serif));ArrivalUnlock(place:place)}
+                    Section("The story") {Text(place.story).font(.body)}
+                }
                 else {
                 Section {Text(place.name).font(.system(.title2,design:.serif));Text(place.story).font(.body);TextField("Worth a footnote?",text:$note,axis:.vertical).lineLimit(3...6)}
                 Section {
@@ -135,7 +154,8 @@ struct CheckIn:View {
                 if let error=guide.error {Section {Text(error).foregroundStyle(FieldStyle.clay)}}
                 Section {Button("Keep this moment") {if guide.collect(place,note:note,photo:photo) {dismiss()}}.frame(minHeight:52)}
                 }
-            }.navigationTitle("I’m here").toolbar{Button("Cancel"){dismiss()}}
+            }.scrollContentBackground(.hidden).background(paper).foregroundStyle(ink)
+                .navigationTitle("Check in").navigationBarTitleDisplayMode(.inline).toolbar{Button("Cancel"){dismiss()}}
                 .onAppear {if let visit=guide.visits[place.id]{note=visit.note;photo=visit.photo}}
                 .onChange(of:photoItem) {_,item in Task {
                     do {guard let data=try await item?.loadTransferable(type:Data.self),let image=UIImage(data:data) else {photoError="Could not open that photo.";return}

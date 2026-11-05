@@ -18,6 +18,7 @@
 		249A5F8693C9FBB148867306 /* VisitLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1B5953165F4CCC285D8F1F /* VisitLocation.swift */; };
 		249E84FDAE2588D5EAC770C8 /* park-153.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C3808F5C2EC4F93189226329 /* park-153.jpg */; };
 		24A94AFBC84799DBA2AB726E /* lm-33.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A8F11201079D0A553E24830D /* lm-33.jpg */; };
+		24E38798F607C996537A9C9A /* WalkNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F09794CBA1C7203B127518 /* WalkNavigation.swift */; };
 		258BF50D110A1643C477497B /* lm-113.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C139F886E56599C44C2A4DA8 /* lm-113.jpg */; };
 		27CF458585FCC2A6933EB494 /* lm-263.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DE4F6419D7E7A64BF446AB73 /* lm-263.jpg */; };
 		39EE0B792F87839ADA2803BC /* lm-40.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C7481352C321F0857E4F14E5 /* lm-40.jpg */; };
@@ -125,6 +126,7 @@
 		C7481352C321F0857E4F14E5 /* lm-40.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-40.jpg"; sourceTree = "<group>"; };
 		CDE801A3353DE9971F80EC5C /* ArrivalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalView.swift; sourceTree = "<group>"; };
 		D4D09285BE1BB93317CB650E /* lm-276.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-276.jpg"; sourceTree = "<group>"; };
+		D4F09794CBA1C7203B127518 /* WalkNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkNavigation.swift; sourceTree = "<group>"; };
 		D803D822BCB26939FF4AE30A /* SidewalkMotion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidewalkMotion.swift; sourceTree = "<group>"; };
 		DE4F6419D7E7A64BF446AB73 /* lm-263.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-263.jpg"; sourceTree = "<group>"; };
 		E1ED069670AE7F04B7CA7E50 /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
@@ -177,6 +179,7 @@
 				D803D822BCB26939FF4AE30A /* SidewalkMotion.swift */,
 				A230B4F4353CE232AE8BD73D /* StartingLocation.swift */,
 				4C1B5953165F4CCC285D8F1F /* VisitLocation.swift */,
+				D4F09794CBA1C7203B127518 /* WalkNavigation.swift */,
 				F3066E0416804284FCE02CAF /* WalkPlanner.swift */,
 				92EFB734AD4E5B4C47EAB41F /* Resources */,
 			);
@@ -412,6 +415,7 @@
 				5F8D9A6FDC4078BE739B576B /* SidewalkMotion.swift in Sources */,
 				8A6FAD553D22DF95420A7A51 /* StartingLocation.swift in Sources */,
 				249A5F8693C9FBB148867306 /* VisitLocation.swift in Sources */,
+				24E38798F607C996537A9C9A /* WalkNavigation.swift in Sources */,
 				4F83767FE24EE74F4FFE8B2C /* WalkPlanner.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -436,7 +440,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Sidewalk;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Use your location as a walking start and confirm arrival to unlock a story. Starting coordinates are sent to Apple Maps for directions; check-in coordinates stay on your device.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Use your location for live walking directions, as a walking start, and to confirm arrival to collect a visit stamp. Starting coordinates are sent to Apple Maps for directions; check-in coordinates stay on your device.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -459,7 +463,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Sidewalk;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Use your location as a walking start and confirm arrival to unlock a story. Starting coordinates are sent to Apple Maps for directions; check-in coordinates stay on your device.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Use your location for live walking directions, as a walking start, and to confirm arrival to collect a visit stamp. Starting coordinates are sent to Apple Maps for directions; check-in coordinates stay on your device.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

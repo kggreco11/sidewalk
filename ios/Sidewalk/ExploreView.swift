@@ -11,6 +11,7 @@ struct ExploreView: View {
     @State private var pendingWalk:Place?
     @State private var walkRequest:WalkRequest?
     @State private var route:MKRoute?
+    @StateObject private var navigation=WalkNavigation()
     @State private var library=false
     @State private var detent:ExploreDetent = .browse
     @State private var drag:CGFloat=0
@@ -31,10 +32,10 @@ struct ExploreView: View {
         GeometryReader {geometry in
             let height=max(140,min(geometry.size.height-64,detent.height(in:geometry.size.height,accessibility:typeSize.isAccessibilitySize)-drag))
             ZStack(alignment:.bottom) {
-                PlacesMap(places:route == nil ? matches : [],center:center,selected:$selected,route:route,bottomInset:walkRequest == nil ? height : 220,recenter:recenter)
+                PlacesMap(places:matches,center:center,selected:$selected,route:route,bottomInset:walkRequest == nil ? height : 220,recenter:recenter,navigating:navigation.running && navigation.fix != nil,followToken:navigation.recenter)
                     .ignoresSafeArea().accessibilityElement(children:.contain).accessibilityLabel("Map of places").accessibilitySortPriority(-1)
                 if let request=walkRequest {
-                    WalkPlanner(destination:request.destination,route:$route) {
+                    WalkPlanner(destination:request.destination,route:$route,navigation:navigation) {
                         withAnimation(SidewalkMotion.spring(reduced)) {walkRequest=nil;route=nil}
                     }.id(request.id).transition(.opacity)
                 } else {

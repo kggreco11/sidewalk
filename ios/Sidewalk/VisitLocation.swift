@@ -23,14 +23,14 @@ import CoreLocation
         switch manager.authorizationStatus {
         case .notDetermined: manager.requestWhenInUseAuthorization()
         case .authorizedAlways, .authorizedWhenInUse: manager.requestLocation()
-        default: finish("Allow location for Sidewalk in Settings to unlock this story.")
+        default: finish("Allow location for Sidewalk in Settings to collect this visit.")
         }
     }
     func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
         guard checking else { return }
         switch manager.authorizationStatus {
         case .authorizedAlways, .authorizedWhenInUse: manager.requestLocation()
-        case .denied, .restricted: finish("Allow location for Sidewalk in Settings to unlock this story.")
+        case .denied, .restricted: finish("Allow location for Sidewalk in Settings to collect this visit.")
         default: break
         }
     }
@@ -66,17 +66,17 @@ struct ArrivalUnlock: View {
     let place: Place
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Label("Unlock this story", systemImage: "sparkle").font(.headline)
-            Text("Visit this place to unlock its story. Check in within 75 m.").font(.body)
+            Label("Collect this place", systemImage: "sparkle").font(.headline)
+            Text("Here in person? Check in to add a visit stamp to your field guide.").font(.body)
             Button {
                 location.verify(place) { guide.unlock(place) }
             } label: {
-                HStack { Text(location.checking ? "Checking location…" : "I’m here · unlock story"); Spacer(); if location.checking { ProgressView().tint(paper) } else { Image(systemName: "location") } }
+                HStack(spacing:10) { if location.checking { ProgressView().tint(paper) } else { Image(systemName: "location.fill") }; Text(location.checking ? "Checking…" : "Check in") }
                     .frame(minHeight: 52)
-            }.foregroundStyle(paper).buttonStyle(FieldPrimaryButtonStyle()).disabled(location.checking)
+            }.buttonStyle(FieldPrimaryButtonStyle()).disabled(location.checking)
             if let message = location.message { Text(message).font(.body).accessibilityLabel(message) }
-            Text("Stay on a public path. Location is checked on your device.").font(.subheadline).foregroundStyle(.secondary)
-        }.padding(16).background(ink.opacity(0.06), in: RoundedRectangle(cornerRadius: 12))
+            Text("Within 75 m · location stays on your device").font(.subheadline).foregroundStyle(.secondary)
+        }.padding(.vertical,8)
             .onDisappear { location.cancel() }
             .onChange(of: scenePhase) { _, phase in if phase == .background { location.cancel() } }
     }

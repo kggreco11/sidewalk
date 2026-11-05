@@ -19,11 +19,10 @@ struct PlaceDetail:View {
                         Text(place.name).font(.system(.largeTitle,design:.serif).weight(.semibold)).tracking(-0.5).fixedSize(horizontal:false,vertical:true)
                         if let address=place.address {Label(address,systemImage:"mappin").font(.subheadline).foregroundStyle(FieldStyle.secondary).fixedSize(horizontal:false,vertical:true)}
                     }
+                    Text(place.story).font(.system(.body,design:.serif)).lineSpacing(6).textSelection(.enabled)
                     if guide.unlocked.contains(place.id) {
-                        Text(place.story).font(.system(.body,design:.serif)).lineSpacing(6).textSelection(.enabled)
                         Button {checkIn=true} label: {Label(guide.visits[place.id] == nil ? "Keep this moment" : "Edit field note",systemImage:"square.and.pencil").font(.headline).frame(maxWidth:.infinity,minHeight:48).background(FieldStyle.inset,in:RoundedRectangle(cornerRadius:12))}.buttonStyle(.plain)
                     } else {
-                        if let teaser=place.teaser,!teaser.isEmpty {Text(teaser).font(.body).lineSpacing(4)}
                         ArrivalUnlock(place:place)
                     }
                     DisclosureGroup("Sources & photo credits") {

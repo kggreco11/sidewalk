@@ -15,6 +15,8 @@ struct PlacesMap: UIViewRepresentable {
     var route: MKRoute? = nil
     var bottomInset:CGFloat = 140
     var recenter:Int = 0
+    var navigating=false
+    var followToken=0
     func makeCoordinator() -> Coordinator { Coordinator(self) }
     func makeUIView(context:Context) -> MKMapView {
         let map=MKMapView(); map.delegate=context.coordinator; map.pointOfInterestFilter = .excludingAll
@@ -49,6 +51,11 @@ struct PlacesMap: UIViewRepresentable {
                 map.setVisibleMapRect(route.polyline.boundingMapRect,edgePadding:UIEdgeInsets(top:100,left:20,bottom:20,right:20),animated:true)
             }
         }
+        map.showsUserLocation=navigating
+        if context.coordinator.following != navigating || context.coordinator.followToken != followToken {
+            context.coordinator.following=navigating;context.coordinator.followToken=followToken
+            map.setUserTrackingMode(navigating ? .follow : .none,animated:true)
+        }
         let key="\(center.latitude),\(center.longitude),\(city),\(recenter)"
         if context.coordinator.centerKey != key {
             context.coordinator.centerKey=key
@@ -64,6 +71,8 @@ struct PlacesMap: UIViewRepresentable {
         var currentRoute: MKRoute?
         var endpoints:[MKPointAnnotation]=[]
         var hasCentered=false
+        var following=false
+        var followToken=0
         func mapView(_ mapView:MKMapView,rendererFor overlay:MKOverlay)->MKOverlayRenderer {
             let renderer=MKPolylineRenderer(overlay:overlay);renderer.strokeColor=UIColor(ink);renderer.lineWidth=6;return renderer
         }

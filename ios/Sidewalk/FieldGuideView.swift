@@ -24,7 +24,7 @@ struct FieldGuideView:View {
                 }.padding(20)
                 Picker("Collection",selection:$tab) {Text("Saved").tag(0);Text("Collected").tag(1)}.pickerStyle(.segmented).padding(.horizontal,20).padding(.bottom,12)
                 if places.isEmpty {
-                    ContentUnavailableView(tab == 0 ? "Places for another day" : "Your first discovery awaits",systemImage:tab == 0 ? "bookmark" : "sparkle",description:Text(tab == 0 ? "Save a place while exploring to keep it here." : "Visit a place and check in to collect its story."))
+                    ContentUnavailableView(tab == 0 ? "Places for another day" : "Your first discovery awaits",systemImage:tab == 0 ? "bookmark" : "sparkle",description:Text(tab == 0 ? "Save a place while exploring to keep it here." : "Visit a place and check in to collect a visit stamp."))
                 } else {
                     ScrollView {
                         LazyVStack(spacing:0) {ForEach(places) {place in

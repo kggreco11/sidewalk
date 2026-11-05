@@ -20,7 +20,7 @@ targets:
         GENERATE_INFOPLIST_FILE: YES
         INFOPLIST_KEY_CFBundleDisplayName: Sidewalk
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
-        INFOPLIST_KEY_NSLocationWhenInUseUsageDescription: Use your location as a walking start and confirm arrival to unlock a story. Starting coordinates are sent to Apple Maps for directions; check-in coordinates stay on your device.
+        INFOPLIST_KEY_NSLocationWhenInUseUsageDescription: Use your location for live walking directions, as a walking start, and to confirm arrival to collect a visit stamp. Starting coordinates are sent to Apple Maps for directions; check-in coordinates stay on your device.
         TARGETED_DEVICE_FAMILY: '1'
         SWIFT_VERSION: '5.0'
         MARKETING_VERSION: 0.1.0

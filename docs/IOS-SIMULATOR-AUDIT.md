@@ -1,6 +1,14 @@
 # Native simulator audit — November 4, 2026
 
-## Current quality pass
+## Map and navigation follow-up
+
+Discovery markers are restored during route preview and walking. Go now presents the next instruction and destination with foreground GPS path progress, remaining distance/time, map following and recenter. Off-route fixes offer an explicit route update. Backgrounding stops location updates; returning resumes the current walk. Stale/imprecise fixes do not drive progress.
+
+Stories are now readable before arrival. The simplified Check in button earns a local visit stamp; it no longer gates the story. Notes/photos still belong to a confirmed visit.
+
+Four additional deterministic tests cover route projection, off-route distance, endpoint clamping and stale/inaccurate fix rejection (17 total). Physical outdoor navigation and background navigation remain unverified/not implemented respectively.
+
+## Earlier quality pass
 
 Native SwiftUI/MapKit, iPhone 17 Simulator. The app was interacted with through accessibility controls; compilation alone was not treated as UI verification.
 
