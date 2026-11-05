@@ -3,6 +3,8 @@ import MapKit
 import PhotosUI
 
 struct WalkPlanner: View {
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
+    @State private var controlsVisible=false
     @EnvironmentObject var guide:FieldGuide
     let destination:Place?
     @State private var from="Ferry Building"
@@ -38,6 +40,7 @@ struct WalkPlanner: View {
                     }.padding(16).background(paper)
                 }
             }.background(paper)
+                .offset(y:controlsVisible || reduceMotion ? 0 : -36).opacity(controlsVisible ? 1 : 0)
             Spacer()
             Group {
                 VStack(alignment:.leading,spacing:12) {
@@ -58,6 +61,10 @@ struct WalkPlanner: View {
                     }.buttonStyle(.borderedProminent).disabled(busy || target == nil || from.trimmingCharacters(in:.whitespaces).isEmpty)
                 }.padding(20).background(paper,in:UnevenRoundedRectangle(topLeadingRadius:24,topTrailingRadius:24))
             }
+            .offset(y:controlsVisible || reduceMotion ? 0 : 48).opacity(controlsVisible ? 1 : 0)
+            .onAppear {withAnimation(SidewalkMotion.spring(reduceMotion)) {controlsVisible=true}}
+            .animation(SidewalkMotion.spring(reduceMotion),value:active)
+            .animation(SidewalkMotion.spring(reduceMotion),value:route != nil)
             .onChange(of:from) {_,_ in requestID=UUID();busy=false;route=nil;active=false}
             .onDisappear {requestID=UUID()}
             .task {if target != nil {await plan()}}

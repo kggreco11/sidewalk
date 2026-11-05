@@ -3,11 +3,17 @@ options:
   bundleIdPrefix: com.sidewalk
   deploymentTarget:
     iOS: '17.0'
+packages:
+  Pow:
+    url: https://github.com/EmergeTools/Pow.git
+    exactVersion: 1.0.6
 targets:
   Sidewalk:
     type: application
     platform: iOS
     sources: [Sidewalk]
+    dependencies:
+      - package: Pow
     settings:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.sidewalk.explore

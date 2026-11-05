@@ -13,6 +13,7 @@
 		1D07515FDC780FC6344A3A5D /* lm-35.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AF37C53EEE73BD2FE8D87911 /* lm-35.jpg */; };
 		1D5DD963104679FC996D73B7 /* lm-228.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 93F70ED248B12CFE09945792 /* lm-228.jpg */; };
 		204821742EB787C5B4BCD50D /* lm-286.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6024FC0817169584131386F6 /* lm-286.jpg */; };
+		22441BBB8B11F97311EF7960 /* Pow in Frameworks */ = {isa = PBXBuildFile; productRef = 5FD63C9F7146C726321AF3EB /* Pow */; };
 		249A5F8693C9FBB148867306 /* VisitLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1B5953165F4CCC285D8F1F /* VisitLocation.swift */; };
 		249E84FDAE2588D5EAC770C8 /* park-153.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C3808F5C2EC4F93189226329 /* park-153.jpg */; };
 		24A94AFBC84799DBA2AB726E /* lm-33.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A8F11201079D0A553E24830D /* lm-33.jpg */; };
@@ -28,6 +29,7 @@
 		52E9BBE7AE6BBD31052820C5 /* lm-154.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EA86E55AD24C0475AB90C74A /* lm-154.jpg */; };
 		5C2BA2FEDEC88042B6B10DA5 /* lm-291.png in Resources */ = {isa = PBXBuildFile; fileRef = 694A0A0DB8E727E9068D570B /* lm-291.png */; };
 		5F0B4C5EB52210A5E4E712A3 /* lm-80.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E5335CE74286AFE6495D57A6 /* lm-80.jpg */; };
+		5F8D9A6FDC4078BE739B576B /* SidewalkMotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = D803D822BCB26939FF4AE30A /* SidewalkMotion.swift */; };
 		6AE008208C338FEB90828967 /* SidewalkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD25CEB4A91CA18DCBB958F5 /* SidewalkApp.swift */; };
 		720A865588A793DA2B827B50 /* lm-86.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0C64D0F527CE6288EA444FA0 /* lm-86.jpg */; };
 		728F39F6CF609AC4BA3632D6 /* lm-134.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EEEA0CCD4C54484A0E966F5B /* lm-134.jpg */; };
@@ -94,6 +96,7 @@
 		C7481352C321F0857E4F14E5 /* lm-40.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-40.jpg"; sourceTree = "<group>"; };
 		CDE801A3353DE9971F80EC5C /* ArrivalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalView.swift; sourceTree = "<group>"; };
 		D4D09285BE1BB93317CB650E /* lm-276.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-276.jpg"; sourceTree = "<group>"; };
+		D803D822BCB26939FF4AE30A /* SidewalkMotion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidewalkMotion.swift; sourceTree = "<group>"; };
 		DE4F6419D7E7A64BF446AB73 /* lm-263.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-263.jpg"; sourceTree = "<group>"; };
 		E5335CE74286AFE6495D57A6 /* lm-80.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-80.jpg"; sourceTree = "<group>"; };
 		EA86E55AD24C0475AB90C74A /* lm-154.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-154.jpg"; sourceTree = "<group>"; };
@@ -102,6 +105,17 @@
 		F5FB6694458DF65AB67614B3 /* lm-315.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-315.jpg"; sourceTree = "<group>"; };
 		F982A53AC4D89AD3A976DA2C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		802FD2A70648159549D822A3 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				22441BBB8B11F97311EF7960 /* Pow in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
 		03B953D4EDF02C3186615247 = {
@@ -117,6 +131,7 @@
 			children = (
 				CDE801A3353DE9971F80EC5C /* ArrivalView.swift */,
 				AD25CEB4A91CA18DCBB958F5 /* SidewalkApp.swift */,
+				D803D822BCB26939FF4AE30A /* SidewalkMotion.swift */,
 				4C1B5953165F4CCC285D8F1F /* VisitLocation.swift */,
 				F3066E0416804284FCE02CAF /* WalkPlanner.swift */,
 				92EFB734AD4E5B4C47EAB41F /* Resources */,
@@ -197,6 +212,7 @@
 			buildPhases = (
 				ACF589F8AB6F539CD79BB129 /* Sources */,
 				A53B388C3F37278ACAF18112 /* Resources */,
+				802FD2A70648159549D822A3 /* Frameworks */,
 			);
 			buildRules = (
 			);
@@ -204,6 +220,7 @@
 			);
 			name = Sidewalk;
 			packageProductDependencies = (
+				5FD63C9F7146C726321AF3EB /* Pow */,
 			);
 			productName = Sidewalk;
 			productReference = AC6D6785CE1ECA1B2E79F4DF /* Sidewalk.app */;
@@ -232,6 +249,9 @@
 			);
 			mainGroup = 03B953D4EDF02C3186615247;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				0AAB6E0A49E451C5BA182261 /* XCRemoteSwiftPackageReference "Pow" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = C873873F52BF7C6FFF8D24EE /* Products */;
 			projectDirPath = "";
@@ -300,6 +320,7 @@
 			files = (
 				9BE480C768CA7634FE737D68 /* ArrivalView.swift in Sources */,
 				6AE008208C338FEB90828967 /* SidewalkApp.swift in Sources */,
+				5F8D9A6FDC4078BE739B576B /* SidewalkMotion.swift in Sources */,
 				249A5F8693C9FBB148867306 /* VisitLocation.swift in Sources */,
 				4F83767FE24EE74F4FFE8B2C /* WalkPlanner.swift in Sources */,
 			);
@@ -495,6 +516,25 @@
 			defaultConfigurationName = Debug;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		0AAB6E0A49E451C5BA182261 /* XCRemoteSwiftPackageReference "Pow" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/EmergeTools/Pow.git";
+			requirement = {
+				kind = exactVersion;
+				version = 1.0.6;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		5FD63C9F7146C726321AF3EB /* Pow */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 0AAB6E0A49E451C5BA182261 /* XCRemoteSwiftPackageReference "Pow" */;
+			productName = Pow;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = F5AF8B85974DAB3CFCB94885 /* Project object */;
 }

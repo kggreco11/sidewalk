@@ -72,7 +72,7 @@ struct WalkRequest: Identifiable {
 }
 struct ExploreView: View {
     @EnvironmentObject var guide: FieldGuide
-    @Environment(\.dynamicTypeSize) private var textSize
+    @Environment(\.accessibilityReduceMotion) private var reduceMotion
     @State private var filter = "All"
     @State private var search = ""
     @State private var selected: Place?
@@ -82,7 +82,7 @@ struct ExploreView: View {
     @State private var collection = false
     @State private var center = CLLocationCoordinate2D(latitude: 37.800, longitude: -122.407)
     @State private var panelLevel = 1
-    @GestureState private var panelDrag: CGFloat = 0
+    @State private var panelDrag: CGFloat = 0
     @State private var area = "North Beach"
     let areas = ["North Beach", "Waterfront", "Mission", "Civic Center", "Golden Gate Park", "All San Francisco"]
     var matches: [Place] {
@@ -97,7 +97,7 @@ struct ExploreView: View {
         ZStack(alignment:.bottom) {
             PlacesMap(places: matches, center: center, city: false, selected: $selected, route:plannedRoute).ignoresSafeArea()
             if let request=walkRequest {
-                WalkPlanner(destination:request.destination,route:$plannedRoute) { withAnimation(.easeInOut(duration:0.3)) {walkRequest=nil;plannedRoute=nil} }.id(request.id).transition(.opacity)
+                WalkPlanner(destination:request.destination,route:$plannedRoute) { withAnimation(SidewalkMotion.spring(reduceMotion)) {walkRequest=nil;plannedRoute=nil} }.id(request.id).transition(.opacity)
             } else {
             VStack { HStack {
                 Text("sidewalk").font(.system(.largeTitle, design: .serif)).tracking(-1.5)
@@ -105,19 +105,19 @@ struct ExploreView: View {
                 Button { collection = true } label: { Image(systemName: "book.closed").font(.title3).frame(width:44,height:44) }.accessibilityLabel("My field guide")
             }.padding(.horizontal,20).padding(.vertical,8).background(paper.opacity(0.96))
                 Spacer()
-            }
+            }.transition(SidewalkMotion.transition(edge:.top, reduced:reduceMotion))
             VStack(spacing:0) {
                 VStack(spacing:4) {
                     Capsule().fill(ink.opacity(0.25)).frame(width:36,height:5).padding(.top,10)
-                    HStack { Text("Explore").font(.title2.bold()); Spacer(); Button { withAnimation(.snappy) { panelLevel = panelLevel == 0 ? 1 : 0 } } label: { Image(systemName:panelLevel == 0 ? "chevron.up" : "chevron.down").frame(width:44,height:44) }.accessibilityLabel(panelLevel == 0 ? "Show places" : "Show full map") }.padding(.horizontal,16)
-                }.contentShape(Rectangle()).gesture(DragGesture().updating($panelDrag) { value,state,_ in state=value.translation.height }.onEnded { value in withAnimation(.snappy) { if value.predictedEndTranslation.height > 50 { panelLevel=max(0,panelLevel-1) } else if value.predictedEndTranslation.height < -50 { panelLevel=min(2,panelLevel+1) } } })
+                    HStack { Text("Explore").font(.title2.bold()); Spacer(); Button { withAnimation(SidewalkMotion.spring(reduceMotion)) { panelLevel = panelLevel == 0 ? 1 : 0 } } label: { Image(systemName:"chevron.down").rotationEffect(.degrees(panelLevel == 0 ? 180 : 0)).frame(width:44,height:44) }.accessibilityLabel(panelLevel == 0 ? "Show places" : "Show full map") }.padding(.horizontal,16)
+                }.contentShape(Rectangle()).gesture(DragGesture().onChanged { value in panelDrag=value.translation.height }.onEnded { value in withAnimation(SidewalkMotion.spring(reduceMotion)) { if value.predictedEndTranslation.height > 50 { panelLevel=max(0,panelLevel-1) } else if value.predictedEndTranslation.height < -50 { panelLevel=min(2,panelLevel+1) }; panelDrag=0 } })
                 if panelLevel > 0 {
             ScrollView { VStack(spacing: 0) {
             VStack(alignment:.leading, spacing:12) {
 
                 HStack { Image(systemName:"magnifyingglass"); TextField("Find a place",text:$search).textInputAutocapitalization(.never); if !search.isEmpty { Button { search = "" } label: { Image(systemName:"xmark.circle.fill").frame(width:44,height:44) }.accessibilityLabel("Clear search") } }.padding(10).background(.white.opacity(0.65),in:RoundedRectangle(cornerRadius:10))
                 ScrollView(.horizontal,showsIndicators:false) { HStack { ForEach(["All","Architecture","History","Culture","Art","Parks","Saved"],id:\.self) { value in
-                    Button(value) { filter = value }.font(.body).padding(.horizontal,14).frame(minHeight:44).background(filter == value ? ink : .clear,in:Capsule()).foregroundStyle(filter == value ? paper : ink).overlay(Capsule().stroke(ink.opacity(0.15))).accessibilityAddTraits(filter == value ? .isSelected : [])
+                    Button(value) { withAnimation(SidewalkMotion.spring(reduceMotion)) {filter = value} }.font(.body).padding(.horizontal,14).frame(minHeight:44).background(filter == value ? ink : .clear,in:Capsule()).foregroundStyle(filter == value ? paper : ink).overlay(Capsule().stroke(ink.opacity(0.15))).accessibilityAddTraits(filter == value ? .isSelected : [])
                 } } }
                 HStack { Text("\(matches.count) places"); Spacer(); Text("Nearby").foregroundStyle(.secondary) }.font(.body)
                 LazyVStack(spacing:12) { ForEach(matches) { place in
@@ -140,14 +140,15 @@ struct ExploreView: View {
             }.padding(16).background(paper)
         } }.scrollDismissesKeyboard(.interactively).scrollBounceBehavior(.basedOnSize)
                 }
-                Button { withAnimation(.easeInOut(duration:0.3)) { walkRequest = WalkRequest(destination:nil) } } label: { Label("Start a walk",systemImage:"figure.walk").foregroundStyle(paper).frame(maxWidth:.infinity,minHeight:52) }.buttonStyle(.borderedProminent).padding(.horizontal,16).padding(.bottom,8)
+                Button { withAnimation(SidewalkMotion.spring(reduceMotion)) { walkRequest = WalkRequest(destination:nil) } } label: { Label("Start a walk",systemImage:"figure.walk").foregroundStyle(paper).frame(maxWidth:.infinity,minHeight:52) }.buttonStyle(.borderedProminent).padding(.horizontal,16).padding(.bottom,8)
             }.frame(height:max(134,min(geometry.size.height-70,(panelLevel == 0 ? 134 : geometry.size.height * (panelLevel == 1 ? 0.56 : 0.9))-panelDrag)))
                 .background(paper,in:UnevenRoundedRectangle(topLeadingRadius:24,topTrailingRadius:24))
                 .clipped()
+                .transition(SidewalkMotion.transition(edge:.bottom, reduced:reduceMotion))
             }
         }
         }.background(paper).foregroundStyle(ink)
-        .sheet(item:$selected,onDismiss:{if let destination=walkDestination {walkRequest=WalkRequest(destination:destination);walkDestination=nil}}) { p in PlaceDetail(place:p) { walkDestination = p; selected = nil }.environmentObject(guide) }
+        .sheet(item:$selected,onDismiss:{if let destination=walkDestination {withAnimation(SidewalkMotion.spring(reduceMotion)) {walkRequest=WalkRequest(destination:destination)};walkDestination=nil}}) { p in PlaceDetail(place:p) { walkDestination = p; selected = nil }.environmentObject(guide) }
         .sheet(isPresented:$collection) { NavigationStack { List(guide.places.filter { guide.visits[$0.id] != nil || guide.unlocked.contains($0.id) }) { p in VStack(alignment:.leading,spacing:8) { Text(p.name).font(.headline); if guide.unlocked.contains(p.id) { Text(p.story).font(.body) }; Text(guide.visits[p.id]?.note ?? ""); if let data=guide.visits[p.id]?.photo,let image=UIImage(data:data) { Image(uiImage:image).resizable().scaledToFit().frame(maxHeight:180) } } }.navigationTitle("Field guide").overlay { if guide.visits.isEmpty && guide.unlocked.isEmpty { ContentUnavailableView("No stamps yet",systemImage:"book.closed",description:Text("Check in at a place to collect it.")) } }.toolbar { Button("Done") { collection=false } } } }
         .alert("Field guide",isPresented:Binding(get:{guide.error != nil},set:{if !$0 {guide.error=nil}})) { Button("OK") {guide.error=nil} } message: {Text(guide.error ?? "")}
     }

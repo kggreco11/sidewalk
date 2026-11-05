@@ -20,6 +20,7 @@ struct ArrivalView: View {
             ExploreView()
                 .accessibilityHidden(showing)
                 .allowsHitTesting(!showing)
+                .scaleEffect(showing && !reduceMotion ? 0.98 : 1)
             if showing {
                 GeometryReader { geometry in
                     ZStack {
@@ -45,7 +46,7 @@ struct ArrivalView: View {
                             .padding(.top, max(64, geometry.safeAreaInsets.top + 24))
                             .padding(.bottom, geometry.safeAreaInsets.bottom + 24)
                     }.background(paper)
-                }.ignoresSafeArea().transition(.opacity).zIndex(1)
+                }.ignoresSafeArea().transition(SidewalkMotion.welcome(reduced:reduceMotion)).zIndex(1)
             }
         }.background(paper).task {
             do {
