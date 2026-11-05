@@ -1,27 +1,25 @@
 import SwiftUI
 import MapKit
 
-struct LocationSearch: View {
-    @Environment(\.dismiss) private var dismiss
-    let title: String
+struct LocationSuggestions: View {
+    let query: String
     let places: [Place]
     let select: (MKMapItem, Place?) -> Void
-    @State private var query = ""
     @State private var results: [MKMapItem] = []
     @State private var loading = false
     @State private var error: String?
     @State private var searched = false
 
     var body: some View {
-        NavigationStack {
-            List {
+        ScrollView {
+            LazyVStack(alignment:.leading,spacing:0) {
                 if query.trimmingCharacters(in:.whitespacesAndNewlines).isEmpty {
                     Section("From the field guide") {
-                        ForEach(places.sorted {$0.name < $1.name}) { place in
+                        ForEach(Array(places.prefix(6))) { place in
                             Button {
                                 let item=MKMapItem(placemark:MKPlacemark(coordinate:place.coordinate))
                                 item.name=place.name
-                                select(item,place);dismiss()
+                                select(item,place)
                             } label: { row(place.name,place.address ?? place.kind) }
                         }
                     }
@@ -29,18 +27,16 @@ struct LocationSearch: View {
                     if loading { HStack {ProgressView();Text("Searching places…")} }
                     if let error {Text(error).foregroundStyle(.secondary)}
                     ForEach(Array(results.enumerated()),id:\.offset) { _,item in
-                        Button {select(item,nil);dismiss()} label: {row(item.name ?? "Place",item.placemark.title ?? "")}
+                        Button {select(item,nil)} label: {row(item.name ?? "Place",item.placemark.title ?? "")}
                     }
                     if searched && !loading && results.isEmpty && error == nil {
                         ContentUnavailableView.search(text:query)
                     }
                 }
-            }.listStyle(.plain).tint(ink)
-                .searchable(text:$query,prompt:"Address, business, or landmark")
-                .navigationTitle(title).navigationBarTitleDisplayMode(.inline)
-                .toolbar {Button("Cancel") {dismiss()}}
-                .task(id:query) {await search()}
-        }
+            }.padding(.horizontal,16)
+        }.frame(maxHeight:260).background(paper).tint(ink)
+            .scrollDismissesKeyboard(.interactively)
+            .task(id:query) {await search()}
     }
     private func row(_ name:String,_ address:String)->some View {
         HStack(spacing:14) {

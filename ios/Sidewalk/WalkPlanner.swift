@@ -16,13 +16,16 @@ struct WalkPlanner: View {
     @State private var error:String?
     @State private var active=false
     @State private var checkIn=false
-    @State private var searchField: RouteSearchField?
+    @FocusState private var searchField: RouteSearchField?
+    @State private var originText=""
+    @State private var destinationText=""
     @State private var requestID = UUID()
     init(destination:Place?, route:Binding<MKRoute?>, close:@escaping () -> Void) {
         self.destination=destination
         _route=route
         self.close=close
         _target=State(initialValue:destination)
+        _destinationText=State(initialValue:destination?.name ?? "")
         if let destination {
             let item=MKMapItem(placemark:MKPlacemark(coordinate:destination.coordinate));item.name=destination.name
             _destinationItem=State(initialValue:item)
@@ -38,15 +41,35 @@ struct WalkPlanner: View {
                 }.padding(.horizontal,12)
                 if !active {
                     VStack(spacing:12) {
-                        Button {searchField = .origin} label: {HStack {Image(systemName:"circle");Text(origin?.name ?? "Choose starting point").frame(maxWidth:.infinity,alignment:.leading);Image(systemName:"magnifyingglass")}.frame(minHeight:44)}.buttonStyle(.plain)
+                        HStack {
+                            Image(systemName:"circle")
+                            TextField("Starting point",text:input(.origin)).focused($searchField,equals:.origin)
+                                .submitLabel(.search).autocorrectionDisabled()
+                            if !originText.isEmpty {Button {input(.origin).wrappedValue="";searchField = .origin} label: {Image(systemName:"xmark.circle.fill").frame(width:44,height:44)}.accessibilityLabel("Clear starting point")}
+                        }.frame(minHeight:44)
                         Divider()
-                        Button { searchField = .destination } label: { HStack { Image(systemName:"mappin.circle.fill"); Text(destinationItem?.name ?? "Where to?").frame(maxWidth:.infinity,alignment:.leading); Image(systemName:"magnifyingglass") }.frame(minHeight:44) }.buttonStyle(.plain)
+                        HStack {
+                            Image(systemName:"mappin.circle.fill")
+                            TextField("Where to?",text:input(.destination)).focused($searchField,equals:.destination)
+                                .submitLabel(.search).autocorrectionDisabled()
+                            if !destinationText.isEmpty {Button {input(.destination).wrappedValue="";searchField = .destination} label: {Image(systemName:"xmark.circle.fill").frame(width:44,height:44)}.accessibilityLabel("Clear destination")}
+                        }.frame(minHeight:44)
                     }.padding(16).background(paper)
+                    if let field=searchField {
+                        LocationSuggestions(query:field == .origin ? originText : destinationText,places:guide.places) {item,place in
+                            invalidateRoute()
+                            if field == .origin {origin=item;originText=item.name ?? "Selected place"}
+                            else {destinationItem=item;destinationText=item.name ?? "Selected place";target=place}
+                            searchField=nil
+                            if origin != nil && destinationItem != nil {Task {await plan()}}
+                        }.id(field)
+                    }
                 }
             }.background(paper)
                 .offset(y:controlsVisible || reduceMotion ? 0 : -36).opacity(controlsVisible ? 1 : 0)
             Spacer()
             Group {
+                if searchField == nil {
                 VStack(alignment:.leading,spacing:12) {
                     if let route {
                         Text("\(Int(ceil(route.expectedTravelTime/60))) min · \(route.distance/1000,specifier:"%.1f") km").font(.title2.bold())
@@ -64,22 +87,24 @@ struct WalkPlanner: View {
                         HStack { if busy {ProgressView().tint(paper)}; Label(active ? (target == nil ? "Finish walk" : "I’m here") : route == nil ? "Find route" : "Go",systemImage:active ? "mappin" : "figure.walk") }.foregroundStyle(paper).frame(maxWidth:.infinity,minHeight:52)
                     }.buttonStyle(.borderedProminent).disabled(busy || destinationItem == nil || origin == nil)
                 }.padding(20).background(paper,in:UnevenRoundedRectangle(topLeadingRadius:24,topTrailingRadius:24))
+                }
             }
             .offset(y:controlsVisible || reduceMotion ? 0 : 48).opacity(controlsVisible ? 1 : 0)
             .onAppear {withAnimation(SidewalkMotion.spring(reduceMotion)) {controlsVisible=true}}
             .animation(SidewalkMotion.spring(reduceMotion),value:active)
             .animation(SidewalkMotion.spring(reduceMotion),value:route != nil)
             .onDisappear {requestID=UUID()}
-            .sheet(item:$searchField) {field in
-                LocationSearch(title:field.title,places:guide.places) {item,place in
-                    requestID=UUID();busy=false;route=nil;active=false;error=nil
-                    if field == .origin {origin=item} else {destinationItem=item;target=place}
-                    if origin != nil && destinationItem != nil {Task {await plan()}}
-                }
-            }
             .sheet(isPresented:$checkIn) {if let target {CheckIn(place:target).environmentObject(guide)}}
         }.foregroundStyle(ink)
     }
+    private func input(_ field:RouteSearchField)->Binding<String> {
+        Binding(get: {field == .origin ? originText : destinationText},set: {value in
+            invalidateRoute()
+            if field == .origin {originText=value;origin=nil}
+            else {destinationText=value;destinationItem=nil;target=nil}
+        })
+    }
+    private func invalidateRoute() {requestID=UUID();busy=false;route=nil;active=false;error=nil}
     func plan() async {
         guard let origin,let destinationItem else{return}
         let token=UUID();requestID=token;busy=true;error=nil;defer {if requestID == token {busy=false}}
