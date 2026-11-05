@@ -14,6 +14,5 @@ Native SwiftUI + MapKit. Source is grouped by feature in [ios/Sidewalk](ios/Side
 
 - [Roadmap](BACKLOG.md) · [Data-source research](docs/DATA-SOURCE-ROADMAP.md)
 - [iOS setup and tests](ios/README.md) · [Contribution rules](CONTRIBUTING.md)
-- [Earlier web prototype](docs/WEB-PROTOTYPE.md)
 
 Development build. New routes need a connection; saved directions and personal moments stay on your device.

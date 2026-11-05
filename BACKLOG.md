@@ -2,7 +2,7 @@
 
 ## Narration — deferred
 
-The initial device-generated voiceover was removed after user feedback about poor voice quality. Keep the app text-only for now; do not restore browser speech synthesis.
+The initial device-generated voiceover was removed after user feedback about poor voice quality. Keep the app text-only for now; do not restore device-generated speech synthesis.
 
 Before reintroducing audio:
 - Evaluate natural-sounding voices using actual San Francisco stop stories.
@@ -16,9 +16,9 @@ Before reintroducing audio:
 - Keep UI copy functional. No slogans, motivational filler, decorative captions, or API-setup prompts in the walking flow.
 - Live LLM integration is deferred at the user's request. No API key setup is needed for the current prototype.
 
-## Explore prototype — implemented
+## Explore — implemented
 
-- Explore home, all matching suggestions with clustered map pins, map/card details, neighborhood and interest filters.
+- Native Explore home, all matching suggestions with clustered map pins, map/card details and interest filters.
 - Save places locally; Walk here creates a route to the exact place and supports its destination stamp.
 - Curated Civic Art Collection and Recreation & Parks records with source links and a repeatable importer.
 
@@ -27,7 +27,7 @@ Before reintroducing audio:
 Prioritized research and acceptance criteria: [Data-source roadmap](docs/DATA-SOURCE-ROADMAP.md).
 
 - Expand neighborhood coverage with editorially reviewed stories and verified pedestrian entrances.
-- Complete place-photo coverage: 39 licensed covers integrated; 94 curated places still need reviewed images. See `lib/data/place-image-gaps.json`.
+- Complete place-photo coverage: 39 licensed covers integrated; 94 curated places still need reviewed images. See `data/place-image-gaps.json`.
 - Import reviewed POPOS (81 source rows) and separate 1% Public Art (65 source rows), with access review and deduplication. See `docs/PUBLIC-DATA-REVIEW.md`.
 - Build two reviewed cultural walks from SF Planning context statements; enrich identities using OHP BERD and NRHP bulk records.
 - Pilot landmark trees and an archival “Then” collection, with public-viewing points and item-level image rights.
