@@ -49,6 +49,7 @@
 		CECCE294651B840A4F1E5B94 /* lm-36.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A3AADDA98FFAF04789A4A /* lm-36.jpg */; };
 		D54968FC926036E5D48BEA0B /* film-624.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3CBBC834013F562151AE2B81 /* film-624.jpg */; };
 		D882BA3C18357256A08EA2A7 /* lm-353.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3363699E8E5CC7B942A96EF0 /* lm-353.jpg */; };
+		D96638949392F835577867A1 /* LocationSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D02D6042D9D7BAF92BA433 /* LocationSearch.swift */; };
 		DE604FE512E54402FC159D0A /* lm-264.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AEC719BA5DFA779882BE9F2B /* lm-264.jpg */; };
 		E07070F3111AF4B9C1E8EF1E /* lm-288.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7DB3873B2C52990F582D9796 /* lm-288.jpg */; };
 		FC434948E06245F5257F0201 /* lm-100.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1C9166CD321491F63D232341 /* lm-100.jpg */; };
@@ -102,6 +103,7 @@
 		EA86E55AD24C0475AB90C74A /* lm-154.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-154.jpg"; sourceTree = "<group>"; };
 		EEEA0CCD4C54484A0E966F5B /* lm-134.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-134.jpg"; sourceTree = "<group>"; };
 		F3066E0416804284FCE02CAF /* WalkPlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkPlanner.swift; sourceTree = "<group>"; };
+		F3D02D6042D9D7BAF92BA433 /* LocationSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearch.swift; sourceTree = "<group>"; };
 		F5FB6694458DF65AB67614B3 /* lm-315.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-315.jpg"; sourceTree = "<group>"; };
 		F982A53AC4D89AD3A976DA2C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -130,6 +132,7 @@
 			isa = PBXGroup;
 			children = (
 				CDE801A3353DE9971F80EC5C /* ArrivalView.swift */,
+				F3D02D6042D9D7BAF92BA433 /* LocationSearch.swift */,
 				AD25CEB4A91CA18DCBB958F5 /* SidewalkApp.swift */,
 				D803D822BCB26939FF4AE30A /* SidewalkMotion.swift */,
 				4C1B5953165F4CCC285D8F1F /* VisitLocation.swift */,
@@ -319,6 +322,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9BE480C768CA7634FE737D68 /* ArrivalView.swift in Sources */,
+				D96638949392F835577867A1 /* LocationSearch.swift in Sources */,
 				6AE008208C338FEB90828967 /* SidewalkApp.swift in Sources */,
 				5F8D9A6FDC4078BE739B576B /* SidewalkMotion.swift in Sources */,
 				249A5F8693C9FBB148867306 /* VisitLocation.swift in Sources */,
