@@ -17,6 +17,8 @@ targets:
         INFOPLIST_KEY_NSLocationWhenInUseUsageDescription: Confirm you are near a place to unlock its story. Your check-in coordinates stay on your device.
         TARGETED_DEVICE_FAMILY: '1'
         SWIFT_VERSION: '5.0'
+        MARKETING_VERSION: 0.1.0
+        CURRENT_PROJECT_VERSION: 1
         CODE_SIGN_STYLE: Automatic
     scheme:
       gatherCoverageData: false

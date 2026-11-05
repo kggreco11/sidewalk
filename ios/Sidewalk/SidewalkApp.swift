@@ -66,6 +66,10 @@ let ink = Color(red: 0.16, green: 0.24, blue: 0.31)
     @StateObject private var guide = FieldGuide()
     var body: some Scene { WindowGroup { ArrivalView().environmentObject(guide).tint(ink).preferredColorScheme(.light) } }
 }
+struct WalkRequest: Identifiable {
+    let id = UUID()
+    var destination: Place?
+}
 struct ExploreView: View {
     @EnvironmentObject var guide: FieldGuide
     @Environment(\.dynamicTypeSize) private var textSize
@@ -73,7 +77,7 @@ struct ExploreView: View {
     @State private var search = ""
     @State private var selected: Place?
     @State private var walkDestination: Place?
-    @State private var planner = false
+    @State private var walkRequest: WalkRequest?
     @State private var collection = false
     @State private var center = CLLocationCoordinate2D(latitude: 37.800, longitude: -122.407)
     @State private var area = "North Beach"
@@ -126,11 +130,11 @@ struct ExploreView: View {
                         }.padding(12).frame(width:320,alignment:.topLeading).background(.white.opacity(0.7),in:RoundedRectangle(cornerRadius:10))
                     } } }
                 if matches.isEmpty { Text("No matches. Try another interest or search.").font(.body) }
-                Button { walkDestination = nil; planner = true } label: { Label("Start a walk",systemImage:"figure.walk").frame(maxWidth:.infinity,minHeight:52) }.buttonStyle(.borderedProminent)
+                Button { walkRequest = WalkRequest(destination:nil) } label: { Label("Start a walk",systemImage:"figure.walk").foregroundStyle(paper).frame(maxWidth:.infinity,minHeight:52) }.buttonStyle(.borderedProminent)
             }.padding(16).background(paper)
         } }.background(paper).foregroundStyle(ink)
-        .sheet(item:$selected,onDismiss:{if walkDestination != nil {planner=true}}) { p in PlaceDetail(place:p) { walkDestination = p; selected = nil }.environmentObject(guide) }
-        .sheet(isPresented:$planner,onDismiss:{walkDestination=nil}) { WalkPlanner(destination:walkDestination).environmentObject(guide) }
+        .sheet(item:$selected,onDismiss:{if let destination=walkDestination {walkRequest=WalkRequest(destination:destination);walkDestination=nil}}) { p in PlaceDetail(place:p) { walkDestination = p; selected = nil }.environmentObject(guide) }
+        .sheet(item:$walkRequest) { request in WalkPlanner(destination:request.destination).environmentObject(guide) }
         .sheet(isPresented:$collection) { NavigationStack { List(guide.places.filter { guide.visits[$0.id] != nil || guide.unlocked.contains($0.id) }) { p in VStack(alignment:.leading,spacing:8) { Text(p.name).font(.headline); if guide.unlocked.contains(p.id) { Text(p.story).font(.body) }; Text(guide.visits[p.id]?.note ?? ""); if let data=guide.visits[p.id]?.photo,let image=UIImage(data:data) { Image(uiImage:image).resizable().scaledToFit().frame(maxHeight:180) } } }.navigationTitle("Field guide").overlay { if guide.visits.isEmpty && guide.unlocked.isEmpty { ContentUnavailableView("No stamps yet",systemImage:"book.closed",description:Text("Check in at a place to collect it.")) } }.toolbar { Button("Done") { collection=false } } } }
         .alert("Field guide",isPresented:Binding(get:{guide.error != nil},set:{if !$0 {guide.error=nil}})) { Button("OK") {guide.error=nil} } message: {Text(guide.error ?? "")}
     }
@@ -152,7 +156,7 @@ struct PlaceDetail: View {
                 Text(place.story).font(.system(.body,design:.serif)).lineSpacing(5)
                 Button { checkIn = true } label: { Label(guide.visits[place.id] == nil ? "Keep this moment" : "Edit field note",systemImage:"book").frame(maxWidth:.infinity,minHeight:52) }.buttonStyle(.bordered)
             } else {
-                Text(place.teaser ?? place.address ?? place.kind).font(.body)
+                if let teaser=place.teaser { Text(teaser).font(.body) }
                 ArrivalUnlock(place:place)
             }
             if let address=place.address { Label(address,systemImage:"mappin").font(.body) }

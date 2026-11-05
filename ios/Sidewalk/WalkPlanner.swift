@@ -13,6 +13,10 @@ struct WalkPlanner: View {
     @State private var error:String?
     @State private var active=false
     @State private var checkIn=false
+    init(destination:Place?) {
+        self.destination=destination
+        _target=State(initialValue:destination)
+    }
     var body:some View {
         NavigationStack {
             Group {
@@ -45,7 +49,6 @@ struct WalkPlanner: View {
                 }
             }.navigationTitle(route == nil ? "Start a walk" : "Your walk").navigationBarTitleDisplayMode(.inline)
                 .toolbar {ToolbarItem(placement:.topBarLeading) {Button("Close") {dismiss()}}}
-                .onAppear {target=destination}
                 .sheet(isPresented:$checkIn) { if let target {CheckIn(place:target).environmentObject(guide)} }
         }
     }

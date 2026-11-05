@@ -40,6 +40,7 @@
 		9BE480C768CA7634FE737D68 /* ArrivalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE801A3353DE9971F80EC5C /* ArrivalView.swift */; };
 		A718F9706791C660BA847936 /* lm-274.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 85E92279D0507A0BCB9FA692 /* lm-274.jpg */; };
 		A82B7F6DF191D3FE06023BDE /* art-1936.1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 35176D48AAE84E40C957575F /* art-1936.1.jpg */; };
+		AFD015F84CAD15ACD65A222E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F982A53AC4D89AD3A976DA2C /* Assets.xcassets */; };
 		B1DE9306ED15F8D26740104C /* places.json in Resources */ = {isa = PBXBuildFile; fileRef = 428A2BB01E5E8AA82A689AD3 /* places.json */; };
 		B5CB0D15A49CACEF62DC9BF6 /* art-1901.2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2C86D091FD3C64728ED3D083 /* art-1901.2.jpg */; };
 		B70CEAFBE29847CC005E7E82 /* coast.png in Resources */ = {isa = PBXBuildFile; fileRef = A22EC34365E0368F20EE4434 /* coast.png */; };
@@ -105,6 +106,7 @@
 		EEEA0CCD4C54484A0E966F5B /* lm-134.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-134.jpg"; sourceTree = "<group>"; };
 		F3066E0416804284FCE02CAF /* WalkPlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkPlanner.swift; sourceTree = "<group>"; };
 		F5FB6694458DF65AB67614B3 /* lm-315.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-315.jpg"; sourceTree = "<group>"; };
+		F982A53AC4D89AD3A976DA2C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXGroup section */
@@ -187,6 +189,7 @@
 		92EFB734AD4E5B4C47EAB41F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				F982A53AC4D89AD3A976DA2C /* Assets.xcassets */,
 				428A2BB01E5E8AA82A689AD3 /* places.json */,
 				4281961C1BC63967C022C1D1 /* ArrivalArt */,
 				82AB17F4474D7122755D9FE5 /* PlaceCovers */,
@@ -261,6 +264,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				AFD015F84CAD15ACD65A222E /* Assets.xcassets in Resources */,
 				B5CB0D15A49CACEF62DC9BF6 /* art-1901.2.jpg in Resources */,
 				A82B7F6DF191D3FE06023BDE /* art-1936.1.jpg in Resources */,
 				B70CEAFBE29847CC005E7E82 /* coast.png in Resources */,
@@ -330,6 +334,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Sidewalk;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Confirm you are near a place to unlock its story. Your check-in coordinates stay on your device.";
@@ -338,6 +343,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sidewalk.explore;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
@@ -351,6 +357,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Sidewalk;
 				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Confirm you are near a place to unlock its story. Your check-in coordinates stay on your device.";
@@ -359,6 +366,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
+				MARKETING_VERSION = 0.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.sidewalk.explore;
 				SDKROOT = iphoneos;
 				SWIFT_VERSION = 5.0;
