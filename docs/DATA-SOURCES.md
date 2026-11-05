@@ -42,7 +42,7 @@ For replay from previously captured raw responses, provide a directory containin
 node scripts/import-explore.mjs /path/to/raw-data
 ```
 
-The importer joins curated records by accession/property ID, validates San Francisco bounds and unique IDs, and fails on missing records or art no longer marked Public Display. It rejects a response reaching the request limit rather than silently accepting truncation. It writes `lib/data/explore-places.json` and `lib/data/explore-sources.json`; existing landmark/film files are not overwritten. Stories deliberately stay curated across refreshes. Review changed source records before publishing.
+The importer joins curated records by accession/property ID, validates San Francisco bounds and unique IDs, and fails on missing records or art no longer marked Public Display. It rejects a response reaching the request limit rather than silently accepting truncation. It writes `data/explore-places.json` and `data/explore-sources.json`; existing landmark/film files are not overwritten. Stories deliberately stay curated across refreshes. Review changed source records before publishing.
 
 The manifest records the fetch date separately from the source's `data_as_of` date. In particular, the Civic Art feed still reports **2024-04-17** as its source snapshot. A successful refresh does not establish that every artwork remains accessible today.
 

@@ -1,6 +1,6 @@
 # Arrival artwork
 
-Generated with the built-in image-generation tool. Decorative illustrations, not photographs or accurate route maps. The original hillside image is reused; two companion scenes use it as a style reference. All three assets are copied into `public/arrival-art` and `ios/Sidewalk/Resources/ArrivalArt`.
+Generated with the built-in image-generation tool. Decorative illustrations, not photographs or accurate route maps. The original hillside image is reused; two companion scenes use it as a style reference. The three native assets live in `ios/Sidewalk/Resources/Assets.xcassets/Arrival-*.imageset`.
 
 ## Companion prompts
 

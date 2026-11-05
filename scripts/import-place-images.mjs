@@ -1,5 +1,5 @@
 import fs from 'node:fs/promises';
-const matches=JSON.parse(await fs.readFile(new URL('../lib/data/place-image-matches.json',import.meta.url),'utf8'));
+const matches=JSON.parse(await fs.readFile(new URL('../data/place-image-matches.json',import.meta.url),'utf8'));
 const clean=value=>String(value||'').replace(/<[^>]*>/g,'').replace(/&amp;/g,'&').replace(/&quot;/g,'"').replace(/&#39;/g,"'").replace(/&nbsp;/g,' ').trim();
 const images={};const rejected=[];
 for(const match of matches){
@@ -12,6 +12,6 @@ for(const match of matches){
  images[match.id]={image:info.thumburl,imageCredit:`${artist} · ${license}`,imageAuthor:artist,imageLicense:license,imageLicenseUrl:metadata.LicenseUrl?.value||null,imageSource:info.descriptionurl,imageDescription:clean(metadata.ImageDescription?.value),imageDate:clean(metadata.DateTimeOriginal?.value),imageRetrievedAt:new Date().toISOString(),wikidata:match.wikidata};
  await new Promise(resolve=>setTimeout(resolve,1100));
 }
-await fs.writeFile(new URL('../lib/data/place-images.json',import.meta.url),JSON.stringify(images,null,2)+'\n');
-await fs.writeFile(new URL('../lib/data/place-images-rejected.json',import.meta.url),JSON.stringify(rejected,null,2)+'\n');
+await fs.writeFile(new URL('../data/place-images.json',import.meta.url),JSON.stringify(images,null,2)+'\n');
+await fs.writeFile(new URL('../data/place-images-rejected.json',import.meta.url),JSON.stringify(rejected,null,2)+'\n');
 console.log(`${Object.keys(images).length} licensed place images; ${rejected.length} rejected.`);

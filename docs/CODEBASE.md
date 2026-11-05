@@ -1,6 +1,6 @@
 # Code guide
 
-The product is the native SwiftUI app. The repository also retains the earlier web prototype and the shared catalog import tools.
+This repository contains the native SwiftUI app and its standalone catalog import tools.
 
 ```text
 ios/
@@ -17,10 +17,9 @@ ios/
     Shared/                   Visual styles, motion, covers and search UI
     Resources/                Bundled catalog, licensed covers and assets
   SidewalkTests/              Journey, routing, location and storage regressions
-lib/data/                     Shared normalized catalog and media manifests
+data/                         Normalized catalog and media manifests
 scripts/                      Import, image and catalog maintenance
 docs/                         Source research, design decisions and evidence
-app/, components/, lib/       Earlier web prototype
 ```
 
 ## Where changes belong
@@ -48,6 +47,6 @@ Choose an installed simulator name if yours differs. Run the existing regression
 
 ## Catalog maintenance
 
-Edit or import reviewed records under `lib/data/`, then run `node scripts/sync-ios-catalog.mjs` to regenerate the bundled native catalog and cover-gap list. Keep place IDs stable: saves, moments and tour stops refer to them. Image credits and licenses belong in the media manifest; public visibility alone is not reuse permission. See [data provenance](DATA-SOURCES.md) and [source roadmap](DATA-SOURCE-ROADMAP.md).
+Edit or import reviewed records under `data/`, then run `node scripts/sync-ios-catalog.mjs` to regenerate the bundled native catalog and cover-gap list. Keep place IDs stable: saves, moments and tour stops refer to them. Image credits and licenses belong in the media manifest; public visibility alone is not reuse permission. See [data provenance](DATA-SOURCES.md) and [source roadmap](DATA-SOURCE-ROADMAP.md).
 
-The [web prototype notes](WEB-PROTOTYPE.md) retain its separate Node setup and deployment details. Keep its runtime files separate from native feature work.
+Catalog scripts use Node.js built-ins and require Node 22.13+. No npm installation or web runtime is needed to build the iPhone app.
