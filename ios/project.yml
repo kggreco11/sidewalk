@@ -18,9 +18,11 @@ targets:
       base:
         PRODUCT_BUNDLE_IDENTIFIER: com.sidewalk.explore
         GENERATE_INFOPLIST_FILE: YES
+        INFOPLIST_FILE: Sidewalk-Info.plist
         INFOPLIST_KEY_CFBundleDisplayName: Sidewalk
         INFOPLIST_KEY_UILaunchScreen_Generation: YES
-        INFOPLIST_KEY_NSLocationWhenInUseUsageDescription: Use your location for live walking directions, as a walking start, and to confirm arrival to collect a visit stamp. Starting coordinates are sent to Apple Maps for directions; check-in coordinates stay on your device.
+        INFOPLIST_KEY_NSLocationWhenInUseUsageDescription: Follow your active walk, including when your phone is locked, and confirm arrival for visit stamps. Starting coordinates are sent to Apple Maps for directions; check-in coordinates stay on your device. Pause or end the walk to stop tracking.
+        INFOPLIST_KEY_NSCameraUsageDescription: Take a photo of a place for your private field guide.
         TARGETED_DEVICE_FAMILY: '1'
         SWIFT_VERSION: '5.0'
         MARKETING_VERSION: 0.1.0
