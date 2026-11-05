@@ -35,6 +35,7 @@ struct Visit: Codable { var note: String; var date: Date; var photo: Data? }
     @Published var saved: Set<String> = []
     @Published var visits: [String: Visit] = [:]
     @Published var error: String?
+    @Published var unlocked: Set<String> = Set(UserDefaults.standard.stringArray(forKey: "unlockedPlaces") ?? [])
     init() {
         do {
             guard let url = Bundle.main.url(forResource: "places", withExtension: "json") else { throw CocoaError(.fileNoSuchFile) }
@@ -47,7 +48,12 @@ struct Visit: Codable { var note: String; var date: Date; var photo: Data? }
         if saved.contains(place.id) { saved.remove(place.id) } else { saved.insert(place.id) }
         UserDefaults.standard.set(Array(saved), forKey: "savedPlaces")
     }
+    func unlock(_ place: Place) {
+        unlocked.insert(place.id)
+        UserDefaults.standard.set(Array(unlocked), forKey: "unlockedPlaces")
+    }
     func collect(_ place: Place, note: String, photo: Data?) {
+        guard unlocked.contains(place.id) else { error = "Confirm your arrival to collect this place."; return }
         visits[place.id] = Visit(note: note, date: Date(), photo: photo)
         do { UserDefaults.standard.set(try JSONEncoder().encode(visits), forKey: "visits") }
         catch { self.error = "Your field note could not be saved." }
@@ -75,7 +81,7 @@ struct ExploreView: View {
     var matches: [Place] {
         guide.places.filter { p in
             (filter == "All" || (filter == "Saved" ? guide.saved.contains(p.id) : p.kind == filter)) &&
-            (search.isEmpty || (p.name + " " + p.story).localizedCaseInsensitiveContains(search))
+            (search.isEmpty || (p.name + " " + p.category).localizedCaseInsensitiveContains(search))
         }.sorted { distance($0) < distance($1) }
     }
     func distance(_ p: Place) -> Double { pow(p.lat-center.latitude,2) + pow((p.lng-center.longitude)*0.79,2) }
@@ -88,9 +94,8 @@ struct ExploreView: View {
             }.padding(.horizontal,20)
             PlacesMap(places: matches, center: center, city: area == "All San Francisco", selected: $selected).frame(height:textSize.isAccessibilitySize ? 220 : 280)
             VStack(alignment:.leading, spacing:12) {
-                HStack {
+                VStack(alignment:.leading,spacing:8) {
                     Text("Explore").font(.system(.largeTitle,design:.serif))
-                    Spacer()
                     Menu {
                         ForEach(areas,id:\.self) { name in Button(name) {
                             area = name
@@ -99,7 +104,7 @@ struct ExploreView: View {
                         } }
                     } label: { Label(area,systemImage:"chevron.down").font(.body).frame(minHeight:44) }
                 }
-                HStack { Image(systemName:"magnifyingglass"); TextField("Find a place",text:$search).textInputAutocapitalization(.never); if !search.isEmpty { Button { search = "" } label: { Image(systemName:"xmark.circle.fill") }.accessibilityLabel("Clear search") } }.padding(10).background(.white.opacity(0.65),in:RoundedRectangle(cornerRadius:10))
+                HStack { Image(systemName:"magnifyingglass"); TextField("Find a place",text:$search).textInputAutocapitalization(.never); if !search.isEmpty { Button { search = "" } label: { Image(systemName:"xmark.circle.fill").frame(width:44,height:44) }.accessibilityLabel("Clear search") } }.padding(10).background(.white.opacity(0.65),in:RoundedRectangle(cornerRadius:10))
                 ScrollView(.horizontal,showsIndicators:false) { HStack { ForEach(["All","Architecture","History","Culture","Art","Parks","Saved"],id:\.self) { value in
                     Button(value) { filter = value }.font(.body).padding(.horizontal,14).frame(minHeight:44).background(filter == value ? ink : .clear,in:Capsule()).foregroundStyle(filter == value ? paper : ink).overlay(Capsule().stroke(ink.opacity(0.15))).accessibilityAddTraits(filter == value ? .isSelected : [])
                 } } }
@@ -113,7 +118,7 @@ struct ExploreView: View {
                                     VStack(alignment:.leading,spacing:7) {
                                         Text(place.kind.uppercased()).font(.subheadline.monospaced())
                                         Text(place.name).font(.system(.title2,design:.serif)).fixedSize(horizontal:false,vertical:true)
-                                        Text(place.teaser ?? place.story).font(.body).foregroundStyle(.secondary)
+                                        Text(place.teaser ?? place.address ?? place.kind).font(.body).foregroundStyle(.secondary)
                                     }.frame(maxWidth:.infinity,alignment:.leading)
                                 }
                             }.buttonStyle(.plain)
@@ -126,28 +131,40 @@ struct ExploreView: View {
         } }.background(paper).foregroundStyle(ink)
         .sheet(item:$selected,onDismiss:{if walkDestination != nil {planner=true}}) { p in PlaceDetail(place:p) { walkDestination = p; selected = nil }.environmentObject(guide) }
         .sheet(isPresented:$planner,onDismiss:{walkDestination=nil}) { WalkPlanner(destination:walkDestination).environmentObject(guide) }
-        .sheet(isPresented:$collection) { NavigationStack { List(guide.places.filter { guide.visits[$0.id] != nil }) { p in VStack(alignment:.leading,spacing:8) { Text(p.name).font(.headline); Text(guide.visits[p.id]?.note ?? ""); if let data=guide.visits[p.id]?.photo,let image=UIImage(data:data) { Image(uiImage:image).resizable().scaledToFit().frame(maxHeight:180) } } }.navigationTitle("Field guide").overlay { if guide.visits.isEmpty { ContentUnavailableView("No stamps yet",systemImage:"book.closed",description:Text("Check in at a place to collect it.")) } }.toolbar { Button("Done") { collection=false } } } }
+        .sheet(isPresented:$collection) { NavigationStack { List(guide.places.filter { guide.visits[$0.id] != nil || guide.unlocked.contains($0.id) }) { p in VStack(alignment:.leading,spacing:8) { Text(p.name).font(.headline); if guide.unlocked.contains(p.id) { Text(p.story).font(.body) }; Text(guide.visits[p.id]?.note ?? ""); if let data=guide.visits[p.id]?.photo,let image=UIImage(data:data) { Image(uiImage:image).resizable().scaledToFit().frame(maxHeight:180) } } }.navigationTitle("Field guide").overlay { if guide.visits.isEmpty && guide.unlocked.isEmpty { ContentUnavailableView("No stamps yet",systemImage:"book.closed",description:Text("Check in at a place to collect it.")) } }.toolbar { Button("Done") { collection=false } } } }
         .alert("Field guide",isPresented:Binding(get:{guide.error != nil},set:{if !$0 {guide.error=nil}})) { Button("OK") {guide.error=nil} } message: {Text(guide.error ?? "")}
     }
 }
 struct PlaceDetail: View {
     @EnvironmentObject var guide: FieldGuide
+    @Environment(\.dismiss) private var dismiss
+    @State private var checkIn = false
     let place: Place
     let walk: () -> Void
     var body: some View {
-        ScrollView { VStack(alignment:.leading,spacing:20) {
+        NavigationStack { ScrollView { VStack(alignment:.leading,spacing:20) {
             PlaceCover(place:place).frame(height:200).clipped()
             if let credit=place.imageCredit, let source=place.imageSource, let url=URL(string:source) {Link(credit,destination:url).font(.body).frame(minHeight:44);if let license=place.imageLicenseUrl,let licenseURL=URL(string:license){Link("Image license",destination:licenseURL).font(.body).frame(minHeight:44)};Text("Cropped to fit").font(.subheadline).foregroundStyle(.secondary)}
             Text(place.kind.uppercased()).font(.subheadline.monospaced())
             Text(place.name).font(.system(.largeTitle,design:.serif))
-            Text(place.story).font(.system(.body,design:.serif)).lineSpacing(5)
+            if guide.unlocked.contains(place.id) {
+                Label("Story unlocked",systemImage:"lock.open").font(.headline)
+                Text(place.story).font(.system(.body,design:.serif)).lineSpacing(5)
+                Button { checkIn = true } label: { Label(guide.visits[place.id] == nil ? "Keep this moment" : "Edit field note",systemImage:"book").frame(maxWidth:.infinity,minHeight:52) }.buttonStyle(.bordered)
+            } else {
+                Text(place.teaser ?? place.address ?? place.kind).font(.body)
+                ArrivalUnlock(place:place)
+            }
             if let address=place.address { Label(address,systemImage:"mappin").font(.body) }
-            if let url=URL(string:place.source) { Link(place.sourceName,destination:url).font(.body).frame(minHeight:44) }
+            if guide.unlocked.contains(place.id), let url=URL(string:place.source) { Link(place.sourceName,destination:url).font(.body).frame(minHeight:44) }
             VStack(spacing:12) {
                 Button(action:walk) { Label("Walk here",systemImage:"figure.walk").frame(maxWidth:.infinity,minHeight:52) }.buttonStyle(.borderedProminent)
                 Button { guide.toggle(place) } label: { Image(systemName:guide.saved.contains(place.id) ? "bookmark.fill" : "bookmark").frame(width:44,height:44) }.buttonStyle(.bordered).accessibilityLabel("Save place")
             }
-        }.padding(24) }.background(paper).presentationDragIndicator(.visible)
+        }.padding(24) }.background(paper)
+            .toolbar { ToolbarItem(placement:.topBarTrailing) { Button("Done") { dismiss() }.frame(minHeight:44) } }
+            .sheet(isPresented:$checkIn) { CheckIn(place:place).environmentObject(guide) }
+        }.presentationDragIndicator(.visible)
     }
 }
 final class PlacePin: NSObject, MKAnnotation {

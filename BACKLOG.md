@@ -33,4 +33,11 @@ Before reintroducing audio:
 
 ## Native iOS — in progress
 
-SwiftUI Explore, bookmarks, direct walking routes, and photo/note check-ins are implemented in `ios/`. Remaining: simulator/device visual QA, scenic multi-stop routing, foreground GPS/proximity, camera capture, custom map styling, and distribution signing. See `ios/README.md`.
+SwiftUI Explore, bookmarks, direct walking routes, and photo/note check-ins are implemented in `ios/`. Remaining: simulator/device visual QA, scenic multi-stop routing, continuous foreground GPS/navigation, camera capture, custom map styling, and distribution signing. See `ios/README.md`.
+
+## Arrival unlocks — prototype implemented
+
+- Preview photo/name/teaser/address before arriving; full stories unlock with an on-device foreground location check.
+- 75 m arrival radius, reported accuracy at most 35 m, fix at most 15 seconds old; uncertainty must fit within 100 m.
+- Unlocked stories persist locally. Existing manual stamps/photos/notes are preserved but do not count as verified unlocks.
+- Production follow-up: review public-access arrival coordinates, field-test city GPS, account sync, and server-validated rewards if stamps gain monetary or competitive value. Client-side unlocks are an experience gate, not anti-cheat enforcement.

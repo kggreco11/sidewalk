@@ -1,5 +1,5 @@
 import type {Place} from './types';
-export type CollectedPlace=Pick<Place,'id'|'name'|'category'|'lat'|'lng'> & {visits:string[];note:string;photo?:string};
+export type CollectedPlace=Pick<Place,'id'|'name'|'category'|'lat'|'lng'> & {visits:string[];note:string;photo?:string;story?:string;source?:string;sourceName?:string};
 export type Collection={places:CollectedPlace[];walks:string[]};
 export const collectionKey='sidewalk.collection.v1';
 export const emptyCollection=():Collection=>({places:[],walks:[]});
@@ -12,7 +12,7 @@ export function readCollection(raw:string|null):Collection {
 }
 export function collectPlace(collection:Collection,place:Place,date:string):Collection {
   const existing=collection.places.find(p=>p.id===place.id);
-  return {...collection,places:existing?collection.places.map(p=>p.id===place.id?{...p,visits:[...p.visits,date]}:p):[{id:place.id,name:place.name,category:place.category,lat:place.lat,lng:place.lng,visits:[date],note:''},...collection.places]};
+  return {...collection,places:existing?collection.places.map(p=>p.id===place.id?{...p,visits:[...p.visits,date]}:p):[{id:place.id,name:place.name,category:place.category,lat:place.lat,lng:place.lng,visits:[date],note:'',story:place.story,source:place.source,sourceName:place.sourceName},...collection.places]};
 }
 export function milestones(c:Collection){return [
   {name:'First discovery',detail:'Visit your first place',count:c.places.length,goal:1},

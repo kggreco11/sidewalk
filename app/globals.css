@@ -53,3 +53,35 @@
  .collection-milestone strong,.stamp-detail label,.stamp-detail h3{font-size:17px}.collection-milestone small,.stamp-card>small{font-size:15px}
 }
 @media(max-width:800px){.walk-here-dialog [data-slot=dialog-description],.arrival-dialog [data-slot=dialog-description]{font-size:17px;line-height:1.5}}
+
+.locked-story{padding:18px;border:1px solid var(--pencil);border-radius:12px;background:#e9ebe2;display:grid;gap:14px;margin:12px 0}
+.locked-story h3{display:flex;align-items:center;gap:10px;font-size:19px;line-height:1.4;margin:0}.locked-story h3 svg{flex-shrink:0}
+.locked-story p{font-size:17px;line-height:1.5}.locked-story small{font-size:15px;color:var(--ink-soft)}
+.locked-story .primary-action{height:auto;min-height:52px;gap:12px;padding:14px 16px;text-align:left;font-size:17px}
+.unlocked-entry{border-bottom:1px solid var(--pencil);padding:12px 0}.unlocked-entry summary{min-height:44px;font-size:19px;line-height:1.5}.unlocked-entry p{margin:16px 0}
+@media(max-width:800px){
+ [data-slot=dialog-content]{max-height:calc(100dvh - 32px);overflow-y:auto;overscroll-behavior:contain}
+ [data-slot=dialog-title]{padding-right:44px;line-height:1.2}
+ [data-slot=dialog-description]{font-size:17px;line-height:1.5}
+ [data-slot=dialog-close]{top:12px;right:12px;background:var(--paper-raised);border:1px solid var(--pencil);border-radius:50%;opacity:1}
+ .options>summary,.option-value,.options-fields label>span,.options-fields [data-slot=select-trigger],.options-fields small,.distance-input span{font-size:17px}
+ .location-field small,.example-number,.arrival-meta,.route-note,.manual-progress,.directions li small{font-size:15px}
+ .directions summary,.directions li,.overview-list strong,.overview-list small,.source-link,.stamp-detail li{font-size:17px;line-height:1.5}
+ .directions summary,.source-link,.sources-dialog a{min-height:44px;display:flex;align-items:center}
+ .source-link{gap:8px}.source-link svg{flex-shrink:0}
+ .walk-meta{flex-wrap:wrap;gap:8px}.route-index{flex-wrap:wrap}.primary-action{height:auto;min-height:52px;padding-top:14px;padding-bottom:14px;gap:12px}
+ .collection-milestone small{line-height:1.4}.collection-dialog>h2{padding-right:44px}
+ .stamp-grid{grid-template-columns:repeat(auto-fit,minmax(140px,1fr))}
+ .walk-here-dialog h2,.walking-notes-dialog>h2{padding-right:44px}
+ .live-card-dock{max-height:65dvh}.live-status{gap:10px}.live-status .eyebrow{letter-spacing:.5px}
+ .map-toolbar{gap:6px}.map-toolbar .icon-button{flex-shrink:0}
+}
+@media(max-width:800px){
+ .note-heading .eyebrow,.intro .eyebrow,.live-heading small{font-size:13px!important;line-height:1.4}
+ .route-index button,.route-index button span,.list-index{font-size:17px!important}
+ .collection-milestone>span{font-size:15px}
+ .maplibregl-ctrl-attrib-button{width:44px!important;height:44px!important}
+ .maplibregl-compact{min-height:44px!important}.maplibregl-ctrl-attrib-inner{padding-right:20px}
+}
+@media(max-width:800px){[data-slot=select-item]{font-size:17px;min-height:44px}.explore-place-dialog{background:#f6f3ed!important}}
+@media(max-width:800px){.maplibregl-ctrl-attrib-button{background-repeat:no-repeat!important;background-position:center!important}}

@@ -8,9 +8,12 @@ Native SwiftUI prototype, iOS 17+. Open `Sidewalk.xcodeproj` in Xcode, select an
 - No five-place cap: all matching places in the lazy card list and native clustered map.
 - Search, category filters, neighborhood map positioning, source-linked details.
 - Saved places and visited field notes persist on this device.
-- Typed starting point, Apple walking route, step list, manual check-in, library photo and note.
+- Typed starting point, Apple walking route, step list, location-confirmed story unlock/check-in, library photo and note.
 
 Apple MapKit supplies this native prototype's map and direct walking directions. Search and routing require a network connection. The existing web MapLibre style has not been ported yet. The private Sites backend is not embedded or made public.
+
+- Rotating illustrated opening and semantic Dynamic Type text.
+- On-device arrival check with denied, weak, stale, distant, and timeout handling. Stories remain unlocked locally.
 
 ## Remaining native parity
 

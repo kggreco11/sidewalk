@@ -13,6 +13,7 @@
 		1D07515FDC780FC6344A3A5D /* lm-35.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AF37C53EEE73BD2FE8D87911 /* lm-35.jpg */; };
 		1D5DD963104679FC996D73B7 /* lm-228.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 93F70ED248B12CFE09945792 /* lm-228.jpg */; };
 		204821742EB787C5B4BCD50D /* lm-286.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6024FC0817169584131386F6 /* lm-286.jpg */; };
+		249A5F8693C9FBB148867306 /* VisitLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1B5953165F4CCC285D8F1F /* VisitLocation.swift */; };
 		249E84FDAE2588D5EAC770C8 /* park-153.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C3808F5C2EC4F93189226329 /* park-153.jpg */; };
 		24A94AFBC84799DBA2AB726E /* lm-33.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A8F11201079D0A553E24830D /* lm-33.jpg */; };
 		258BF50D110A1643C477497B /* lm-113.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C139F886E56599C44C2A4DA8 /* lm-113.jpg */; };
@@ -71,6 +72,7 @@
 		3F08DAF9BCF9C9BED05045DD /* neighborhood.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = neighborhood.png; sourceTree = "<group>"; };
 		428A2BB01E5E8AA82A689AD3 /* places.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = places.json; sourceTree = "<group>"; };
 		4764D5BF8DFF34FC9B3E940C /* lm-265.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-265.jpg"; sourceTree = "<group>"; };
+		4C1B5953165F4CCC285D8F1F /* VisitLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitLocation.swift; sourceTree = "<group>"; };
 		535193C30739790E4AE2B2EA /* lm-275.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-275.jpg"; sourceTree = "<group>"; };
 		6024FC0817169584131386F6 /* lm-286.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-286.jpg"; sourceTree = "<group>"; };
 		618EEB7A0EB186CE01044E52 /* lm-267.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-267.jpg"; sourceTree = "<group>"; };
@@ -129,6 +131,7 @@
 			children = (
 				CDE801A3353DE9971F80EC5C /* ArrivalView.swift */,
 				AD25CEB4A91CA18DCBB958F5 /* SidewalkApp.swift */,
+				4C1B5953165F4CCC285D8F1F /* VisitLocation.swift */,
 				F3066E0416804284FCE02CAF /* WalkPlanner.swift */,
 				92EFB734AD4E5B4C47EAB41F /* Resources */,
 			);
@@ -313,6 +316,7 @@
 			files = (
 				9BE480C768CA7634FE737D68 /* ArrivalView.swift in Sources */,
 				6AE008208C338FEB90828967 /* SidewalkApp.swift in Sources */,
+				249A5F8693C9FBB148867306 /* VisitLocation.swift in Sources */,
 				4F83767FE24EE74F4FFE8B2C /* WalkPlanner.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -328,7 +332,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Sidewalk;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Show your position during a walk.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Confirm you are near a place to unlock its story. Your check-in coordinates stay on your device.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -349,7 +353,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_KEY_CFBundleDisplayName = Sidewalk;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Show your position during a walk.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Confirm you are near a place to unlock its story. Your check-in coordinates stay on your device.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

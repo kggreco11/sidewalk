@@ -17,9 +17,9 @@ struct WalkPlanner: View {
         NavigationStack {
             Group {
                 if let route,let target {
-                    VStack(spacing:0) {
+                    ScrollView { VStack(spacing:0) {
                         Map { MapPolyline(route.polyline).stroke(ink,lineWidth:6); Marker(target.name,coordinate:target.coordinate) }
-                            .mapStyle(.standard(pointsOfInterest:.excludingAll))
+                            .mapStyle(.standard(pointsOfInterest:.excludingAll)).frame(minHeight:260)
                         VStack(alignment:.leading,spacing:16) {
                             Text(target.name).font(.system(.title2,design:.serif))
                             Text("\(Int(ceil(route.expectedTravelTime/60))) min · \(route.distance/1000,specifier:"%.1f") km").font(.subheadline)
@@ -31,7 +31,7 @@ struct WalkPlanner: View {
                                 Button { active=true } label: {Text("Start walk").frame(maxWidth:.infinity,minHeight:52)}.buttonStyle(.borderedProminent)
                             }
                         }.padding(20).background(paper)
-                    }
+                    } }
                 } else {
                     Form {
                         Section("Starting place") { TextField("Where from?",text:$from) }
@@ -72,13 +72,16 @@ struct CheckIn:View {
     var body:some View {
         NavigationStack {
             Form {
-                Section {Text(place.name).font(.system(.title2,design:.serif));TextField("Worth a footnote?",text:$note,axis:.vertical).lineLimit(3...6)}
+                if !guide.unlocked.contains(place.id) { Section { ArrivalUnlock(place:place) } }
+                else {
+                Section {Text(place.name).font(.system(.title2,design:.serif));Text(place.story).font(.body);TextField("Worth a footnote?",text:$note,axis:.vertical).lineLimit(3...6)}
                 Section {
                     PhotosPicker(selection:$photoItem,matching:.images) {Label("A little proof you wandered",systemImage:"camera")}
                     if let photo,let image=UIImage(data:photo) {Image(uiImage:image).resizable().scaledToFit().frame(maxHeight:200)}
                     if let photoError {Text(photoError).foregroundStyle(.red)}
                 }
-                Section {Button("Keep this moment") {guide.collect(place,note:note,photo:photo);dismiss()}}
+                Section {Button("Keep this moment") {guide.collect(place,note:note,photo:photo);dismiss()}.frame(minHeight:52)}
+                }
             }.navigationTitle("I’m here").toolbar{Button("Cancel"){dismiss()}}
                 .onAppear {if let visit=guide.visits[place.id]{note=visit.note;photo=visit.photo}}
                 .onChange(of:photoItem) {_,item in Task {
