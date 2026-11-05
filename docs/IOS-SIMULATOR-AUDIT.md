@@ -1,5 +1,7 @@
 # Native simulator audit — November 4, 2026
 
+Latest implementation and verification: [Native walking-tour build](design/WALKING-TOUR-BUILD.md). It supersedes the single-destination behavior described in the earlier passes below, with 52 passing regressions, multi-stop sessions, active-walk background configuration, camera/drafts and saved summaries. Outdoor behavior remains a release gate.
+
 ## Map and navigation follow-up
 
 Discovery markers are restored during route preview and walking. Go now presents the next instruction and destination with foreground GPS path progress, remaining distance/time, map following and recenter. Off-route fixes offer an explicit route update. Backgrounding stops location updates; returning resumes the current walk. Stale/imprecise fixes do not drive progress.

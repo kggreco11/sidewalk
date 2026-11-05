@@ -1,41 +1,33 @@
 # Sidewalk for iPhone
 
-Native SwiftUI prototype, iOS 17+. Open `Sidewalk.xcodeproj` in Xcode, select an iPhone simulator, and Run. For a physical phone, select your own signing team first. This project has not been distributed through TestFlight or the App Store.
+See the [code guide](../docs/CODEBASE.md) for the feature layout, ownership and formatting commands.
+
+Native SwiftUI and MapKit app, iOS 17+. Open `Sidewalk.xcodeproj` in Xcode and run on an iPhone Simulator. Select your own signing team for a device. This is a development build, not a TestFlight or App Store release.
 
 ## Included
 
-- All 133 curated places bundled locally, including official SF art and parks records.
-- No five-place cap: all matching places in the lazy place list and native clustered map.
-- Search, category filters, map recentering, source-linked details.
-- Saved places and visited field notes persist on this device.
-- Typed starting point, Apple walking route, step list, location-confirmed visit stamps, library photo and note.
+- All 133 curated places in Explore, category/search filters, source-linked stories, bookmarks and optional discoveries on the map.
+- One-, three- and five-stop tours with optional extra-walking time, actual pedestrian routes, numbered pins, reorderable preview and Add to walk.
+- Inline address suggestions, direct typed submission and stable curated place identity across Apple search, Saved, map and Explore.
+- Current-leg guidance, directional maneuvers, next-stop card, readable offline steps, overview/recenter, explicit rerouting, pause/resume, saved session/progress and completion history.
+- Active-walk background location, including when locked, with the iOS indicator and an in-app opt-out. Pause/End stops updates. An interrupted process restores as paused.
+- Optional verified visit stamps, readable stories before arrival, dated personal notes, camera/library photos, photo replacement/removal and recovered drafts.
+- Atomic metadata with separate, lazily loaded photos. Legacy preferences migrate while retaining their recovery copy. The native guide does not sync with the web prototype.
+- Illustrated opening, field-guide colors, Dynamic Type, 44-point controls, optional approach haptics and accessibility announcements.
 
-Apple MapKit supplies this native prototype's map and direct walking directions. Search and routing require a network connection. The existing web MapLibre style has not been ported yet. The private Sites backend is not embedded or made public.
+New search/routing requires a network connection. Saved geometry and directions reopen offline. Route estimates cover walking and exclude time spent at stops; the summary reports active-session time and planned route length. Access hours, entrances, stairs and step-free access have not been comprehensively reviewed and are disclosed as unknown.
 
-- Rotating illustrated opening and semantic Dynamic Type text.
-- On-device arrival check with denied, weak, stale, distant, and timeout handling. Visit stamps persist locally; stories are readable before arrival.
-
-## Remaining native parity
-
-- Multi-stop scenic routing and walking-time budgets.
-- Outdoor validation of foreground GPS guidance, background navigation, and automatic rerouting.
-- Camera capture (the native prototype currently selects existing photos).
-- MapLibre Native field-guide styling, if retained as the final map provider.
-- Outdoor device QA, VoiceOver audit, Dynamic Type extremes, and TestFlight distribution.
-- Backup/export and photo retention policy before production. Native notes use atomic Application Support metadata with separate photo files; legacy UserDefaults migrate without deleting the recovery copy. Native data does not sync with the web prototype.
-
-## Build
+## Build and test
 
 ```sh
-xcodebuild -project ios/Sidewalk.xcodeproj -scheme Sidewalk -sdk iphonesimulator -configuration Debug CODE_SIGNING_ALLOWED=NO build
+xcodegen generate --spec ios/project.yml
+xcodebuild -project ios/Sidewalk.xcodeproj -scheme Sidewalk -destination 'platform=iOS Simulator,name=iPhone 17' test
 ```
 
-The committed Xcode project is generated from `ios/project.yml` using XcodeGen. Regenerate after adding Swift source files. The bundled catalog follows `lib/place-catalog.ts`; regenerate from the source datasets when those change. Data provenance is in `docs/DATA-SOURCES.md`.
+52 tests cover tour progression, storage, identity, routing failure/cancellation, maneuvers, location accuracy, implausible GPS jumps, background lifecycle, notes/photos and drafts. The Xcode project is generated from `ios/project.yml`; regenerate when adding source files. `Sidewalk-Info.plist` supplies the location background mode; usage descriptions and version settings come from the project spec.
 
-## Native quality pass — November 4
+The bundled catalog follows `lib/place-catalog.ts`; provenance is in `docs/DATA-SOURCES.md`. The [walking-tour implementation and evidence](../docs/design/WALKING-TOUR-BUILD.md) maps the original audit to the built behavior.
 
-Explore uses a persistent map with three panel heights, readable place rows, and independent save actions. Route fields and live suggestions appear over that same map. Typed addresses submit directly; ambiguous results require selection. Route requests cancel when input changes. Current location is an explicit foreground action, with typed-address fallback.
+## Release work
 
-The Field Guide separates Saved and Collected. Place details keep Walk here reachable and keep stories readable and award a visit stamp after verified arrival. Go enters foreground walking guidance with the next instruction, GPS-based distance and time remaining, a following map, and a recenter control. An off-route state offers a new route from the current location. Discovery markers remain visible. Stale or inaccurate GPS suppresses progress; background navigation and automatic rerouting are not implemented.
-
-Run regression tests with `xcodebuild -project ios/Sidewalk.xcodeproj -scheme Sidewalk -destination 'platform=iOS Simulator,name=iPhone 17' test`. See `docs/IOS-SIMULATOR-AUDIT.md` for observed coverage and limitations.
+Physical outdoor navigation, entrances, camera, lock/unlock and battery tests remain necessary. Complete VoiceOver/smaller-device evaluation, reviewed access data, broader photo coverage, privacy/distribution work and backup/export policy before a production launch. Narration remains deferred. No live LLM or new paid API is required by this build.

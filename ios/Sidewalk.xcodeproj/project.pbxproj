@@ -8,61 +8,75 @@
 
 /* Begin PBXBuildFile section */
 		027CB2D2CAC4723CC6FAD07E /* lm-125.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 75E80BFF643EA8C812BDF874 /* lm-125.jpg */; };
-		08A98953FBA7456BF7095F65 /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C597623B58499CBAA1CB8D81 /* ExploreView.swift */; };
+		04480A693879AAA7C4B31C46 /* WalkNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5CF65AA060E496E0FD54B6B5 /* WalkNavigation.swift */; };
+		06B87793556618DCC7654701 /* PlacesMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BCF5D33D3FBBE622EA84278 /* PlacesMap.swift */; };
 		0C1ED44469536280174E4BD8 /* lm-246.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2EA4A7BB0E44AF7701E0AC8B /* lm-246.jpg */; };
 		175DF1E2485D7FB0EB2794F5 /* lm-69.jpg in Resources */ = {isa = PBXBuildFile; fileRef = B39A20E38383A3F968C7BA1F /* lm-69.jpg */; };
 		1D07515FDC780FC6344A3A5D /* lm-35.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AF37C53EEE73BD2FE8D87911 /* lm-35.jpg */; };
 		1D5DD963104679FC996D73B7 /* lm-228.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 93F70ED248B12CFE09945792 /* lm-228.jpg */; };
+		1F2A4B157CB0E9C190C166A5 /* GuideStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D916640B8683B406844FDB1 /* GuideStorage.swift */; };
 		204821742EB787C5B4BCD50D /* lm-286.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 6024FC0817169584131386F6 /* lm-286.jpg */; };
 		22441BBB8B11F97311EF7960 /* Pow in Frameworks */ = {isa = PBXBuildFile; productRef = 5FD63C9F7146C726321AF3EB /* Pow */; };
-		249A5F8693C9FBB148867306 /* VisitLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C1B5953165F4CCC285D8F1F /* VisitLocation.swift */; };
 		249E84FDAE2588D5EAC770C8 /* park-153.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C3808F5C2EC4F93189226329 /* park-153.jpg */; };
 		24A94AFBC84799DBA2AB726E /* lm-33.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A8F11201079D0A553E24830D /* lm-33.jpg */; };
-		24E38798F607C996537A9C9A /* WalkNavigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = D4F09794CBA1C7203B127518 /* WalkNavigation.swift */; };
 		258BF50D110A1643C477497B /* lm-113.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C139F886E56599C44C2A4DA8 /* lm-113.jpg */; };
+		263F998CEB1F32D4B451D0F1 /* RoutePlannerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 399A17BFF5FEA20DD3BE61D3 /* RoutePlannerModel.swift */; };
 		27CF458585FCC2A6933EB494 /* lm-263.jpg in Resources */ = {isa = PBXBuildFile; fileRef = DE4F6419D7E7A64BF446AB73 /* lm-263.jpg */; };
+		2AB7004303EE16A021EB865A /* PlaceCover.swift in Sources */ = {isa = PBXBuildFile; fileRef = 70EF09B6C6492C0241515EB3 /* PlaceCover.swift */; };
+		2F342EC955FCE11CFE67B86B /* TourRouting.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0DA9D3B903147A0AB2AFD5D4 /* TourRouting.swift */; };
 		39EE0B792F87839ADA2803BC /* lm-40.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C7481352C321F0857E4F14E5 /* lm-40.jpg */; };
+		3AE40755C7EE2D8DAAB9C8F4 /* Visit.swift in Sources */ = {isa = PBXBuildFile; fileRef = A02EC8F76282D45C27F2642D /* Visit.swift */; };
+		3B00E1F1128EFECF70A6EBB0 /* TourJourneyTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B76F40873217624AA433C25D /* TourJourneyTests.swift */; };
+		3DA5C8E65B7A57AFD87FC0DE /* CheckIn.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9D008AA26EE6DC965C44B185 /* CheckIn.swift */; };
 		3DDDC2F541BDBA5D9C8490FF /* lm-215.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0D0F0557221B7AD62FA7C63C /* lm-215.jpg */; };
+		4557DF0F107B556937D7C01F /* WalkRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 91DAC40D225F0E6772A77437 /* WalkRequest.swift */; };
+		4635C28F7A22D237F07C020D /* MomentDraftStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = A3672C6DD5642FD5C19ED27A /* MomentDraftStore.swift */; };
+		47F6973461678C9359FF4EE2 /* StopStory.swift in Sources */ = {isa = PBXBuildFile; fileRef = C4C49BF69D8CF657FB440C7D /* StopStory.swift */; };
 		488189ED3DECED17FC063EAE /* lm-316.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C62BBEB42948927C5C9F675A /* lm-316.jpg */; };
 		489A6992D877FB1DD31729EC /* lm-275.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 535193C30739790E4AE2B2EA /* lm-275.jpg */; };
 		4AA07C54DAEACFE9A0ED9E39 /* lm-267.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 618EEB7A0EB186CE01044E52 /* lm-267.jpg */; };
-		4F83767FE24EE74F4FFE8B2C /* WalkPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3066E0416804284FCE02CAF /* WalkPlanner.swift */; };
+		4B52DD123D18024C704185FB /* FieldGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = A4216F5E6393EDFA3C522BE1 /* FieldGuide.swift */; };
+		519B6B8AAF2377121C05D533 /* PlaceDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = FAAFC22ED270A81050922A28 /* PlaceDetail.swift */; };
 		52B56C9790F0E25B208A9A11 /* lm-315.jpg in Resources */ = {isa = PBXBuildFile; fileRef = F5FB6694458DF65AB67614B3 /* lm-315.jpg */; };
 		52E9BBE7AE6BBD31052820C5 /* lm-154.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EA86E55AD24C0475AB90C74A /* lm-154.jpg */; };
+		55D00C8E21ECD8AA54D00801 /* TourStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = EF92ECA78CC19653F03DF2E7 /* TourStore.swift */; };
 		5C2BA2FEDEC88042B6B10DA5 /* lm-291.png in Resources */ = {isa = PBXBuildFile; fileRef = 694A0A0DB8E727E9068D570B /* lm-291.png */; };
+		5C9D75CA9BCD4BF56247C225 /* ArrivalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = EADD3394ADBABD1B01111F7B /* ArrivalView.swift */; };
 		5F0B4C5EB52210A5E4E712A3 /* lm-80.jpg in Resources */ = {isa = PBXBuildFile; fileRef = E5335CE74286AFE6495D57A6 /* lm-80.jpg */; };
-		5F8D9A6FDC4078BE739B576B /* SidewalkMotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = D803D822BCB26939FF4AE30A /* SidewalkMotion.swift */; };
-		6AE008208C338FEB90828967 /* SidewalkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AD25CEB4A91CA18DCBB958F5 /* SidewalkApp.swift */; };
+		5F992D65DF5E1499D6FB1BF3 /* WalkingProgress.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6F8C7AD41F1A48D08A858AC /* WalkingProgress.swift */; };
+		64248C55113CD8922DFCE270 /* Place.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55150848EF613D9E048E7755 /* Place.swift */; };
+		64734EE589D1E7B9337EB2E6 /* SidewalkApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = E3D0D9F41DF6AF831BC27705 /* SidewalkApp.swift */; };
+		652201ABFC5898A6613C3087 /* LocationSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4764E06F0148140ECDAF812C /* LocationSearch.swift */; };
 		720A865588A793DA2B827B50 /* lm-86.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 0C64D0F527CE6288EA444FA0 /* lm-86.jpg */; };
+		723BC08E564344B62539ECAF /* VisitLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = AB2B895141E4C39E0D12B459 /* VisitLocation.swift */; };
 		728F39F6CF609AC4BA3632D6 /* lm-134.jpg in Resources */ = {isa = PBXBuildFile; fileRef = EEEA0CCD4C54484A0E966F5B /* lm-134.jpg */; };
+		7E38B2ADBDDF5F3CA34A3DBF /* WalkSummaryContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = DB586D523F751FF65ADDD957 /* WalkSummaryContent.swift */; };
+		8481E88E54157FB2EE26ABEF /* ExploreView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D78305BCD23541B86AB16DE2 /* ExploreView.swift */; };
 		8557056E616F23C40AE4E620 /* film-523.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 145EDDC118C156DF5C618375 /* film-523.jpg */; };
 		871F5E3242320611F7C05B63 /* film-301.jpg in Resources */ = {isa = PBXBuildFile; fileRef = A1390CA9DF7170C25E0F9F6F /* film-301.jpg */; };
-		8A6FAD553D22DF95420A7A51 /* StartingLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = A230B4F4353CE232AE8BD73D /* StartingLocation.swift */; };
-		8E46F51DF9BDE6AA601CED29 /* RoutePlannerModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5024435A006AC977650229BE /* RoutePlannerModel.swift */; };
 		8E77663142850686DDBA8FAB /* lm-276.jpg in Resources */ = {isa = PBXBuildFile; fileRef = D4D09285BE1BB93317CB650E /* lm-276.jpg */; };
 		8F6FC911ABE2DC5422763587 /* lm-310.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 8C6C0C66C6AC52722DC293B7 /* lm-310.jpg */; };
 		9059EDB93C709C8633B95308 /* QualityTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F6E196039500519ED0537AB8 /* QualityTests.swift */; };
-		90F2531EBFF5534F36B0D6C7 /* PlacesMap.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4C4EDF359D768925F2A23910 /* PlacesMap.swift */; };
+		90678ABC54989FFD110B73EE /* SidewalkMotion.swift in Sources */ = {isa = PBXBuildFile; fileRef = 64A7033F942C7D4F71218121 /* SidewalkMotion.swift */; };
 		93C35C97C548263655D93072 /* lm-334.jpg in Resources */ = {isa = PBXBuildFile; fileRef = C1D3EE1241F9EE0D9ECB0AB1 /* lm-334.jpg */; };
-		9BE480C768CA7634FE737D68 /* ArrivalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CDE801A3353DE9971F80EC5C /* ArrivalView.swift */; };
-		A13A77B73FBA4EBE1EA3C081 /* FieldGuide.swift in Sources */ = {isa = PBXBuildFile; fileRef = F0C0B55F0DFB66FA74BCE59E /* FieldGuide.swift */; };
+		A4E20194252D7F81510C950B /* StartingLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0D9A5682CDC2AE0919C567ED /* StartingLocation.swift */; };
 		A718F9706791C660BA847936 /* lm-274.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 85E92279D0507A0BCB9FA692 /* lm-274.jpg */; };
 		A82B7F6DF191D3FE06023BDE /* art-1936.1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 35176D48AAE84E40C957575F /* art-1936.1.jpg */; };
 		AFD015F84CAD15ACD65A222E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F982A53AC4D89AD3A976DA2C /* Assets.xcassets */; };
 		B1DE9306ED15F8D26740104C /* places.json in Resources */ = {isa = PBXBuildFile; fileRef = 428A2BB01E5E8AA82A689AD3 /* places.json */; };
 		B5CB0D15A49CACEF62DC9BF6 /* art-1901.2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2C86D091FD3C64728ED3D083 /* art-1901.2.jpg */; };
 		BAE13D51640D06D7F43F830F /* lm-282.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 2444A87386E06A0EF2126E8F /* lm-282.jpg */; };
-		BDF4314AAE380509F1604744 /* GuideStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850188F768711A251CA9C0B6 /* GuideStorage.swift */; };
-		C0889B5AFA9B5CA168B8BA35 /* PlaceDetail.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5DFBD3F2B64D5472093EC44A /* PlaceDetail.swift */; };
+		BC90180ED4CDCFB3E2F0EFC2 /* TourController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 97C9694E572B855C6932F59B /* TourController.swift */; };
 		C615AA4DFAB94122541708A1 /* lm-265.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 4764D5BF8DFF34FC9B3E940C /* lm-265.jpg */; };
-		C9C0F4E22971C4FD11199316 /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = E1ED069670AE7F04B7CA7E50 /* DesignSystem.swift */; };
+		CA01DF7D1B0231FBFF8D8654 /* DesignSystem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D85864CE6CB23FAD43C52C4 /* DesignSystem.swift */; };
+		CA59B8F6C9B849E523A89483 /* WalkPlanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A9A4AA01F2F2E3156ED6C04 /* WalkPlanner.swift */; };
 		CECCE294651B840A4F1E5B94 /* lm-36.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1D4A3AADDA98FFAF04789A4A /* lm-36.jpg */; };
 		D54968FC926036E5D48BEA0B /* film-624.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3CBBC834013F562151AE2B81 /* film-624.jpg */; };
+		D679B141E577AD32AA2015E0 /* TourSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6689E6888F61CFDF77E6F50A /* TourSession.swift */; };
 		D882BA3C18357256A08EA2A7 /* lm-353.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3363699E8E5CC7B942A96EF0 /* lm-353.jpg */; };
-		D96638949392F835577867A1 /* LocationSearch.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3D02D6042D9D7BAF92BA433 /* LocationSearch.swift */; };
 		DE604FE512E54402FC159D0A /* lm-264.jpg in Resources */ = {isa = PBXBuildFile; fileRef = AEC719BA5DFA779882BE9F2B /* lm-264.jpg */; };
 		E07070F3111AF4B9C1E8EF1E /* lm-288.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 7DB3873B2C52990F582D9796 /* lm-288.jpg */; };
-		EF6A3DA1833C93AC26588082 /* FieldGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BB75F11D081B87E34585F376 /* FieldGuideView.swift */; };
+		F3CA42CAAC4F0C345B7E48EB /* FieldGuideView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E608BDC820673D3CF4C08871 /* FieldGuideView.swift */; };
 		FC434948E06245F5257F0201 /* lm-100.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 1C9166CD321491F63D232341 /* lm-100.jpg */; };
 		FEAB35DB169C651F856CCAEA /* lm-253.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 3C3E8CB2B947A405A72051C9 /* lm-253.jpg */; };
 		FEC3244B84DF7B808F1D2DEF /* park-145.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 9D03D4708D72C4519BB11424 /* park-145.jpg */; };
@@ -81,6 +95,8 @@
 /* Begin PBXFileReference section */
 		0C64D0F527CE6288EA444FA0 /* lm-86.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-86.jpg"; sourceTree = "<group>"; };
 		0D0F0557221B7AD62FA7C63C /* lm-215.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-215.jpg"; sourceTree = "<group>"; };
+		0D9A5682CDC2AE0919C567ED /* StartingLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartingLocation.swift; sourceTree = "<group>"; };
+		0DA9D3B903147A0AB2AFD5D4 /* TourRouting.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourRouting.swift; sourceTree = "<group>"; };
 		145EDDC118C156DF5C618375 /* film-523.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "film-523.jpg"; sourceTree = "<group>"; };
 		16D6C43D91C0CA0C920195BB /* SidewalkTests.xctest */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.cfbundle; path = SidewalkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1C9166CD321491F63D232341 /* lm-100.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-100.jpg"; sourceTree = "<group>"; };
@@ -90,55 +106,67 @@
 		2EA4A7BB0E44AF7701E0AC8B /* lm-246.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-246.jpg"; sourceTree = "<group>"; };
 		3363699E8E5CC7B942A96EF0 /* lm-353.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-353.jpg"; sourceTree = "<group>"; };
 		35176D48AAE84E40C957575F /* art-1936.1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "art-1936.1.jpg"; sourceTree = "<group>"; };
+		399A17BFF5FEA20DD3BE61D3 /* RoutePlannerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePlannerModel.swift; sourceTree = "<group>"; };
 		3C3E8CB2B947A405A72051C9 /* lm-253.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-253.jpg"; sourceTree = "<group>"; };
 		3CBBC834013F562151AE2B81 /* film-624.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "film-624.jpg"; sourceTree = "<group>"; };
 		428A2BB01E5E8AA82A689AD3 /* places.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = places.json; sourceTree = "<group>"; };
 		4764D5BF8DFF34FC9B3E940C /* lm-265.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-265.jpg"; sourceTree = "<group>"; };
-		4C1B5953165F4CCC285D8F1F /* VisitLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitLocation.swift; sourceTree = "<group>"; };
-		4C4EDF359D768925F2A23910 /* PlacesMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesMap.swift; sourceTree = "<group>"; };
-		5024435A006AC977650229BE /* RoutePlannerModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoutePlannerModel.swift; sourceTree = "<group>"; };
+		4764E06F0148140ECDAF812C /* LocationSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearch.swift; sourceTree = "<group>"; };
+		4A9A4AA01F2F2E3156ED6C04 /* WalkPlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkPlanner.swift; sourceTree = "<group>"; };
+		4D916640B8683B406844FDB1 /* GuideStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideStorage.swift; sourceTree = "<group>"; };
 		535193C30739790E4AE2B2EA /* lm-275.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-275.jpg"; sourceTree = "<group>"; };
-		5DFBD3F2B64D5472093EC44A /* PlaceDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetail.swift; sourceTree = "<group>"; };
+		55150848EF613D9E048E7755 /* Place.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Place.swift; sourceTree = "<group>"; };
+		5CF65AA060E496E0FD54B6B5 /* WalkNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkNavigation.swift; sourceTree = "<group>"; };
 		6024FC0817169584131386F6 /* lm-286.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-286.jpg"; sourceTree = "<group>"; };
 		618EEB7A0EB186CE01044E52 /* lm-267.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-267.jpg"; sourceTree = "<group>"; };
+		64A7033F942C7D4F71218121 /* SidewalkMotion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidewalkMotion.swift; sourceTree = "<group>"; };
+		6689E6888F61CFDF77E6F50A /* TourSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourSession.swift; sourceTree = "<group>"; };
 		694A0A0DB8E727E9068D570B /* lm-291.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "lm-291.png"; sourceTree = "<group>"; };
+		70EF09B6C6492C0241515EB3 /* PlaceCover.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceCover.swift; sourceTree = "<group>"; };
 		75E80BFF643EA8C812BDF874 /* lm-125.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-125.jpg"; sourceTree = "<group>"; };
+		7BCF5D33D3FBBE622EA84278 /* PlacesMap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlacesMap.swift; sourceTree = "<group>"; };
 		7DB3873B2C52990F582D9796 /* lm-288.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-288.jpg"; sourceTree = "<group>"; };
-		850188F768711A251CA9C0B6 /* GuideStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GuideStorage.swift; sourceTree = "<group>"; };
 		85E92279D0507A0BCB9FA692 /* lm-274.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-274.jpg"; sourceTree = "<group>"; };
 		8C6C0C66C6AC52722DC293B7 /* lm-310.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-310.jpg"; sourceTree = "<group>"; };
+		8D85864CE6CB23FAD43C52C4 /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
+		91DAC40D225F0E6772A77437 /* WalkRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkRequest.swift; sourceTree = "<group>"; };
 		93F70ED248B12CFE09945792 /* lm-228.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-228.jpg"; sourceTree = "<group>"; };
+		97C9694E572B855C6932F59B /* TourController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourController.swift; sourceTree = "<group>"; };
+		9D008AA26EE6DC965C44B185 /* CheckIn.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckIn.swift; sourceTree = "<group>"; };
 		9D03D4708D72C4519BB11424 /* park-145.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "park-145.jpg"; sourceTree = "<group>"; };
+		A02EC8F76282D45C27F2642D /* Visit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Visit.swift; sourceTree = "<group>"; };
 		A1390CA9DF7170C25E0F9F6F /* film-301.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "film-301.jpg"; sourceTree = "<group>"; };
-		A230B4F4353CE232AE8BD73D /* StartingLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StartingLocation.swift; sourceTree = "<group>"; };
+		A3672C6DD5642FD5C19ED27A /* MomentDraftStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MomentDraftStore.swift; sourceTree = "<group>"; };
+		A4216F5E6393EDFA3C522BE1 /* FieldGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldGuide.swift; sourceTree = "<group>"; };
 		A8F11201079D0A553E24830D /* lm-33.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-33.jpg"; sourceTree = "<group>"; };
+		AB2B895141E4C39E0D12B459 /* VisitLocation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisitLocation.swift; sourceTree = "<group>"; };
 		AC6D6785CE1ECA1B2E79F4DF /* Sidewalk.app */ = {isa = PBXFileReference; includeInIndex = 0; lastKnownFileType = wrapper.application; path = Sidewalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		AD25CEB4A91CA18DCBB958F5 /* SidewalkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidewalkApp.swift; sourceTree = "<group>"; };
 		AEC719BA5DFA779882BE9F2B /* lm-264.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-264.jpg"; sourceTree = "<group>"; };
 		AF37C53EEE73BD2FE8D87911 /* lm-35.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-35.jpg"; sourceTree = "<group>"; };
 		B39A20E38383A3F968C7BA1F /* lm-69.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-69.jpg"; sourceTree = "<group>"; };
-		BB75F11D081B87E34585F376 /* FieldGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldGuideView.swift; sourceTree = "<group>"; };
+		B76F40873217624AA433C25D /* TourJourneyTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourJourneyTests.swift; sourceTree = "<group>"; };
 		C139F886E56599C44C2A4DA8 /* lm-113.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-113.jpg"; sourceTree = "<group>"; };
 		C1D3EE1241F9EE0D9ECB0AB1 /* lm-334.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-334.jpg"; sourceTree = "<group>"; };
 		C3808F5C2EC4F93189226329 /* park-153.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "park-153.jpg"; sourceTree = "<group>"; };
-		C597623B58499CBAA1CB8D81 /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
+		C4C49BF69D8CF657FB440C7D /* StopStory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StopStory.swift; sourceTree = "<group>"; };
 		C62BBEB42948927C5C9F675A /* lm-316.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-316.jpg"; sourceTree = "<group>"; };
 		C7481352C321F0857E4F14E5 /* lm-40.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-40.jpg"; sourceTree = "<group>"; };
-		CDE801A3353DE9971F80EC5C /* ArrivalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalView.swift; sourceTree = "<group>"; };
 		D4D09285BE1BB93317CB650E /* lm-276.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-276.jpg"; sourceTree = "<group>"; };
-		D4F09794CBA1C7203B127518 /* WalkNavigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkNavigation.swift; sourceTree = "<group>"; };
-		D803D822BCB26939FF4AE30A /* SidewalkMotion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidewalkMotion.swift; sourceTree = "<group>"; };
+		D78305BCD23541B86AB16DE2 /* ExploreView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExploreView.swift; sourceTree = "<group>"; };
+		DB586D523F751FF65ADDD957 /* WalkSummaryContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkSummaryContent.swift; sourceTree = "<group>"; };
 		DE4F6419D7E7A64BF446AB73 /* lm-263.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-263.jpg"; sourceTree = "<group>"; };
-		E1ED069670AE7F04B7CA7E50 /* DesignSystem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DesignSystem.swift; sourceTree = "<group>"; };
+		E3D0D9F41DF6AF831BC27705 /* SidewalkApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidewalkApp.swift; sourceTree = "<group>"; };
 		E5335CE74286AFE6495D57A6 /* lm-80.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-80.jpg"; sourceTree = "<group>"; };
+		E608BDC820673D3CF4C08871 /* FieldGuideView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldGuideView.swift; sourceTree = "<group>"; };
 		EA86E55AD24C0475AB90C74A /* lm-154.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-154.jpg"; sourceTree = "<group>"; };
+		EADD3394ADBABD1B01111F7B /* ArrivalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArrivalView.swift; sourceTree = "<group>"; };
 		EEEA0CCD4C54484A0E966F5B /* lm-134.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-134.jpg"; sourceTree = "<group>"; };
-		F0C0B55F0DFB66FA74BCE59E /* FieldGuide.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldGuide.swift; sourceTree = "<group>"; };
-		F3066E0416804284FCE02CAF /* WalkPlanner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkPlanner.swift; sourceTree = "<group>"; };
-		F3D02D6042D9D7BAF92BA433 /* LocationSearch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationSearch.swift; sourceTree = "<group>"; };
+		EF92ECA78CC19653F03DF2E7 /* TourStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TourStore.swift; sourceTree = "<group>"; };
 		F5FB6694458DF65AB67614B3 /* lm-315.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = "lm-315.jpg"; sourceTree = "<group>"; };
 		F6E196039500519ED0537AB8 /* QualityTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QualityTests.swift; sourceTree = "<group>"; };
+		F6F8C7AD41F1A48D08A858AC /* WalkingProgress.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WalkingProgress.swift; sourceTree = "<group>"; };
 		F982A53AC4D89AD3A976DA2C /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FAAFC22ED270A81050922A28 /* PlaceDetail.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlaceDetail.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -162,28 +190,53 @@
 			);
 			sourceTree = "<group>";
 		};
+		24817E12663A9CBF3E9FAC9A /* FieldGuide */ = {
+			isa = PBXGroup;
+			children = (
+				9D008AA26EE6DC965C44B185 /* CheckIn.swift */,
+				A4216F5E6393EDFA3C522BE1 /* FieldGuide.swift */,
+				E608BDC820673D3CF4C08871 /* FieldGuideView.swift */,
+			);
+			path = FieldGuide;
+			sourceTree = "<group>";
+		};
+		3BDFFA45D98AA853CF92F5AB /* Explore */ = {
+			isa = PBXGroup;
+			children = (
+				D78305BCD23541B86AB16DE2 /* ExploreView.swift */,
+				FAAFC22ED270A81050922A28 /* PlaceDetail.swift */,
+				7BCF5D33D3FBBE622EA84278 /* PlacesMap.swift */,
+			);
+			path = Explore;
+			sourceTree = "<group>";
+		};
 		707073C84D2601DA23F7CBD6 /* Sidewalk */ = {
 			isa = PBXGroup;
 			children = (
-				CDE801A3353DE9971F80EC5C /* ArrivalView.swift */,
-				E1ED069670AE7F04B7CA7E50 /* DesignSystem.swift */,
-				C597623B58499CBAA1CB8D81 /* ExploreView.swift */,
-				F0C0B55F0DFB66FA74BCE59E /* FieldGuide.swift */,
-				BB75F11D081B87E34585F376 /* FieldGuideView.swift */,
-				850188F768711A251CA9C0B6 /* GuideStorage.swift */,
-				F3D02D6042D9D7BAF92BA433 /* LocationSearch.swift */,
-				5DFBD3F2B64D5472093EC44A /* PlaceDetail.swift */,
-				4C4EDF359D768925F2A23910 /* PlacesMap.swift */,
-				5024435A006AC977650229BE /* RoutePlannerModel.swift */,
-				AD25CEB4A91CA18DCBB958F5 /* SidewalkApp.swift */,
-				D803D822BCB26939FF4AE30A /* SidewalkMotion.swift */,
-				A230B4F4353CE232AE8BD73D /* StartingLocation.swift */,
-				4C1B5953165F4CCC285D8F1F /* VisitLocation.swift */,
-				D4F09794CBA1C7203B127518 /* WalkNavigation.swift */,
-				F3066E0416804284FCE02CAF /* WalkPlanner.swift */,
+				B4C83476985B0FACC4FF5110 /* App */,
+				D201ED9538A3DA2F969EC94C /* Features */,
+				8B29906063C30B77BCAC1306 /* Location */,
+				8A84867F82D0374589BA5C77 /* Models */,
 				92EFB734AD4E5B4C47EAB41F /* Resources */,
+				E566A501468C58DC2FA37129 /* Shared */,
+				A89535303DD027B3299ED825 /* Storage */,
 			);
 			path = Sidewalk;
+			sourceTree = "<group>";
+		};
+		7BCF0763E137C09BD00C5E8C /* Walking */ = {
+			isa = PBXGroup;
+			children = (
+				399A17BFF5FEA20DD3BE61D3 /* RoutePlannerModel.swift */,
+				C4C49BF69D8CF657FB440C7D /* StopStory.swift */,
+				97C9694E572B855C6932F59B /* TourController.swift */,
+				0DA9D3B903147A0AB2AFD5D4 /* TourRouting.swift */,
+				F6F8C7AD41F1A48D08A858AC /* WalkingProgress.swift */,
+				5CF65AA060E496E0FD54B6B5 /* WalkNavigation.swift */,
+				4A9A4AA01F2F2E3156ED6C04 /* WalkPlanner.swift */,
+				DB586D523F751FF65ADDD957 /* WalkSummaryContent.swift */,
+			);
+			path = Walking;
 			sourceTree = "<group>";
 		};
 		82AB17F4474D7122755D9FE5 /* PlaceCovers */ = {
@@ -232,6 +285,26 @@
 			path = PlaceCovers;
 			sourceTree = "<group>";
 		};
+		8A84867F82D0374589BA5C77 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				55150848EF613D9E048E7755 /* Place.swift */,
+				6689E6888F61CFDF77E6F50A /* TourSession.swift */,
+				A02EC8F76282D45C27F2642D /* Visit.swift */,
+				91DAC40D225F0E6772A77437 /* WalkRequest.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
+		8B29906063C30B77BCAC1306 /* Location */ = {
+			isa = PBXGroup;
+			children = (
+				0D9A5682CDC2AE0919C567ED /* StartingLocation.swift */,
+				AB2B895141E4C39E0D12B459 /* VisitLocation.swift */,
+			);
+			path = Location;
+			sourceTree = "<group>";
+		};
 		92EFB734AD4E5B4C47EAB41F /* Resources */ = {
 			isa = PBXGroup;
 			children = (
@@ -240,6 +313,25 @@
 				82AB17F4474D7122755D9FE5 /* PlaceCovers */,
 			);
 			path = Resources;
+			sourceTree = "<group>";
+		};
+		A89535303DD027B3299ED825 /* Storage */ = {
+			isa = PBXGroup;
+			children = (
+				4D916640B8683B406844FDB1 /* GuideStorage.swift */,
+				A3672C6DD5642FD5C19ED27A /* MomentDraftStore.swift */,
+				EF92ECA78CC19653F03DF2E7 /* TourStore.swift */,
+			);
+			path = Storage;
+			sourceTree = "<group>";
+		};
+		B4C83476985B0FACC4FF5110 /* App */ = {
+			isa = PBXGroup;
+			children = (
+				EADD3394ADBABD1B01111F7B /* ArrivalView.swift */,
+				E3D0D9F41DF6AF831BC27705 /* SidewalkApp.swift */,
+			);
+			path = App;
 			sourceTree = "<group>";
 		};
 		C873873F52BF7C6FFF8D24EE /* Products */ = {
@@ -251,12 +343,34 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		D201ED9538A3DA2F969EC94C /* Features */ = {
+			isa = PBXGroup;
+			children = (
+				3BDFFA45D98AA853CF92F5AB /* Explore */,
+				24817E12663A9CBF3E9FAC9A /* FieldGuide */,
+				7BCF0763E137C09BD00C5E8C /* Walking */,
+			);
+			path = Features;
+			sourceTree = "<group>";
+		};
 		E5208963DEDE708B3CC606CD /* SidewalkTests */ = {
 			isa = PBXGroup;
 			children = (
 				F6E196039500519ED0537AB8 /* QualityTests.swift */,
+				B76F40873217624AA433C25D /* TourJourneyTests.swift */,
 			);
 			path = SidewalkTests;
+			sourceTree = "<group>";
+		};
+		E566A501468C58DC2FA37129 /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				8D85864CE6CB23FAD43C52C4 /* DesignSystem.swift */,
+				4764E06F0148140ECDAF812C /* LocationSearch.swift */,
+				70EF09B6C6492C0241515EB3 /* PlaceCover.swift */,
+				64A7033F942C7D4F71218121 /* SidewalkMotion.swift */,
+			);
+			path = Shared;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -394,6 +508,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9059EDB93C709C8633B95308 /* QualityTests.swift in Sources */,
+				3B00E1F1128EFECF70A6EBB0 /* TourJourneyTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -401,22 +516,35 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				9BE480C768CA7634FE737D68 /* ArrivalView.swift in Sources */,
-				C9C0F4E22971C4FD11199316 /* DesignSystem.swift in Sources */,
-				08A98953FBA7456BF7095F65 /* ExploreView.swift in Sources */,
-				A13A77B73FBA4EBE1EA3C081 /* FieldGuide.swift in Sources */,
-				EF6A3DA1833C93AC26588082 /* FieldGuideView.swift in Sources */,
-				BDF4314AAE380509F1604744 /* GuideStorage.swift in Sources */,
-				D96638949392F835577867A1 /* LocationSearch.swift in Sources */,
-				C0889B5AFA9B5CA168B8BA35 /* PlaceDetail.swift in Sources */,
-				90F2531EBFF5534F36B0D6C7 /* PlacesMap.swift in Sources */,
-				8E46F51DF9BDE6AA601CED29 /* RoutePlannerModel.swift in Sources */,
-				6AE008208C338FEB90828967 /* SidewalkApp.swift in Sources */,
-				5F8D9A6FDC4078BE739B576B /* SidewalkMotion.swift in Sources */,
-				8A6FAD553D22DF95420A7A51 /* StartingLocation.swift in Sources */,
-				249A5F8693C9FBB148867306 /* VisitLocation.swift in Sources */,
-				24E38798F607C996537A9C9A /* WalkNavigation.swift in Sources */,
-				4F83767FE24EE74F4FFE8B2C /* WalkPlanner.swift in Sources */,
+				5C9D75CA9BCD4BF56247C225 /* ArrivalView.swift in Sources */,
+				3DA5C8E65B7A57AFD87FC0DE /* CheckIn.swift in Sources */,
+				CA01DF7D1B0231FBFF8D8654 /* DesignSystem.swift in Sources */,
+				8481E88E54157FB2EE26ABEF /* ExploreView.swift in Sources */,
+				4B52DD123D18024C704185FB /* FieldGuide.swift in Sources */,
+				F3CA42CAAC4F0C345B7E48EB /* FieldGuideView.swift in Sources */,
+				1F2A4B157CB0E9C190C166A5 /* GuideStorage.swift in Sources */,
+				652201ABFC5898A6613C3087 /* LocationSearch.swift in Sources */,
+				4635C28F7A22D237F07C020D /* MomentDraftStore.swift in Sources */,
+				64248C55113CD8922DFCE270 /* Place.swift in Sources */,
+				2AB7004303EE16A021EB865A /* PlaceCover.swift in Sources */,
+				519B6B8AAF2377121C05D533 /* PlaceDetail.swift in Sources */,
+				06B87793556618DCC7654701 /* PlacesMap.swift in Sources */,
+				263F998CEB1F32D4B451D0F1 /* RoutePlannerModel.swift in Sources */,
+				64734EE589D1E7B9337EB2E6 /* SidewalkApp.swift in Sources */,
+				90678ABC54989FFD110B73EE /* SidewalkMotion.swift in Sources */,
+				A4E20194252D7F81510C950B /* StartingLocation.swift in Sources */,
+				47F6973461678C9359FF4EE2 /* StopStory.swift in Sources */,
+				BC90180ED4CDCFB3E2F0EFC2 /* TourController.swift in Sources */,
+				2F342EC955FCE11CFE67B86B /* TourRouting.swift in Sources */,
+				D679B141E577AD32AA2015E0 /* TourSession.swift in Sources */,
+				55D00C8E21ECD8AA54D00801 /* TourStore.swift in Sources */,
+				3AE40755C7EE2D8DAAB9C8F4 /* Visit.swift in Sources */,
+				723BC08E564344B62539ECAF /* VisitLocation.swift in Sources */,
+				04480A693879AAA7C4B31C46 /* WalkNavigation.swift in Sources */,
+				CA59B8F6C9B849E523A89483 /* WalkPlanner.swift in Sources */,
+				4557DF0F107B556937D7C01F /* WalkRequest.swift in Sources */,
+				7E38B2ADBDDF5F3CA34A3DBF /* WalkSummaryContent.swift in Sources */,
+				5F992D65DF5E1499D6FB1BF3 /* WalkingProgress.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -439,8 +567,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Sidewalk-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Sidewalk;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Use your location for live walking directions, as a walking start, and to confirm arrival to collect a visit stamp. Starting coordinates are sent to Apple Maps for directions; check-in coordinates stay on your device.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Take a photo of a place for your private field guide.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Follow your active walk, including when your phone is locked, and confirm arrival for visit stamps. Starting coordinates are sent to Apple Maps for directions; check-in coordinates stay on your device. Pause or end the walk to stop tracking.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -462,8 +592,10 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = "Sidewalk-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = Sidewalk;
-				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Use your location for live walking directions, as a walking start, and to confirm arrival to collect a visit stamp. Starting coordinates are sent to Apple Maps for directions; check-in coordinates stay on your device.";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Take a photo of a place for your private field guide.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Follow your active walk, including when your phone is locked, and confirm arrival for visit stamps. Starting coordinates are sent to Apple Maps for directions; check-in coordinates stay on your device. Pause or end the walk to stop tracking.";
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
