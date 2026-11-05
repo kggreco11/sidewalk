@@ -78,8 +78,11 @@ struct ExploreView: View {
     @State private var selected: Place?
     @State private var walkDestination: Place?
     @State private var walkRequest: WalkRequest?
+    @State private var plannedRoute: MKRoute?
     @State private var collection = false
     @State private var center = CLLocationCoordinate2D(latitude: 37.800, longitude: -122.407)
+    @State private var panelLevel = 1
+    @GestureState private var panelDrag: CGFloat = 0
     @State private var area = "North Beach"
     let areas = ["North Beach", "Waterfront", "Mission", "Civic Center", "Golden Gate Park", "All San Francisco"]
     var matches: [Place] {
@@ -90,31 +93,34 @@ struct ExploreView: View {
     }
     func distance(_ p: Place) -> Double { pow(p.lat-center.latitude,2) + pow((p.lng-center.longitude)*0.79,2) }
     var body: some View {
-        ScrollView { VStack(spacing: 0) {
-            HStack {
+        GeometryReader { geometry in
+        ZStack(alignment:.bottom) {
+            PlacesMap(places: matches, center: center, city: false, selected: $selected, route:plannedRoute).ignoresSafeArea()
+            if let request=walkRequest {
+                WalkPlanner(destination:request.destination,route:$plannedRoute) { withAnimation(.easeInOut(duration:0.3)) {walkRequest=nil;plannedRoute=nil} }.id(request.id).transition(.opacity)
+            } else {
+            VStack { HStack {
                 Text("sidewalk").font(.system(.largeTitle, design: .serif)).tracking(-1.5)
                 Spacer()
                 Button { collection = true } label: { Image(systemName: "book.closed").font(.title3).frame(width:44,height:44) }.accessibilityLabel("My field guide")
-            }.padding(.horizontal,20)
-            PlacesMap(places: matches, center: center, city: area == "All San Francisco", selected: $selected).frame(height:textSize.isAccessibilitySize ? 220 : 280)
+            }.padding(.horizontal,20).padding(.vertical,8).background(paper.opacity(0.96))
+                Spacer()
+            }
+            VStack(spacing:0) {
+                VStack(spacing:4) {
+                    Capsule().fill(ink.opacity(0.25)).frame(width:36,height:5).padding(.top,10)
+                    HStack { Text("Explore").font(.title2.bold()); Spacer(); Button { withAnimation(.snappy) { panelLevel = panelLevel == 0 ? 1 : 0 } } label: { Image(systemName:panelLevel == 0 ? "chevron.up" : "chevron.down").frame(width:44,height:44) }.accessibilityLabel(panelLevel == 0 ? "Show places" : "Show full map") }.padding(.horizontal,16)
+                }.contentShape(Rectangle()).gesture(DragGesture().updating($panelDrag) { value,state,_ in state=value.translation.height }.onEnded { value in withAnimation(.snappy) { if value.predictedEndTranslation.height > 50 { panelLevel=max(0,panelLevel-1) } else if value.predictedEndTranslation.height < -50 { panelLevel=min(2,panelLevel+1) } } })
+                if panelLevel > 0 {
+            ScrollView { VStack(spacing: 0) {
             VStack(alignment:.leading, spacing:12) {
-                VStack(alignment:.leading,spacing:8) {
-                    Text("Explore").font(.system(.largeTitle,design:.serif))
-                    Menu {
-                        ForEach(areas,id:\.self) { name in Button(name) {
-                            area = name
-                            let centers: [String:CLLocationCoordinate2D] = ["North Beach":.init(latitude:37.800,longitude:-122.407),"Waterfront":.init(latitude:37.796,longitude:-122.394),"Mission":.init(latitude:37.760,longitude:-122.419),"Civic Center":.init(latitude:37.780,longitude:-122.419),"Golden Gate Park":.init(latitude:37.770,longitude:-122.469),"All San Francisco":.init(latitude:37.775,longitude:-122.438)]
-                            center = centers[name]!
-                        } }
-                    } label: { Label(area,systemImage:"chevron.down").font(.body).frame(minHeight:44) }
-                }
+
                 HStack { Image(systemName:"magnifyingglass"); TextField("Find a place",text:$search).textInputAutocapitalization(.never); if !search.isEmpty { Button { search = "" } label: { Image(systemName:"xmark.circle.fill").frame(width:44,height:44) }.accessibilityLabel("Clear search") } }.padding(10).background(.white.opacity(0.65),in:RoundedRectangle(cornerRadius:10))
                 ScrollView(.horizontal,showsIndicators:false) { HStack { ForEach(["All","Architecture","History","Culture","Art","Parks","Saved"],id:\.self) { value in
                     Button(value) { filter = value }.font(.body).padding(.horizontal,14).frame(minHeight:44).background(filter == value ? ink : .clear,in:Capsule()).foregroundStyle(filter == value ? paper : ink).overlay(Capsule().stroke(ink.opacity(0.15))).accessibilityAddTraits(filter == value ? .isSelected : [])
                 } } }
-                HStack { Text("\(matches.count) places"); Spacer(); Text("Swipe to explore").foregroundStyle(.secondary) }.font(.body)
-                ScrollView(.horizontal,showsIndicators:false) {
-                    LazyHStack(spacing:12) { ForEach(matches) { place in
+                HStack { Text("\(matches.count) places"); Spacer(); Text("Nearby").foregroundStyle(.secondary) }.font(.body)
+                LazyVStack(spacing:12) { ForEach(matches) { place in
                         HStack(alignment:.top,spacing:12) {
                             Button { selected = place } label: {
                                 HStack(alignment:.top,spacing:12) {
@@ -127,14 +133,21 @@ struct ExploreView: View {
                                 }
                             }.buttonStyle(.plain)
                             Button { guide.toggle(place) } label: { Image(systemName:guide.saved.contains(place.id) ? "bookmark.fill" : "bookmark").frame(width:44,height:44) }.accessibilityLabel("Save \(place.name)")
-                        }.padding(12).frame(width:320,alignment:.topLeading).background(.white.opacity(0.7),in:RoundedRectangle(cornerRadius:10))
-                    } } }
+                        }.padding(12).frame(maxWidth:.infinity,alignment:.topLeading).background(.white.opacity(0.7),in:RoundedRectangle(cornerRadius:10))
+                    } }
                 if matches.isEmpty { Text("No matches. Try another interest or search.").font(.body) }
-                Button { walkRequest = WalkRequest(destination:nil) } label: { Label("Start a walk",systemImage:"figure.walk").foregroundStyle(paper).frame(maxWidth:.infinity,minHeight:52) }.buttonStyle(.borderedProminent)
+
             }.padding(16).background(paper)
-        } }.background(paper).foregroundStyle(ink)
+        } }.scrollDismissesKeyboard(.interactively).scrollBounceBehavior(.basedOnSize)
+                }
+                Button { withAnimation(.easeInOut(duration:0.3)) { walkRequest = WalkRequest(destination:nil) } } label: { Label("Start a walk",systemImage:"figure.walk").foregroundStyle(paper).frame(maxWidth:.infinity,minHeight:52) }.buttonStyle(.borderedProminent).padding(.horizontal,16).padding(.bottom,8)
+            }.frame(height:max(134,min(geometry.size.height-70,(panelLevel == 0 ? 134 : geometry.size.height * (panelLevel == 1 ? 0.56 : 0.9))-panelDrag)))
+                .background(paper,in:UnevenRoundedRectangle(topLeadingRadius:24,topTrailingRadius:24))
+                .clipped()
+            }
+        }
+        }.background(paper).foregroundStyle(ink)
         .sheet(item:$selected,onDismiss:{if let destination=walkDestination {walkRequest=WalkRequest(destination:destination);walkDestination=nil}}) { p in PlaceDetail(place:p) { walkDestination = p; selected = nil }.environmentObject(guide) }
-        .sheet(item:$walkRequest) { request in WalkPlanner(destination:request.destination).environmentObject(guide) }
         .sheet(isPresented:$collection) { NavigationStack { List(guide.places.filter { guide.visits[$0.id] != nil || guide.unlocked.contains($0.id) }) { p in VStack(alignment:.leading,spacing:8) { Text(p.name).font(.headline); if guide.unlocked.contains(p.id) { Text(p.story).font(.body) }; Text(guide.visits[p.id]?.note ?? ""); if let data=guide.visits[p.id]?.photo,let image=UIImage(data:data) { Image(uiImage:image).resizable().scaledToFit().frame(maxHeight:180) } } }.navigationTitle("Field guide").overlay { if guide.visits.isEmpty && guide.unlocked.isEmpty { ContentUnavailableView("No stamps yet",systemImage:"book.closed",description:Text("Check in at a place to collect it.")) } }.toolbar { Button("Done") { collection=false } } } }
         .alert("Field guide",isPresented:Binding(get:{guide.error != nil},set:{if !$0 {guide.error=nil}})) { Button("OK") {guide.error=nil} } message: {Text(guide.error ?? "")}
     }
@@ -182,6 +195,7 @@ struct PlacesMap: UIViewRepresentable {
     let center: CLLocationCoordinate2D
     var city=false
     @Binding var selected: Place?
+    var route: MKRoute? = nil
     func makeCoordinator() -> Coordinator { Coordinator(self) }
     func makeUIView(context:Context) -> MKMapView {
         let map=MKMapView(); map.delegate=context.coordinator; map.pointOfInterestFilter = .excludingAll
@@ -195,6 +209,14 @@ struct PlacesMap: UIViewRepresentable {
         if context.coordinator.ids != places.map(\.id) {
             map.removeAnnotations(map.annotations); map.addAnnotations(places.map(PlacePin.init)); context.coordinator.ids=places.map(\.id)
         }
+        if context.coordinator.currentRoute !== route {
+            map.removeOverlays(map.overlays)
+            context.coordinator.currentRoute=route
+            if let route {
+                map.addOverlay(route.polyline)
+                map.setVisibleMapRect(route.polyline.boundingMapRect,edgePadding:UIEdgeInsets(top:210,left:45,bottom:240,right:45),animated:true)
+            }
+        }
         let key="\(center.latitude),\(center.longitude),\(city)"
         if context.coordinator.centerKey != key {
             context.coordinator.centerKey=key
@@ -203,6 +225,10 @@ struct PlacesMap: UIViewRepresentable {
     }
     class Coordinator:NSObject,MKMapViewDelegate {
         var parent:PlacesMap; var ids:[String]=[]; var centerKey=""
+        var currentRoute: MKRoute?
+        func mapView(_ mapView:MKMapView,rendererFor overlay:MKOverlay)->MKOverlayRenderer {
+            let renderer=MKPolylineRenderer(overlay:overlay);renderer.strokeColor=UIColor(ink);renderer.lineWidth=6;return renderer
+        }
         init(_ parent:PlacesMap) {self.parent=parent}
         func mapView(_ mapView:MKMapView,viewFor annotation:MKAnnotation)->MKAnnotationView? {
             guard !(annotation is MKUserLocation) else{return nil}

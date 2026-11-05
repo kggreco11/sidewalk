@@ -4,64 +4,84 @@ import PhotosUI
 
 struct WalkPlanner: View {
     @EnvironmentObject var guide:FieldGuide
-    @Environment(\.dismiss) var dismiss
     let destination:Place?
     @State private var from="Ferry Building"
     @State private var target:Place?
-    @State private var route:MKRoute?
+    @Binding var route:MKRoute?
+    let close: () -> Void
     @State private var busy=false
     @State private var error:String?
     @State private var active=false
     @State private var checkIn=false
-    init(destination:Place?) {
+    @State private var choosing=false
+    @State private var query=""
+    @State private var requestID = UUID()
+    init(destination:Place?, route:Binding<MKRoute?>, close:@escaping () -> Void) {
         self.destination=destination
+        _route=route
+        self.close=close
         _target=State(initialValue:destination)
     }
     var body:some View {
-        NavigationStack {
-            Group {
-                if let route,let target {
-                    ScrollView { VStack(spacing:0) {
-                        Map { MapPolyline(route.polyline).stroke(ink,lineWidth:6); Marker(target.name,coordinate:target.coordinate) }
-                            .mapStyle(.standard(pointsOfInterest:.excludingAll)).frame(minHeight:260)
-                        VStack(alignment:.leading,spacing:16) {
-                            Text(target.name).font(.system(.title2,design:.serif))
-                            Text("\(Int(ceil(route.expectedTravelTime/60))) min · \(route.distance/1000,specifier:"%.1f") km").font(.subheadline)
-                            if active {
-                                ScrollView { VStack(alignment:.leading,spacing:16) { ForEach(Array(route.steps.filter{!$0.instructions.isEmpty}.enumerated()),id:\.offset) { _,step in Label(step.instructions,systemImage:"arrow.turn.up.right").font(.body) } } }.frame(minHeight:130,maxHeight:240)
-                                Button { checkIn=true } label: {Text("I’m here").frame(maxWidth:.infinity,minHeight:52)}.buttonStyle(.borderedProminent)
-                            } else {
-                                Text("Direct walking route").font(.body).foregroundStyle(.secondary)
-                                Button { active=true } label: {Text("Start walk").frame(maxWidth:.infinity,minHeight:52)}.buttonStyle(.borderedProminent)
-                            }
-                        }.padding(20).background(paper)
-                    } }
-                } else {
-                    Form {
-                        Section("Starting place") { TextField("Where from?",text:$from) }
-                        Section("Destination") {
-                            if let target {Text(target.name)}
-                            else { Picker("Choose a place",selection:$target) { Text("Select a destination").tag(nil as Place?); ForEach(guide.places.sorted{$0.name<$1.name}) {p in Text(p.name).tag(Optional(p))} } }
-                        }
-                        if let error {Section {Text(error).foregroundStyle(.red)}}
-                        Section { Button { Task { await plan() } } label: { HStack {Text(busy ? "Finding a walk…" : "Go"); Spacer(); if busy {ProgressView()} else {Image(systemName:"arrow.up.right")} } }.disabled(busy || target == nil || from.trimmingCharacters(in:.whitespaces).isEmpty) }
-                    }.scrollContentBackground(.hidden).background(paper)
+        VStack(spacing:0) {
+            VStack(spacing:0) {
+                HStack {
+                    Button(action:close) {Image(systemName:"arrow.left").frame(width:44,height:44)}.accessibilityLabel("Back to Explore")
+                    Text(active ? "Your walk" : "Directions").font(.headline)
+                    Spacer()
+                }.padding(.horizontal,12)
+                if !active {
+                    VStack(spacing:12) {
+                        HStack { Image(systemName:"circle"); TextField("Starting place",text:$from).submitLabel(.route).onSubmit { Task {await plan()} } }
+                        Divider()
+                        Button { choosing=true } label: { HStack { Image(systemName:"mappin.circle.fill"); Text(target?.name ?? "Where to?").frame(maxWidth:.infinity,alignment:.leading); Image(systemName:"magnifyingglass") }.frame(minHeight:44) }.buttonStyle(.plain)
+                    }.padding(16).background(paper)
                 }
-            }.navigationTitle(route == nil ? "Start a walk" : "Your walk").navigationBarTitleDisplayMode(.inline)
-                .toolbar {ToolbarItem(placement:.topBarLeading) {Button("Close") {dismiss()}}}
-                .sheet(isPresented:$checkIn) { if let target {CheckIn(place:target).environmentObject(guide)} }
-        }
+            }.background(paper)
+            Spacer()
+            Group {
+                VStack(alignment:.leading,spacing:12) {
+                    if let route {
+                        Text("\(Int(ceil(route.expectedTravelTime/60))) min · \(route.distance/1000,specifier:"%.1f") km").font(.title2.bold())
+                        Text(target?.name ?? "Walking route").font(.body)
+                        if active {
+                            ScrollView { VStack(alignment:.leading,spacing:16) { ForEach(Array(route.steps.filter{!$0.instructions.isEmpty}.enumerated()),id:\.offset) { _,step in Text(step.instructions).font(.body) } } }.frame(maxHeight:150)
+                        }
+                    } else { Text(busy ? "Finding a walking route…" : "Choose your destination").font(.headline) }
+                    if let error { Text(error).font(.callout).foregroundStyle(.red) }
+                    Button {
+                        if active {checkIn=true}
+                        else if route != nil {active=true}
+                        else {Task {await plan()}}
+                    } label: {
+                        HStack { if busy {ProgressView().tint(paper)}; Label(active ? "I’m here" : route == nil ? "Find route" : "Go",systemImage:active ? "mappin" : "figure.walk") }.foregroundStyle(paper).frame(maxWidth:.infinity,minHeight:52)
+                    }.buttonStyle(.borderedProminent).disabled(busy || target == nil || from.trimmingCharacters(in:.whitespaces).isEmpty)
+                }.padding(20).background(paper,in:UnevenRoundedRectangle(topLeadingRadius:24,topTrailingRadius:24))
+            }
+            .onChange(of:from) {_,_ in requestID=UUID();busy=false;route=nil;active=false}
+            .onDisappear {requestID=UUID()}
+            .task {if target != nil {await plan()}}
+            .sheet(isPresented:$choosing) {
+                NavigationStack {
+                    List(guide.places.filter {query.isEmpty || $0.name.localizedCaseInsensitiveContains(query)}.sorted {$0.name<$1.name}) { place in
+                        Button {target=place;route=nil;active=false;choosing=false;Task {await plan()}} label: { VStack(alignment:.leading,spacing:6) {Text(place.name).font(.headline);Text(place.address ?? place.kind).font(.subheadline).foregroundStyle(.secondary)}.padding(.vertical,6) }.tint(ink)
+                    }.searchable(text:$query,prompt:"Search places").navigationTitle("Where to?").toolbar {Button("Cancel") {choosing=false}}
+                }
+            }
+            .sheet(isPresented:$checkIn) {if let target {CheckIn(place:target).environmentObject(guide)}}
+        }.foregroundStyle(ink)
     }
     func plan() async {
-        guard let target else{return}; busy=true; error=nil; defer{busy=false}
+        guard let target else{return}; let token=UUID();requestID=token;busy=true; error=nil; defer{if requestID == token {busy=false}}
         do {
             let request=MKLocalSearch.Request(); request.naturalLanguageQuery=from+", San Francisco"; request.region=MKCoordinateRegion(center:.init(latitude:37.775,longitude:-122.438),span:.init(latitudeDelta:0.15,longitudeDelta:0.15))
             let response=try await MKLocalSearch(request:request).start()
             guard let source=response.mapItems.first, (37.70...37.84).contains(source.placemark.coordinate.latitude),(-122.53 ... -122.35).contains(source.placemark.coordinate.longitude) else {error="Choose a starting place in San Francisco.";return}
             let directions=MKDirections.Request(); directions.source=source; directions.destination=MKMapItem(placemark:MKPlacemark(coordinate:target.coordinate));directions.transportType = .walking
             let result=try await MKDirections(request:directions).calculate()
+            guard requestID == token else {return}
             guard let first=result.routes.first else{error="No walking route found.";return};route=first
-        } catch {self.error="Could not get a walking route. Check your connection and try again."}
+        } catch {if requestID == token {self.error="Could not get a walking route. Check your connection and try again."}}
     }
 }
 struct CheckIn:View {
