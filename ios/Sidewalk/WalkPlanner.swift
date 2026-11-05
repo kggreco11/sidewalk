@@ -21,14 +21,14 @@ struct WalkPlanner: View {
                         Map { MapPolyline(route.polyline).stroke(ink,lineWidth:6); Marker(target.name,coordinate:target.coordinate) }
                             .mapStyle(.standard(pointsOfInterest:.excludingAll))
                         VStack(alignment:.leading,spacing:16) {
-                            Text(target.name).font(.system(size:28,design:.serif))
+                            Text(target.name).font(.system(.title2,design:.serif))
                             Text("\(Int(ceil(route.expectedTravelTime/60))) min · \(route.distance/1000,specifier:"%.1f") km").font(.subheadline)
                             if active {
-                                ScrollView { VStack(alignment:.leading,spacing:16) { ForEach(Array(route.steps.filter{!$0.instructions.isEmpty}.enumerated()),id:\.offset) { _,step in Label(step.instructions,systemImage:"arrow.turn.up.right").font(.body) } } }.frame(maxHeight:130)
-                                Button { checkIn=true } label: {Text("I’m here").frame(maxWidth:.infinity,minHeight:44)}.buttonStyle(.borderedProminent)
+                                ScrollView { VStack(alignment:.leading,spacing:16) { ForEach(Array(route.steps.filter{!$0.instructions.isEmpty}.enumerated()),id:\.offset) { _,step in Label(step.instructions,systemImage:"arrow.turn.up.right").font(.body) } } }.frame(minHeight:130,maxHeight:240)
+                                Button { checkIn=true } label: {Text("I’m here").frame(maxWidth:.infinity,minHeight:52)}.buttonStyle(.borderedProminent)
                             } else {
-                                Text("Direct walking route").font(.caption).foregroundStyle(.secondary)
-                                Button { active=true } label: {Text("Start walk").frame(maxWidth:.infinity,minHeight:44)}.buttonStyle(.borderedProminent)
+                                Text("Direct walking route").font(.body).foregroundStyle(.secondary)
+                                Button { active=true } label: {Text("Start walk").frame(maxWidth:.infinity,minHeight:52)}.buttonStyle(.borderedProminent)
                             }
                         }.padding(20).background(paper)
                     }
@@ -72,7 +72,7 @@ struct CheckIn:View {
     var body:some View {
         NavigationStack {
             Form {
-                Section {Text(place.name).font(.system(size:26,design:.serif));TextField("Worth a footnote?",text:$note,axis:.vertical).lineLimit(3...6)}
+                Section {Text(place.name).font(.system(.title2,design:.serif));TextField("Worth a footnote?",text:$note,axis:.vertical).lineLimit(3...6)}
                 Section {
                     PhotosPicker(selection:$photoItem,matching:.images) {Label("A little proof you wandered",systemImage:"camera")}
                     if let photo,let image=UIImage(data:photo) {Image(uiImage:image).resizable().scaledToFit().frame(maxHeight:200)}

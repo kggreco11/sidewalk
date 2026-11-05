@@ -58,10 +58,11 @@ let ink = Color(red: 0.16, green: 0.24, blue: 0.31)
 
 @main struct SidewalkApp: App {
     @StateObject private var guide = FieldGuide()
-    var body: some Scene { WindowGroup { ExploreView().environmentObject(guide).tint(ink).preferredColorScheme(.light) } }
+    var body: some Scene { WindowGroup { ArrivalView().environmentObject(guide).tint(ink).preferredColorScheme(.light) } }
 }
 struct ExploreView: View {
     @EnvironmentObject var guide: FieldGuide
+    @Environment(\.dynamicTypeSize) private var textSize
     @State private var filter = "All"
     @State private var search = ""
     @State private var selected: Place?
@@ -79,16 +80,16 @@ struct ExploreView: View {
     }
     func distance(_ p: Place) -> Double { pow(p.lat-center.latitude,2) + pow((p.lng-center.longitude)*0.79,2) }
     var body: some View {
-        VStack(spacing: 0) {
+        ScrollView { VStack(spacing: 0) {
             HStack {
-                Text("sidewalk").font(.system(size: 32, design: .serif)).tracking(-1.5)
+                Text("sidewalk").font(.system(.largeTitle, design: .serif)).tracking(-1.5)
                 Spacer()
                 Button { collection = true } label: { Image(systemName: "book.closed").font(.title3).frame(width:44,height:44) }.accessibilityLabel("My field guide")
             }.padding(.horizontal,20)
-            PlacesMap(places: matches, center: center, city: area == "All San Francisco", selected: $selected).frame(maxHeight: .infinity)
+            PlacesMap(places: matches, center: center, city: area == "All San Francisco", selected: $selected).frame(height:textSize.isAccessibilitySize ? 220 : 280)
             VStack(alignment:.leading, spacing:12) {
                 HStack {
-                    Text("Explore").font(.system(size:32,design:.serif))
+                    Text("Explore").font(.system(.largeTitle,design:.serif))
                     Spacer()
                     Menu {
                         ForEach(areas,id:\.self) { name in Button(name) {
@@ -96,13 +97,13 @@ struct ExploreView: View {
                             let centers: [String:CLLocationCoordinate2D] = ["North Beach":.init(latitude:37.800,longitude:-122.407),"Waterfront":.init(latitude:37.796,longitude:-122.394),"Mission":.init(latitude:37.760,longitude:-122.419),"Civic Center":.init(latitude:37.780,longitude:-122.419),"Golden Gate Park":.init(latitude:37.770,longitude:-122.469),"All San Francisco":.init(latitude:37.775,longitude:-122.438)]
                             center = centers[name]!
                         } }
-                    } label: { Label(area,systemImage:"chevron.down").font(.caption) }
+                    } label: { Label(area,systemImage:"chevron.down").font(.body).frame(minHeight:44) }
                 }
                 HStack { Image(systemName:"magnifyingglass"); TextField("Find a place",text:$search).textInputAutocapitalization(.never); if !search.isEmpty { Button { search = "" } label: { Image(systemName:"xmark.circle.fill") }.accessibilityLabel("Clear search") } }.padding(10).background(.white.opacity(0.65),in:RoundedRectangle(cornerRadius:10))
                 ScrollView(.horizontal,showsIndicators:false) { HStack { ForEach(["All","Architecture","History","Culture","Art","Parks","Saved"],id:\.self) { value in
-                    Button(value) { filter = value }.font(.caption).padding(.horizontal,14).frame(minHeight:44).background(filter == value ? ink : .clear,in:Capsule()).foregroundStyle(filter == value ? paper : ink).overlay(Capsule().stroke(ink.opacity(0.15))).accessibilityAddTraits(filter == value ? .isSelected : [])
+                    Button(value) { filter = value }.font(.body).padding(.horizontal,14).frame(minHeight:44).background(filter == value ? ink : .clear,in:Capsule()).foregroundStyle(filter == value ? paper : ink).overlay(Capsule().stroke(ink.opacity(0.15))).accessibilityAddTraits(filter == value ? .isSelected : [])
                 } } }
-                HStack { Text("\(matches.count) places"); Spacer(); Text("Swipe to explore").foregroundStyle(.secondary) }.font(.caption)
+                HStack { Text("\(matches.count) places"); Spacer(); Text("Swipe to explore").foregroundStyle(.secondary) }.font(.body)
                 ScrollView(.horizontal,showsIndicators:false) {
                     LazyHStack(spacing:12) { ForEach(matches) { place in
                         HStack(alignment:.top,spacing:12) {
@@ -110,19 +111,19 @@ struct ExploreView: View {
                                 HStack(alignment:.top,spacing:12) {
                                     PlaceCover(place:place).frame(width:88,height:100).clipped().clipShape(RoundedRectangle(cornerRadius:6))
                                     VStack(alignment:.leading,spacing:7) {
-                                        Text(place.kind.uppercased()).font(.system(size:9,design:.monospaced))
-                                        Text(place.name).font(.system(size:21,design:.serif)).lineLimit(2)
-                                        Text(place.teaser ?? place.story).font(.caption).foregroundStyle(.secondary).lineLimit(2)
+                                        Text(place.kind.uppercased()).font(.subheadline.monospaced())
+                                        Text(place.name).font(.system(.title2,design:.serif)).fixedSize(horizontal:false,vertical:true)
+                                        Text(place.teaser ?? place.story).font(.body).foregroundStyle(.secondary)
                                     }.frame(maxWidth:.infinity,alignment:.leading)
                                 }
                             }.buttonStyle(.plain)
-                            Button { guide.toggle(place) } label: { Image(systemName:guide.saved.contains(place.id) ? "bookmark.fill" : "bookmark").frame(width:30,height:44) }.accessibilityLabel("Save \(place.name)")
-                        }.padding(12).frame(width:320,height:132).background(.white.opacity(0.7),in:RoundedRectangle(cornerRadius:10))
-                    } } }.frame(height:132)
-                if matches.isEmpty { Text("No matches. Try another interest or search.").font(.caption) }
-                Button { walkDestination = nil; planner = true } label: { Label("Start a walk",systemImage:"figure.walk").frame(maxWidth:.infinity,minHeight:48) }.buttonStyle(.borderedProminent)
+                            Button { guide.toggle(place) } label: { Image(systemName:guide.saved.contains(place.id) ? "bookmark.fill" : "bookmark").frame(width:44,height:44) }.accessibilityLabel("Save \(place.name)")
+                        }.padding(12).frame(width:320,alignment:.topLeading).background(.white.opacity(0.7),in:RoundedRectangle(cornerRadius:10))
+                    } } }
+                if matches.isEmpty { Text("No matches. Try another interest or search.").font(.body) }
+                Button { walkDestination = nil; planner = true } label: { Label("Start a walk",systemImage:"figure.walk").frame(maxWidth:.infinity,minHeight:52) }.buttonStyle(.borderedProminent)
             }.padding(16).background(paper)
-        }.background(paper).foregroundStyle(ink)
+        } }.background(paper).foregroundStyle(ink)
         .sheet(item:$selected,onDismiss:{if walkDestination != nil {planner=true}}) { p in PlaceDetail(place:p) { walkDestination = p; selected = nil }.environmentObject(guide) }
         .sheet(isPresented:$planner,onDismiss:{walkDestination=nil}) { WalkPlanner(destination:walkDestination).environmentObject(guide) }
         .sheet(isPresented:$collection) { NavigationStack { List(guide.places.filter { guide.visits[$0.id] != nil }) { p in VStack(alignment:.leading,spacing:8) { Text(p.name).font(.headline); Text(guide.visits[p.id]?.note ?? ""); if let data=guide.visits[p.id]?.photo,let image=UIImage(data:data) { Image(uiImage:image).resizable().scaledToFit().frame(maxHeight:180) } } }.navigationTitle("Field guide").overlay { if guide.visits.isEmpty { ContentUnavailableView("No stamps yet",systemImage:"book.closed",description:Text("Check in at a place to collect it.")) } }.toolbar { Button("Done") { collection=false } } } }
@@ -136,14 +137,14 @@ struct PlaceDetail: View {
     var body: some View {
         ScrollView { VStack(alignment:.leading,spacing:20) {
             PlaceCover(place:place).frame(height:200).clipped()
-            if let credit=place.imageCredit, let source=place.imageSource, let url=URL(string:source) {Link(credit,destination:url).font(.caption);if let license=place.imageLicenseUrl,let licenseURL=URL(string:license){Link("Image license",destination:licenseURL).font(.caption)};Text("Cropped to fit").font(.caption2).foregroundStyle(.secondary)}
-            Text(place.kind.uppercased()).font(.caption.monospaced())
-            Text(place.name).font(.system(size:34,design:.serif))
-            Text(place.story).font(.system(size:19,design:.serif)).lineSpacing(5)
-            if let address=place.address { Label(address,systemImage:"mappin").font(.caption) }
-            if let url=URL(string:place.source) { Link(place.sourceName,destination:url).font(.caption) }
-            HStack {
-                Button(action:walk) { Label("Walk here",systemImage:"figure.walk").frame(maxWidth:.infinity,minHeight:44) }.buttonStyle(.borderedProminent)
+            if let credit=place.imageCredit, let source=place.imageSource, let url=URL(string:source) {Link(credit,destination:url).font(.body).frame(minHeight:44);if let license=place.imageLicenseUrl,let licenseURL=URL(string:license){Link("Image license",destination:licenseURL).font(.body).frame(minHeight:44)};Text("Cropped to fit").font(.subheadline).foregroundStyle(.secondary)}
+            Text(place.kind.uppercased()).font(.subheadline.monospaced())
+            Text(place.name).font(.system(.largeTitle,design:.serif))
+            Text(place.story).font(.system(.body,design:.serif)).lineSpacing(5)
+            if let address=place.address { Label(address,systemImage:"mappin").font(.body) }
+            if let url=URL(string:place.source) { Link(place.sourceName,destination:url).font(.body).frame(minHeight:44) }
+            VStack(spacing:12) {
+                Button(action:walk) { Label("Walk here",systemImage:"figure.walk").frame(maxWidth:.infinity,minHeight:52) }.buttonStyle(.borderedProminent)
                 Button { guide.toggle(place) } label: { Image(systemName:guide.saved.contains(place.id) ? "bookmark.fill" : "bookmark").frame(width:44,height:44) }.buttonStyle(.bordered).accessibilityLabel("Save place")
             }
         }.padding(24) }.background(paper).presentationDragIndicator(.visible)
