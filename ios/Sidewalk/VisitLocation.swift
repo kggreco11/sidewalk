@@ -66,16 +66,16 @@ struct ArrivalUnlock: View {
     let place: Place
     var body: some View {
         VStack(alignment: .leading, spacing: 14) {
-            Label("Field notes locked", systemImage: "lock").font(.headline)
-            Text("Visit this spot to unlock its field notes. Check in within 75 m from a public path.").font(.body)
+            Label("Unlock this story", systemImage: "sparkle").font(.headline)
+            Text("Visit this place to unlock its story. Check in within 75 m.").font(.body)
             Button {
                 location.verify(place) { guide.unlock(place) }
             } label: {
                 HStack { Text(location.checking ? "Checking location…" : "I’m here · unlock story"); Spacer(); if location.checking { ProgressView().tint(paper) } else { Image(systemName: "location") } }
                     .frame(minHeight: 52)
-            }.buttonStyle(.borderedProminent).disabled(location.checking)
+            }.foregroundStyle(paper).buttonStyle(FieldPrimaryButtonStyle()).disabled(location.checking)
             if let message = location.message { Text(message).font(.body).accessibilityLabel(message) }
-            Text("Location is checked on your device.").font(.subheadline).foregroundStyle(.secondary)
+            Text("Stay on a public path. Location is checked on your device.").font(.subheadline).foregroundStyle(.secondary)
         }.padding(16).background(ink.opacity(0.06), in: RoundedRectangle(cornerRadius: 12))
             .onDisappear { location.cancel() }
             .onChange(of: scenePhase) { _, phase in if phase == .background { location.cancel() } }

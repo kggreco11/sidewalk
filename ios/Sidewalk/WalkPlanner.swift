@@ -2,144 +2,116 @@ import SwiftUI
 import MapKit
 import PhotosUI
 
-struct WalkPlanner: View {
-    @Environment(\.accessibilityReduceMotion) private var reduceMotion
-    @State private var controlsVisible=false
-    @EnvironmentObject var guide:FieldGuide
-    let destination:Place?
-    @State private var origin: MKMapItem?
-    @State private var destinationItem: MKMapItem?
-    @State private var target:Place?
+struct WalkPlanner:View {
+    @Environment(\.accessibilityReduceMotion) private var reduced
+    @StateObject private var model:RoutePlannerModel
+    @StateObject private var location=StartingLocation()
+    @Environment(\.scenePhase) private var scenePhase
     @Binding var route:MKRoute?
-    let close: () -> Void
-    @State private var busy=false
-    @State private var error:String?
-    @State private var active=false
+    let close:()->Void
+    @FocusState private var focused:RouteSearchField?
     @State private var checkIn=false
-    @FocusState private var searchField: RouteSearchField?
-    @State private var originText=""
-    @State private var destinationText=""
-    @State private var requestID = UUID()
-    init(destination:Place?, route:Binding<MKRoute?>, close:@escaping () -> Void) {
-        self.destination=destination
-        _route=route
-        self.close=close
-        _target=State(initialValue:destination)
-        _destinationText=State(initialValue:destination?.name ?? "")
-        if let destination {
-            let item=MKMapItem(placemark:MKPlacemark(coordinate:destination.coordinate));item.name=destination.name
-            _destinationItem=State(initialValue:item)
-        }
+    @State private var visible=false
+    init(destination:Place?,route:Binding<MKRoute?>,close:@escaping ()->Void) {
+        _model=StateObject(wrappedValue:RoutePlannerModel(place:destination));_route=route;self.close=close
     }
+    @EnvironmentObject private var guide:FieldGuide
     var body:some View {
-        VStack(spacing:0) {
+        GeometryReader {geometry in
             VStack(spacing:0) {
-                HStack {
-                    Button(action:close) {Image(systemName:"arrow.left").frame(width:44,height:44)}.accessibilityLabel("Back to Explore")
-                    Text(active ? "Your walk" : "Directions").font(.headline)
-                    Spacer()
-                }.padding(.horizontal,12)
-                if !active {
-                    VStack(spacing:12) {
-                        HStack {
-                            Image(systemName:"circle")
-                            TextField("Starting point",text:input(.origin)).focused($searchField,equals:.origin)
-                                .submitLabel(.route).autocorrectionDisabled().onSubmit {Task {await plan()}}
-                            if !originText.isEmpty {Button {input(.origin).wrappedValue="";searchField = .origin} label: {Image(systemName:"xmark.circle.fill").frame(width:44,height:44)}.accessibilityLabel("Clear starting point")}
-                        }.frame(minHeight:44)
-                        Divider()
-                        HStack {
-                            Image(systemName:"mappin.circle.fill")
-                            TextField("Where to?",text:input(.destination)).focused($searchField,equals:.destination)
-                                .submitLabel(.route).autocorrectionDisabled().onSubmit {Task {await plan()}}
-                            if !destinationText.isEmpty {Button {input(.destination).wrappedValue="";searchField = .destination} label: {Image(systemName:"xmark.circle.fill").frame(width:44,height:44)}.accessibilityLabel("Clear destination")}
-                        }.frame(minHeight:44)
-                    }.padding(16).background(paper)
-                    if let field=searchField {
-                        LocationSuggestions(query:field == .origin ? originText : destinationText,places:guide.places) {item,place in
-                            invalidateRoute()
-                            if field == .origin {origin=item;originText=item.name ?? "Selected place"}
-                            else {destinationItem=item;destinationText=item.name ?? "Selected place";target=place}
-                            searchField=nil
-                            if origin != nil && destinationItem != nil {Task {await plan()}}
-                        }.id(field)
-                    }
-                }
-            }.background(paper)
-                .offset(y:controlsVisible || reduceMotion ? 0 : -36).opacity(controlsVisible ? 1 : 0)
-            Spacer()
-            Group {
-                VStack(alignment:.leading,spacing:12) {
-                    if let route {
-                        Text("\(Int(ceil(route.expectedTravelTime/60))) min · \(route.distance/1000,specifier:"%.1f") km").font(.title2.bold())
-                        Text(destinationItem?.name ?? "Walking route").font(.body)
-                        if active {
-                            ScrollView { VStack(alignment:.leading,spacing:16) { ForEach(Array(route.steps.filter{!$0.instructions.isEmpty}.enumerated()),id:\.offset) { _,step in Text(step.instructions).font(.body) } } }.frame(maxHeight:150)
+                VStack(spacing:0) {
+                    HStack {
+                        FieldIconButton(symbol:"arrow.left",label:"Back to Explore") {focused=nil;model.cancel();close()}
+                        Text(model.active ? "Your walk" : "Plan a walk").font(.headline)
+                        Spacer()
+                        if model.active {Button("Edit") {model.active=false}.frame(minHeight:44)}
+                    }.padding(.horizontal,8)
+                    if !model.active {
+                        HStack(spacing:8) {
+                            VStack(spacing:0) {
+                                endpoint(.origin,symbol:"circle",placeholder:"Starting point")
+                                Divider().padding(.leading,36)
+                                endpoint(.destination,symbol:"mappin",placeholder:"Where to?")
+                            }.padding(.horizontal,12).background(FieldStyle.inset,in:RoundedRectangle(cornerRadius:16))
+                            FieldIconButton(symbol:"arrow.up.arrow.down",label:"Swap starting point and destination") {focused=nil;location.cancel();model.swap();if model.canPlan {model.startPlanning()}}
+                        }.padding(.horizontal,16).padding(.bottom,12)
+                        if focused == .origin || model.originText.isEmpty {
+                            Button {
+                                focused=nil
+                                location.request {item in model.choose(.origin,item:item);if model.canPlan {model.startPlanning()} else {focused = .destination}}
+                            } label: {HStack {if location.busy {ProgressView()} else {Image(systemName:"location")};Text(location.busy ? "Finding your location…" : "Use current location");Spacer()}.font(.subheadline.weight(.medium)).frame(minHeight:44).padding(.horizontal,20)}.buttonStyle(.plain).disabled(location.busy)
                         }
-                    } else { Text(busy ? "Finding a walking route…" : origin == nil ? "Choose your starting point" : "Choose your destination").font(.headline) }
-                    if let error { Text(error).font(.callout).foregroundStyle(.red) }
-                    Button {
-                        if active {if target != nil {checkIn=true} else {close()}}
-                        else if route != nil {active=true}
-                        else {Task {await plan()}}
-                    } label: {
-                        HStack { if busy {ProgressView().tint(paper)}; Label(active ? (target == nil ? "Finish walk" : "I’m here") : route == nil ? "Find route" : "Go",systemImage:active ? "mappin" : "figure.walk") }.foregroundStyle(paper).frame(maxWidth:.infinity,minHeight:52)
-                    }.buttonStyle(.borderedProminent).disabled(busy || originText.trimmingCharacters(in:.whitespacesAndNewlines).isEmpty || destinationText.trimmingCharacters(in:.whitespacesAndNewlines).isEmpty)
+                        if let message=location.message {Text(message).font(.callout).foregroundStyle(FieldStyle.clay).padding(.horizontal,20).padding(.bottom,8)}
+                        if let field=focused {
+                            LocationSuggestions(query:model.text(for:field),places:guide.places) {item,place in
+                                location.cancel()
+                                model.choose(field,item:item,place:place)
+                                focused=nil
+                                if model.canPlan {model.startPlanning()}
+                            }.id(field).frame(maxHeight:max(100,min(260,geometry.size.height*0.38)))
+                        }
+                    }
+                }.background(paper,in:UnevenRoundedRectangle(bottomLeadingRadius:24,bottomTrailingRadius:24))
+                    .shadow(color:ink.opacity(0.07),radius:12,y:4)
+                    .offset(y:visible || reduced ? 0 : -24).opacity(visible ? 1 : 0)
+                Spacer(minLength:8)
+                VStack(alignment:.leading,spacing:12) {
+                    if focused == nil,let route=model.route {
+                        HStack(alignment:.firstTextBaseline) {
+                            Text("\(Int(ceil(route.expectedTravelTime/60))) min").font(.system(.title,design:.rounded).weight(.semibold)).monospacedDigit()
+                            Text(String(format:"%.1f km",route.distance/1000)).font(.body).foregroundStyle(FieldStyle.secondary)
+                            Spacer()
+                            Image(systemName:"figure.walk").font(.title2).foregroundStyle(FieldStyle.clay)
+                        }
+                        Text(model.destination?.name ?? model.destinationText).font(.headline).lineLimit(2)
+                        if model.active {
+                            Text("Walking directions").font(.subheadline).foregroundStyle(FieldStyle.secondary)
+                            ScrollView {
+                                VStack(alignment:.leading,spacing:16) {ForEach(Array(route.steps.filter{!$0.instructions.isEmpty}.enumerated()),id:\.offset) {index,step in
+                                    HStack(alignment:.top,spacing:12) {Text("\(index+1)").font(.caption.monospacedDigit()).frame(width:24,height:24).background(FieldStyle.inset,in:Circle());Text(step.instructions).font(.body)}
+                                }}}.frame(maxHeight:160)
+                            Button {model.openInMaps()} label: {Label("Navigate in Apple Maps",systemImage:"arrow.up.right.square").frame(minHeight:44)}.buttonStyle(.plain)
+                        } else {Text("Direct walking route").font(.subheadline).foregroundStyle(FieldStyle.secondary)}
+                    } else if focused == nil && !model.busy {
+                        Text("Where shall we walk?").font(.system(.title2,design:.serif).weight(.semibold))
+                    }
+                    if let error=model.error {Label(error,systemImage:"exclamationmark.circle").font(.callout).foregroundStyle(FieldStyle.clay).fixedSize(horizontal:false,vertical:true).accessibilityIdentifier("route-error")}
+                    Button(action:primaryAction) {
+                        HStack {if model.busy {ProgressView().tint(paper)};Text(model.busy ? "Finding your route…" : model.active ? (model.place == nil ? "Finish walk" : "I’m here") : model.route == nil ? "Find route" : "Go");if !model.busy {Image(systemName:model.active ? "checkmark" : "arrow.right")}}
+                    }.buttonStyle(FieldPrimaryButtonStyle()).disabled(model.busy || !model.canPlan)
                 }.padding(20).background(paper,in:UnevenRoundedRectangle(topLeadingRadius:24,topTrailingRadius:24))
+                    .background(alignment:.bottom) {paper.frame(height:geometry.safeAreaInsets.bottom+20).offset(y:geometry.safeAreaInsets.bottom)}
+                    .offset(y:visible || reduced ? 0 : 24).opacity(visible ? 1 : 0)
+            }.foregroundStyle(ink)
+        }.onAppear {withAnimation(SidewalkMotion.spring(reduced)) {visible=true}}
+            .onReceive(model.$route) {route=$0}
+            .onDisappear {model.cancel();location.cancel()}
+            .onChange(of:scenePhase) {_,phase in if phase == .background {location.cancel()}}
+            .sheet(isPresented:$checkIn) {if let place=model.place {CheckIn(place:place).environmentObject(guide)}}
+    }
+    private func endpoint(_ field:RouteSearchField,symbol:String,placeholder:String)->some View {
+        HStack(spacing:12) {
+            Image(systemName:symbol).font(.body.weight(.medium)).foregroundStyle(field == .origin ? ink : FieldStyle.clay).frame(width:24)
+            TextField(placeholder,text:Binding(get:{model.text(for:field)},set:{location.cancel();model.edit(field,text:$0)}))
+                .font(.body).focused($focused,equals:field).autocorrectionDisabled().submitLabel(.route)
+                .accessibilityIdentifier(field == .origin ? "route-origin" : "route-destination")
+                .onSubmit {submit()}
+            if !model.text(for:field).isEmpty {
+                FieldIconButton(symbol:"xmark.circle.fill",label:field == .origin ? "Clear starting point" : "Clear destination") {location.cancel();model.edit(field,text:"");focused=field}
             }
-            .offset(y:controlsVisible || reduceMotion ? 0 : 48).opacity(controlsVisible ? 1 : 0)
-            .onAppear {withAnimation(SidewalkMotion.spring(reduceMotion)) {controlsVisible=true}}
-            .animation(SidewalkMotion.spring(reduceMotion),value:active)
-            .animation(SidewalkMotion.spring(reduceMotion),value:route != nil)
-            .sheet(isPresented:$checkIn) {if let target {CheckIn(place:target).environmentObject(guide)}}
-        }.foregroundStyle(ink).onDisappear {requestID=UUID()}
+        }.frame(minHeight:52)
     }
-    private func input(_ field:RouteSearchField)->Binding<String> {
-        Binding(get: {field == .origin ? originText : destinationText},set: {value in
-            invalidateRoute()
-            if field == .origin {originText=value;origin=nil}
-            else {destinationText=value;destinationItem=nil;target=nil}
-        })
+    private func submit() {
+        if model.text(for:.origin).isEmpty {focused = .origin}
+        else if model.text(for:.destination).isEmpty {focused = .destination}
+        else {focused=nil;model.startPlanning()}
     }
-    private func invalidateRoute() {requestID=UUID();busy=false;route=nil;active=false;error=nil}
-    @MainActor private func resolve(_ text:String, label:String) async throws -> MKMapItem {
-        let request=MKLocalSearch.Request()
-        request.naturalLanguageQuery=text
-        request.resultTypes=text.first?.isNumber == true ? .address : [.address,.pointOfInterest]
-        request.region=MKCoordinateRegion(center:.init(latitude:37.775,longitude:-122.438),span:.init(latitudeDelta:0.15,longitudeDelta:0.15))
-        let response=try await MKLocalSearch(request:request).start()
-        guard response.mapItems.count == 1,let item=response.mapItems.first else {
-            throw AddressError(message:response.mapItems.isEmpty ? "Couldn’t find that \(label). Include the street number and city, or choose a suggestion." : "Several places match your \(label). Choose the correct suggestion below the field.")
-        }
-        return item
+    private func primaryAction() {
+        focused=nil
+        if model.active {if model.place != nil {checkIn=true} else {close()}}
+        else if model.route != nil {withAnimation(SidewalkMotion.spring(reduced)) {model.active=true}}
+        else {submit()}
     }
-    @MainActor func plan() async {
-        let from=originText.trimmingCharacters(in:.whitespacesAndNewlines)
-        let to=destinationText.trimmingCharacters(in:.whitespacesAndNewlines)
-        guard !from.isEmpty else {searchField = .origin;return}
-        guard !to.isEmpty else {searchField = .destination;return}
-        let token=UUID();requestID=token;busy=true;error=nil;defer {if requestID == token {busy=false}}
-        do {
-            let source:MKMapItem
-            if let origin {source=origin} else {source=try await resolve(from,label:"starting address")}
-            guard requestID == token else {return}
-            origin=source
-            let end:MKMapItem
-            if let destinationItem {end=destinationItem} else {end=try await resolve(to,label:"destination")}
-            guard requestID == token else {return}
-            destinationItem=end
-            searchField=nil
-            let directions=MKDirections.Request();directions.source=source;directions.destination=end;directions.transportType = .walking
-            let result=try await MKDirections(request:directions).calculate()
-            guard requestID == token else {return}
-            guard let first=result.routes.first else{error="No walking route found between these places.";return};route=first
-        } catch {
-            guard requestID == token else {return}
-            self.error=(error as? AddressError)?.message ?? "Could not get a walking route. Check your connection and try again."
-        }
-    }
-    private struct AddressError: Error {let message:String}
-
 }
 struct CheckIn:View {
     @EnvironmentObject var guide:FieldGuide
@@ -160,7 +132,8 @@ struct CheckIn:View {
                     if let photo,let image=UIImage(data:photo) {Image(uiImage:image).resizable().scaledToFit().frame(maxHeight:200)}
                     if let photoError {Text(photoError).foregroundStyle(.red)}
                 }
-                Section {Button("Keep this moment") {guide.collect(place,note:note,photo:photo);dismiss()}.frame(minHeight:52)}
+                if let error=guide.error {Section {Text(error).foregroundStyle(FieldStyle.clay)}}
+                Section {Button("Keep this moment") {if guide.collect(place,note:note,photo:photo) {dismiss()}}.frame(minHeight:52)}
                 }
             }.navigationTitle("I’m here").toolbar{Button("Cancel"){dismiss()}}
                 .onAppear {if let visit=guide.visits[place.id]{note=visit.note;photo=visit.photo}}
